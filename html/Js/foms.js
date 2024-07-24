@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded and parsed");
 
+
+
+    
     // Formulario de login
     var loginForm = document.getElementById('loginForm');
     if (loginForm) {
