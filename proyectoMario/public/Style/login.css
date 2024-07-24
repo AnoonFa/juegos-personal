@@ -47,7 +47,7 @@ nav h1 {
 }
 
 .Hmedio {
-    position: relative; 
+    position: relative; /* Permite el posicionamiento absoluto de los GIFs */
     flex: 1;
     display: flex;
     align-items: center;
@@ -81,7 +81,6 @@ nav h1 {
     right: 6%; 
 }
 
-
 .Hderecha {
     display: flex;
     gap: 30px; /* Espacio entre los enlaces */
@@ -99,6 +98,86 @@ nav a:hover {
     color: #ffd700; /* Cambia el color del enlace al pasar el ratón */
 }
 
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 20%; /* Ajusta el padding top para dejar espacio al header */
+}
+
+.Ingresa {
+    margin-bottom: 2rem;
+    size: 10rem;
+    top: 20%;
+    text-shadow: 0 0.1rem 0.1rem #f5f5f550;
+}
+
+form {
+    min-width: 10%;
+    max-width: 25%;
+    width: 25%;
+    top: 25%;
+    padding: 2%;
+    background-color: rgb(252, 249, 226);
+    border-radius: 10px;
+    border-color: rgb(240, 25, 25) ;
+    margin: 2px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.493);
+}
+
+form h1 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem; /* Aumenta el tamaño del texto en el form */
+}
+
+form input {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre la etiqueta y el campo de entrada */
+    width: 100%;
+}
+
+.input-group label {
+    width: 20%; /* Ajusta el ancho de la etiqueta según sea necesario */
+}
+
+.input-group input {
+    width: 70%;
+    padding: 0.5rem;
+}
+form button {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0);
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #ee1919; /* Cambia el color de fondo al pasar el raton */
+    transform: scale(1.10); /* Agranda el botón ligeramente */
+}
+
+main a {
+    text-decoration: none;
+    color: black;
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -106,9 +185,9 @@ footer {
     width: 100%;
     background-color: rgb(226, 0, 0);
     text-align: center;
-    padding: 1rem 0;
-    color: #f5f5f5;
+    color:#f5f5f5
 }
+
 
 /* Responsividad */
 @media (max-width: 768px) {

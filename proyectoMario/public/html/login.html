@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/html/Style/index.css">
-     <script src="/html/Js/foms.js" defer></script>
-    <title>Formulario</title>
+    <link rel="stylesheet" href="../Style/login.css">
+    <script src="../Js/foms.js" defer></script>
+    <title>Login</title>
 </head>
 <body>
     <nav>
         <div class="Hizquierda">
-            <a href="/html/index.html">   
-                 <img class="logo" src="https://i.pinimg.com/originals/08/3e/d2/083ed2dd0821aff2eb9ca2789062d708.gif" alt="Gif de Mario Bros" loading="lazy">
-        </a>
+            <a href="/proyectoMario/public/html/index.html">   
+                <img class="logo" src="https://i.pinimg.com/originals/08/3e/d2/083ed2dd0821aff2eb9ca2789062d708.gif" alt="Gif de Mario Bros" loading="lazy">
+            </a>
             <h1>MARIO BROS</h1>
         </div>
         <div class="Hmedio">
@@ -21,15 +21,27 @@
             <img src="https://i.gifer.com/3vIP.gif" class="marqueeGIF derecha">
         </div>
         <div class="Hderecha">
-            <a href="https://mario.nintendo.com/es/characters/">CONOCELOS
-            </a>
+            <a href="https://mario.nintendo.com/es/characters/">CONOCELOS</a>
             <a href="https://www.youtube.com/watch?v=30yVesD1jVg">MARIO</a>
             <a href="https://www.youtube.com/watch?v=i5S-8isAzwk">LUIGI</a>
-            <a href="/html/login.html">INICIA SESIÓN</a>
+            <a href="https://www.youtube.com/watch?v=r-3Exp6pr20">PEACH</a>
         </div>
     </nav>
     <main>
 
+        <form id="loginForm">
+            <h1>Login</h1>
+            <div class="input-group">
+                <label for="username">Usuario:</label>  
+                <input type="text" id="username" placeholder="Pepe123" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña:</label> 
+                <input type="password" id="password" placeholder="Jklsa21" required>
+            </div>
+            <h4>¿No tienes cuenta? <a href="../html/Form.html">Ingresa aquí</a></h4>
+            <button type="submit">Ingresar</button>
+        </form>
     </main>
     <footer>
         <ol>
@@ -40,7 +52,6 @@
                     Ficha:2902082
             </h3></li>
         </ol>
-        
     </footer>
 </body>
 </html>

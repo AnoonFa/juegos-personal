@@ -19,8 +19,17 @@
       "fnacimiento": "1987-03-15",
       "email": "lauraesguerra@gmail.com",
       "password": "123456"
+    },
+    {
+      "id": "4",
+      "tipodoc": "Cédula Extranjera",
+      "numdoc": "11012350597",
+      "nombre": "Esteban",
+      "apellido": "Espinosa Castillo",
+      "fnacimiento": "2007-04-30",
+      "email": "estebanespiia@gmail.com",
+      "password": "123412"
     }
-
   ],
   "habitacion": [
     {
@@ -38,6 +47,14 @@
       "camas": 1,
       "caracteristicas": "1 cama doble, baño privado",
       "valornoche": 100000
+    },
+    {
+      "id": "30",
+      "nombrehab": "Suite GOLD",
+      "capacidad": 5,
+      "camas": 3,
+      "caracteristicas": "2 camas 1 doble 2 sencilla, baño privado",
+      "valornoche": 200000
     }
   ],
   "reservas": [
@@ -59,6 +76,16 @@
       "fechasalida": "2022-08-21",
       "valorreserva": 300000,
       "userId": 2,
+      "habitacionId": 102
+    },
+    {
+      "id": "66",
+      "fechareserva": "2021-06-27",
+      "totalnoches": 2,
+      "fechaentrada": "2021-06-26",
+      "fechasalida": "2021-06-29",
+      "valorreserva": 34000,
+      "userId": 3,
       "habitacionId": 102
     }
   ]
