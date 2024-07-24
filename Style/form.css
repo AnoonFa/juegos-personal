@@ -23,22 +23,22 @@ nav {
     width: 100%;
     position: fixed;
     top: 0;
-    height: 10%;
+    height: auto; /* Ajusta la altura automáticamente */
     color: #f5f5f5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.644); 
     z-index: 1000;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten si es necesario */
 }
 
-
 .logo {
-    width: 80px; /* Ajusta el tamaño del logo según sea necesario */
+    width: 80px;
     height: auto;
-    margin-right: 20px; /* Espacio entre el logo y el título */
+    margin-right: 20px;
 }
 
 nav h1 {
     font-size: 2rem;
-    margin: 0; /* Quita el margen para que esté alineado con el logo */
+    margin: 0;
 }
 
 .Hizquierda {
@@ -47,36 +47,39 @@ nav h1 {
 }
 
 .Hmedio {
+    position: relative; /* Permite el posicionamiento absoluto de los GIFs */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1rem;
-    color: rgb(0, 0, 0); /* Color del texto en el marquee */
-    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
-    width: 60%;
+    color: rgb(0, 0, 0);
+    white-space: nowrap;
+    overflow: hidden; /* Asegura que el contenido largo no se desborde */
 }
 
 .marquee {
-    width: 53%; /* Deja espacio para los GIFs a los lados */
+    width: auto;
+    max-width: 84%; 
     text-align: center;
-    position: fixed;
-    top: 3.5%;
-    left: 23%;
+    position: relative; 
 }
 
 .marqueeGIF {
-    position: fixed;
-    top: 1%;
-    width: 5%;
-    display: flex;
-
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-50%); 
+    width: 5%; 
+    height: auto;
 }
 
 .marqueeGIF.izquierda {
-    left: 20%;
+    left: 6%;
 }
 
 .marqueeGIF.derecha {
-    right: 22%;
+    right: 6%; 
 }
-
 
 .Hderecha {
     display: flex;
@@ -91,7 +94,7 @@ nav a {
 }
 
 nav a:hover { 
-    transform: scale(1.10); /* Agranda el enlace ligeramente */
+    transform: scale(1.10); /* Agranda el enlace */
     color: #ffd700; /* Cambia el color del enlace al pasar el ratón */
 }
 
@@ -186,23 +189,37 @@ footer {
     color:#f5f5f5
 }
 
+
 /* Responsividad */
 @media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Hizquierda, .Hderecha {
+        margin: 10px 0;
+    }
+
+    .Hmedio {
+        font-size: 0.9rem;
+    }
+
+    .marquee {
+        font-size: 0.8rem;
+        max-width: calc(100% - 80px); /* Ajusta el ancho máximo en pantallas más pequeñas */
+        margin: 0 40px;
+    }
+
+    .marqueeGIF {
+        width: 4%;
+    }
+
     nav h1 {
         font-size: 1.5rem;
     }
 
-    .nav-right {
-        flex-direction: column;
+    .Hderecha {
         gap: 10px;
-    }
-
-    main {
-        padding-top: 20%;
-    }
-
-    form {
-        min-width: 80%;
-        max-width: 90%;
     }
 }

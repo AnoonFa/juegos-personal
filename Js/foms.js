@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Para ingresar llena todos los campos porfavor.");
             } else {
                 alert("Inicio de sesión exitoso.");
-                window.location.href = "/index.html"; 
+                window.location.href = "/html/login.html"; 
             }
         });
     } else {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Para ingresar llena todos los campos porfavor.");
             } else {
                 alert("Registro exitoso.");
-                window.location.href = "/login.html"; 
+                window.location.href = "/html/Form.html"; 
         }});
     } else {
         console.error("registerForm not found");
