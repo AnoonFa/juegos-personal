@@ -1,0 +1,27 @@
+.category-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .category-card {
+    width: 200px;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .category-card img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .category-card h3 {
+    margin-top: 10px;
+  }
+  
+  .category-card:hover {
+    transform: scale(1.05);
+  }
+  

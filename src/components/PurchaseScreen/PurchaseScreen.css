@@ -1,0 +1,87 @@
+/* src/components/PurchaseScreen.css */
+
+.purchase-screen {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
+  }
+  
+  .purchase-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .purchase-body {
+    padding: 20px;
+    display: flex;
+  }
+  
+  .purchase-summary {
+    flex: 1;
+    display: flex;
+  }
+  
+  .purchase-summary img {
+    width: 150px;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .summary-info {
+    flex: 1;
+  }
+  
+  .payment-options {
+    flex: 1;
+  }
+  
+  .payment-options ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .payment-options li {
+    margin: 10px 0;
+  }
+  
+  .purchase-footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+  }
+  
+  .confirm-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .terms {
+    margin-top: 10px;
+  }
+  
+  .terms a {
+    color: #007bff;
+  }
+  

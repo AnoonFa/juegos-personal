@@ -1,0 +1,36 @@
+.game-tables {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .game-table {
+    width: 30%;
+    margin: 10px;
+  }
+  
+  .game-table h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .game-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .game-row img {
+    width: 100px;
+    height: auto;
+    margin-right: 15px;
+  }
+  
+  .game-info h3 {
+    margin: 0;
+  }
+  
+  .game-info p {
+    margin: 5px 0;
+  }
+  

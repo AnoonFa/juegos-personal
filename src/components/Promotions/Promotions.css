@@ -1,0 +1,26 @@
+.promotions {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .promotions h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .promotion {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+  }
+  
+  .promotion h3 {
+    margin-top: 0;
+  }
+  
+  .promotion p {
+    margin: 0;
+  }
+  

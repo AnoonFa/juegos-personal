@@ -1,60 +1,35 @@
-import React from "react";
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import HomePage from './pages/HomePage';
+import CategoriesPage from './pages/CategoriesPage';
+import CategoryPage from './pages/CategoryPage';
+import PurchasePage from './pages/PurchasePage';
+import PromotionsPage from './pages/PromotionsPage';
 import './App.css';
-import FilledAlerts from './components/MuiComponents/Alerts';
-import Header from "./components/Header/Hedaer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './assets/Styles/menuheader.css'
-
-
+import CategoryMenu from './components/CategoriaJuego/CategoriaJuego';
+import Carrusel from './components/CarrusePrincipal/CarruselPrincipal';
 
 function App() {
   return (
     <Router>
-    <div className="App">
       <Header />
-      <div className="container">
-        <div className="wrapper">
-          <div className="home">
-            <Routes>
-              <Route  path="/" element={<Home/>} />
-              <Route  path="/opportunities" element={<Opportunities/>} />
-              <Route  path="/solutions" element={<Solutions/>} />
-              <Route  path="/contact-us" element={<Contact/>} />
-            </Routes>
-          </div>
-        </div>
+      <div className="main-content">
+        <CategoryMenu/>
+        <Carrusel />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/:category" element={<CategoryPage />} />
+          <Route path="/purchase" element={<PurchasePage />} />
+          <Route path="/promotions" element={<PromotionsPage />} />
+        </Routes>
       </div>
-    </div>
-  </Router>
-);
-
-}
-
-function Opportunities() {
-  return <p>Discover our numerous opportunities</p>;
-}
-
-function Solutions() {
-  return <p>Solutions that help you.</p>;
-}
-
-function Contact() {
-  return <p>Feel free to reach us.</p>;
-}
-
-function Home() {
-  return (
-    <div className="container">
-      <div className="wrapper">
-        <h5>
-          The <b>HAMBRG</b>, is a creative, engineer driven, global agency
-          working on advancing the software, advertising and design communities
-          to new heights.
-        </h5>
-      </div>
-    </div>
+      <Footer />
+    </Router>
   );
 }
+
 export default App;
-
-
