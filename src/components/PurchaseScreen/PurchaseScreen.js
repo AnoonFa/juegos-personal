@@ -1,12 +1,28 @@
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import './PurchaseScreen.css';
 
-const PurchaseScreen = ({ game, onClose }) => {
+const PurchaseScreen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  // Aquí deberías obtener la información del juego desde tu estado o API
+  const games = []; // Suponiendo que lo obtienes de algún lugar
+  const game = games.find(game => game.id === parseInt(id));
+
+  if (!game) {
+    return <p>Juego no encontrado</p>;
+  }
+
+  const handlePurchase = () => {
+    navigate(`/purchase/${id}`); // Redirige a la página de compra/venta
+  };
+
   return (
     <div className="purchase-screen">
       <div className="purchase-header">
         <h2>Pantalla de Compra</h2>
-        <button className="close-btn" onClick={onClose}>×</button>
+        <button className="close-btn" onClick={() => navigate(-1)}>×</button>
       </div>
       <div className="purchase-body">
         <div className="purchase-summary">
@@ -30,10 +46,7 @@ const PurchaseScreen = ({ game, onClose }) => {
             <li>Razer Gold Wallet</li>
           </ul>
         </div>
-      </div>
-      <div className="purchase-footer">
-        <button className="confirm-btn">Realizar Compra</button>
-        <p className="terms">Al realizar la compra, aceptas nuestros <a href="#terms">términos y condiciones</a>.</p>
+        <button className="confirm-btn" onClick={handlePurchase}>Proceder a la Compra/Venta</button>
       </div>
     </div>
   );

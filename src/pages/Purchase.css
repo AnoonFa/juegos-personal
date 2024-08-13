@@ -1,63 +1,121 @@
+/* Estilos generales para el formulario de compra/venta */
 .purchase {
-    padding: 20px;
-    background-color: #1c1c1c;
-    color: white;
-  }
-  
-  .purchase-content {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .purchase-options {
-    flex: 1;
-  }
-  
-  .purchase-options h3 {
-    margin-bottom: 20px;
-  }
-  
-  .purchase-options label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .purchase-options input,
-  .purchase-options select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    background-color: #333;
-    color: white;
-    border: 1px solid #444;
-    border-radius: 5px;
-  }
-  
-  .purchase-summary {
-    flex: 1;
-  }
-  
-  .purchase-summary img {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .purchase-summary p {
-    margin: 5px 0;
-  }
-  
-  .purchase-summary button {
-    background-color: #444;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .purchase-summary button:hover {
-    background-color: #555;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.purchase h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.purchase-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.purchase-options,
+.purchase-summary {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.purchase-options h3,
+.purchase-summary h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.purchase-options label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.purchase-options select,
+.purchase-options input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.purchase-options button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.purchase-options button.active {
+  background-color: #0056b3;
+}
+
+.purchase-options button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.purchase-summary img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.purchase-summary p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.purchase-summary p:nth-child(2) {
+  font-weight: bold;
+}
+
+.purchase-summary p:last-child {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.purchase-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.purchase-content button:hover {
+  background-color: #218838;
+}
+
+.purchase-content button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

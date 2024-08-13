@@ -13,6 +13,7 @@ import { Carousel } from 'react-responsive-carousel';
 import Categories from './components/CategoriaJuego/CategoriaJuego.js';
 import StatsTables from './components/Tablas/Tablas.js';
 import GameCarousel from './components/CarrusePrincipal/CarruselPrincipal.js';
+import PurchaseScreen from './components/PurchaseScreen/PurchaseScreen.js';
 
 function App() {
   return (
@@ -22,9 +23,12 @@ function App() {
       <main>
         <GameCarousel />
         <Categories />
-        <StatsTables />
+
       </main>
       <Routes>
+        <Route path="/" element={<StatsTables />} />
+        <Route path="/purchase/:id" element={<Purchase />} />
+        <Route path="/details/:id" element={<PurchaseScreen />} />
         <Route path="/purchase/:id" element={<Purchase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

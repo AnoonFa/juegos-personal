@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { buyLicense, sellLicense } from '../redux/actions/gameActions';
 import { useParams } from 'react-router-dom';
-
 import './Purchase.css';
 
 const Purchase = () => {
-  const { id } = useParams();  // Obtener el ID del juego desde la URL
-  const games = useSelector(state => state.games);
+  const { id } = useParams();
+  const games = useSelector(state => state.games.games); // Accede a la propiedad 'games'
   const selectedGame = games.find(game => game.id === parseInt(id));
 
   const [quantity, setQuantity] = useState(1);
-  const [isBuying, setIsBuying] = useState(true); // Estado para manejar compra/venta
-  const [licenseType, setLicenseType] = useState('Standard');  // Estado para el tipo de licencia
+  const [isBuying, setIsBuying] = useState(true);
+  const [licenseType, setLicenseType] = useState('Standard');
 
   const dispatch = useDispatch();
 
