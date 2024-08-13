@@ -1,27 +1,32 @@
-.category-menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  
-  .category-card {
-    width: 200px;
-    cursor: pointer;
-    text-align: center;
-    margin: 10px;
-    transition: transform 0.3s;
-  }
-  
-  .category-card img {
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .category-card h3 {
-    margin-top: 10px;
-  }
-  
-  .category-card:hover {
-    transform: scale(1.05);
-  }
-  
+.categories {
+  padding: 20px;
+  background-color: #1c1c1c;
+  color: white;
+  margin: 20px 0;
+}
+
+.category-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.category-card {
+  flex: 1;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.category-card h3 {
+  font-size: 18px;
+  color: white;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+}

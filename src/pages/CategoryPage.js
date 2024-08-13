@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import GameTables from '../components/Tablas/Tablas';
-import { games } from '../data'; // Asegúrate de definir los datos en un archivo de datos
+import { games } from '../components/data/gamesData'; // Asegúrate de definir los datos en un archivo de datos
 
 const CategoryPage = () => {
   const { category } = useParams();

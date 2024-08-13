@@ -1,82 +1,54 @@
 .carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .carousel-main {
-    position: relative;
-  }
-  
-  .carousel-main img {
-    width: 100%;
-    height: auto;
-    transition: opacity 0.5s ease;
-  }
-  
-  .carousel-info {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-  }
-  
-  .carousel-prev,
-  .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-  }
-  
-  .carousel-prev {
-    left: 10px;
-  }
-  
-  .carousel-next {
-    right: 10px;
-  }
-  
-  .carousel-thumbnails {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .carousel-thumbnails img {
-    width: 50px;
-    height: auto;
-    margin: 0 5px;
-    cursor: pointer;
-    opacity: 0.7;
-  }
-  
-  .carousel-thumbnails img.active {
-    border: 2px solid #fff;
-    opacity: 1;
-  }
-  
-  .carousel-indicators {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .carousel-indicators span {
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    margin: 0 5px;
-    opacity: 0.5;
-  }
-  
-  .carousel-indicators span.active {
-    opacity: 1;
-  }
-  
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  overflow: hidden;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.carousel-images {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-images img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.carousel button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.carousel button:hover {
+  color: #ccc;
+}
+
+.carousel button:first-child {
+  left: 10px;
+}
+
+.carousel button:last-child {
+  right: 10px;
+}
+
+.carousel-info {
+  text-align: center;
+  color: white;
+  margin-top: 15px;
+}
+
+.carousel-info h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}

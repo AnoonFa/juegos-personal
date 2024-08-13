@@ -1,0 +1,44 @@
+.game-detail {
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  .game-detail h2 {
+    margin-bottom: 20px;
+  }
+  
+  .game-detail-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .game-images img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+  
+  .game-info {
+    flex: 1;
+  }
+  
+  .game-info p {
+    margin: 5px 0;
+  }
+  
+  .game-info button {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .game-info button:hover {
+    background-color: #555;
+  }
+  

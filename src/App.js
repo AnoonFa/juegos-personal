@@ -1,34 +1,36 @@
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import HomePage from './pages/HomePage';
-import CategoriesPage from './pages/CategoriesPage';
-import CategoryPage from './pages/CategoryPage';
-import PurchasePage from './pages/PurchasePage';
-import PromotionsPage from './pages/PromotionsPage';
+import Home from './pages/HomePage';
+import GameDetail from './pages/GameDetail';
+import Purchase from './pages/PurchasePage';
 import './App.css';
-import CategoryMenu from './components/CategoriaJuego/CategoriaJuego';
-import Carrusel from './components/CarrusePrincipal/CarruselPrincipal';
+import Login from './components/login';
+import Register from './components/register.js';
+import { Carousel } from 'react-responsive-carousel';
+import Categories from './components/CategoriaJuego/CategoriaJuego.js';
+import StatsTables from './components/Tablas/Tablas.js';
+import GameCarousel from './components/CarrusePrincipal/CarruselPrincipal.js';
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <Header />
-      <div className="main-content">
-        <CategoryMenu/>
-        <Carrusel />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/:category" element={<CategoryPage />} />
-          <Route path="/purchase" element={<PurchasePage />} />
-          <Route path="/promotions" element={<PromotionsPage />} />
-        </Routes>
-      </div>
-      <Footer />
+      <main>
+        <GameCarousel />
+        <Categories />
+        <StatsTables />
+      </main>
+      <Routes>
+        <Route path="/purchase/:id" element={<Purchase />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </Router>
+  </Provider>
   );
 }
 

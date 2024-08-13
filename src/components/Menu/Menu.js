@@ -1,18 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Menu.css'; // Asegúrate de definir estilos CSS adecuados
+import './Menu.css';
 
-
-const Menu = () => {
-  return (
-    <nav className="nav-menu">
-      <ul>
-        <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/categorias">Categorías</Link></li>
-        <li><Link to="/contacto">Contáctenos</Link></li>
-      </ul>
-    </nav>
-  );
-};
+const Menu = () => (
+  <nav className="menu">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="#categorias">Categorías</a></li>
+      <li><a href="#mas-vendidos">Más Vendidos</a></li>
+      <li><a href="#mas-jugados">Más Jugados</a></li>
+    </ul>
+  </nav>
+);
 
 export default Menu;

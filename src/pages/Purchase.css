@@ -1,0 +1,63 @@
+.purchase {
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  .purchase-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .purchase-options {
+    flex: 1;
+  }
+  
+  .purchase-options h3 {
+    margin-bottom: 20px;
+  }
+  
+  .purchase-options label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .purchase-options input,
+  .purchase-options select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 5px;
+  }
+  
+  .purchase-summary {
+    flex: 1;
+  }
+  
+  .purchase-summary img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .purchase-summary p {
+    margin: 5px 0;
+  }
+  
+  .purchase-summary button {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .purchase-summary button:hover {
+    background-color: #555;
+  }
+  

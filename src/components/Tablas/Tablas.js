@@ -1,30 +1,40 @@
 import React from 'react';
-import './Tablas.css'; // Asegúrate de definir estilos CSS adecuados
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import './Tablas.css';
 
-const GameTables = ({ bestSellers, mostPlayed, upcomingTitles }) => {
-  const renderTable = (title, games) => (
-    <div className="game-table">
-      <h2>{title}</h2>
-      {games.map((game, index) => (
-        <div key={index} className="game-row">
-          <img src={game.image} alt={game.title} />
-          <div className="game-info">
-            <h3>{game.title}</h3>
-            <p>{game.price ? `Price: $${game.price}` : 'Free'}</p>
-            {game.discount && <p>Discount: {game.discount}%</p>}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+
+const StatsTables = () => {
+  const games = useSelector(state => state.games);
+  const navigate = useNavigate();  // Hook para redireccionar
+
+  const handleGameClick = (id) => {
+    navigate(`/purchase/${id}`);  // Redirigir a la página de compra/venta
+  };
 
   return (
-    <div className="game-tables">
-      {renderTable('Más Vendidos', bestSellers)}
-      {renderTable('Más Jugados', mostPlayed)}
-      {renderTable('Próximos Títulos', upcomingTitles)}
-    </div>
+    <section className="stats-tables">
+      <div className="table" id="mas-vendidos">
+        <h3>Juegos</h3>
+        <div className="table-row header">
+          <span>Juego</span>
+          <span>Tamaño (KB)</span>
+          <span>Precio</span>
+          <span>Licencias Disponibles</span>
+          <span>Licencias Vendidas</span>
+        </div>
+        {games.map(game => (
+          <div key={game.id} className="table-row" onClick={() => handleGameClick(game.id)}>
+            <span>{game.name}</span>
+            <span>{game.size} KB</span>
+            <span>${game.price.toLocaleString()}</span>
+            <span>{game.licensesAvailable}</span>
+            <span>{game.licensesSold}</span>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 
-export default GameTables;
+export default StatsTables;

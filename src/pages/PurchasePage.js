@@ -1,27 +1,75 @@
-import React from 'react';
-import PurchaseScreen from '../components/PurchaseScreen/PurchaseScreen';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { buyLicense, sellLicense } from '../redux/actions/gameActions';
+import { useParams } from 'react-router-dom';
 
-const game = {
-  image: '/assets/images/game.jpg',
-  title: 'Juego Ejemplo',
-  developer: 'Desarrollador Ejemplo',
-  originalPrice: 50,
-  discount: 10,
-  finalPrice: 45,
-  tax: 4.5,
-  rewards: '5 puntos de recompensa',
-};
+import './Purchase.css';
 
-const PurchasePage = () => {
-  const handleClose = () => {
-    console.log('Compra cerrada');
+const Purchase = () => {
+  const { id } = useParams();  // Obtener el ID del juego desde la URL
+  const games = useSelector(state => state.games);
+  const selectedGame = games.find(game => game.id === parseInt(id));
+
+  const [quantity, setQuantity] = useState(1);
+  const [isBuying, setIsBuying] = useState(true); // Estado para manejar compra/venta
+  const [licenseType, setLicenseType] = useState('Standard');  // Estado para el tipo de licencia
+
+  const dispatch = useDispatch();
+
+  const handleTransaction = () => {
+    if (isBuying) {
+      dispatch(buyLicense(selectedGame.id, quantity));
+      alert('Compra realizada con éxito!');
+    } else {
+      if (selectedGame.licensesSold >= quantity) {
+        dispatch(sellLicense(selectedGame.id, quantity));
+        alert('Venta realizada con éxito!');
+      } else {
+        alert('No hay suficientes licencias vendidas para realizar esta operación.');
+      }
+    }
   };
 
   return (
-    <div>
-      <PurchaseScreen game={game} onClose={handleClose} />
+    <div className="purchase">
+      <h2>Compra/Venta de Licencias para {selectedGame.name}</h2>
+      <div className="purchase-content">
+        <div className="purchase-options">
+          <h3>Opciones de Pago</h3>
+          <label>
+            Tipo de Licencia:
+            <select value={licenseType} onChange={(e) => setLicenseType(e.target.value)}>
+              <option value="Standard">Standard</option>
+              <option value="Premium">Premium</option>
+              <option value="Gold">Gold</option>
+            </select>
+          </label>
+          <label>
+            Cantidad:
+            <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} />
+          </label>
+          <div>
+            <button onClick={() => setIsBuying(true)} className={isBuying ? 'active' : ''}>
+              Comprar
+            </button>
+            <button onClick={() => setIsBuying(false)} className={!isBuying ? 'active' : ''}>
+              Vender
+            </button>
+          </div>
+          <button onClick={handleTransaction}>{isBuying ? 'Realizar Compra' : 'Realizar Venta'}</button>
+        </div>
+        <div className="purchase-summary">
+          <h3>Resumen de la Transacción</h3>
+          <img src={selectedGame.images[0]} alt={selectedGame.name} />
+          <p>{selectedGame.name}</p>
+          <p>Tipo de Licencia: {licenseType}</p>
+          <p>Precio Unitario: ${selectedGame.price.toLocaleString()}</p>
+          <p>Cantidad: {quantity}</p>
+          <p>Total: ${(selectedGame.price * quantity).toLocaleString()}</p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default PurchasePage;
+export default Purchase;

@@ -7,3 +7,58 @@ body {
 .main-content {
   padding: 20px;
 }
+
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.carousel {
+  margin-bottom: 20px;
+}
+
+.categories {
+  margin-bottom: 20px;
+}
+
+.categories-container {
+  display: flex;
+  gap: 20px;
+}
+
+.category {
+  flex: 1;
+  text-align: center;
+}
+
+.category img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.stats-tables {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.table {
+  flex: 1;
+}
+
+.table .table-row.header {
+  font-weight: bold;
+}
+
+.table .table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.table .table-row span {
+  flex: 1;
+  text-align: left;
+}
