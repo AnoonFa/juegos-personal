@@ -1,60 +1,48 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import './Tablas.css';
+import { DataGrid } from '@mui/x-data-grid';
 
 const StatsTables = () => {
-  const games = useSelector(state => state.games.games); // Accede a la propiedad 'games'
+  const games = useSelector(state => state.games.games);
   const navigate = useNavigate();
 
   const handleGameClick = (id) => {
-    navigate(`/purchase/${id}`);
+    navigate(`/game/${id}`);
   };
 
-  const sortedGames = (key) => {
-    return [...games].sort((a, b) => b[key] - a[key]);
+  const valueFormatter = (params) => {
+    const value = params.value;
+    return value !== undefined && value !== null ? value.toLocaleString() : "N/A";
   };
+
+  const columns = [
+    { field: 'name', headerName: 'Juego', width: 200 },
+    { field: 'size', headerName: 'Tamaño (KB)', type: 'number', width: 150 },
+    { 
+      field: 'price', 
+      headerName: 'Precio', 
+      type: 'number', 
+      width: 130,
+      valueFormatter: (params) => {
+        const value = params.value;
+        return value !== undefined && value !== null 
+          ? `$${value.toFixed(2)}` 
+          : "N/A";
+      }
+    }
+  ];
 
   return (
-    <section className="stats-tables">
-      <div className="table" id="mas-vendidos">
-        <h3>Juegos Más Vendidos</h3>
-        <div className="table-row header">
-          <span>Juego</span>
-          <span>Tamaño (KB)</span>
-          <span>Precio</span>
-          <span>Licencias Disponibles</span>
-          <span>Licencias Vendidas</span>
-        </div>
-        {sortedGames('licensesSold').map(game => (
-          <div key={game.id} className="table-row" onClick={() => handleGameClick(game.id)}>
-            <span>{game.name}</span>
-            <span>{game.size} KB</span>
-            <span>${game.price.toLocaleString()}</span>
-            <span>{game.licensesAvailable}</span>
-            <span>{game.licensesSold}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="table" id="mas-comprados">
-        <h3>Juegos Más Comprados</h3>
-        <div className="table-row header">
-          <span>Juego</span>
-          <span>Tamaño (KB)</span>
-          <span>Precio</span>
-          <span>Licencias Disponibles</span>
-          <span>Licencias Compradas</span>
-        </div>
-        {sortedGames('licensesBought').map(game => (
-          <div key={game.id} className="table-row" onClick={() => handleGameClick(game.id)}>
-            <span>{game.name}</span>
-            <span>{game.size} KB</span>
-            <span>${game.price.toLocaleString()}</span>
-            <span>{game.licensesAvailable}</span>
-            <span>{game.licensesBought}</span>
-          </div>
-        ))}
+    <section>
+      <div style={{ height: 400, width: '100%' }}>
+        <DataGrid 
+          rows={games} 
+          columns={columns} 
+          pageSize={5} 
+          rowsPerPageOptions={[5]} 
+          onCellClick={(params) => handleGameClick(params.id)} 
+        />
       </div>
     </section>
   );

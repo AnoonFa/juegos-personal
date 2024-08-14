@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import GameTables from '../components/Tablas/Tablas';
-import { games } from '../components/data/gamesData'; // Asegúrate de definir los datos en un archivo de datos
+import StatsTables from '../components/Tablas/Tablas';  // Usa el componente de tablas existente
+import { GamesContext } from '../context/GameContext';
 
 const CategoryPage = () => {
   const { category } = useParams();
+  const { games } = useContext(GamesContext);
 
   // Filtra los juegos según la categoría
-  const filteredGames = games.filter(game => game.category === category);
+  const filteredGames = games.filter(game => game.category.toLowerCase() === category.toLowerCase());
 
   return (
     <div>
       <h1>Juegos de {category.charAt(0).toUpperCase() + category.slice(1)}</h1>
-      <GameTables
-        bestSellers={filteredGames} // Utiliza los juegos filtrados
-        mostPlayed={filteredGames}
-        upcomingTitles={filteredGames}
-      />
+      <StatsTables bestSellers={filteredGames} mostPlayed={filteredGames} upcomingTitles={filteredGames} />
     </div>
   );
 };

@@ -1,0 +1,76 @@
+.fondo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  .fondo {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contenedor-form.login {
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .contenedor-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .contenedor-input {
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .contenedor-input input,
+  .contenedor-input select {
+    width: calc(100% - 30px);
+    padding: 10px;
+    padding-left: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .contenedor-input .icono {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #666;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0b7dda;
+  }
+  
+  .recordar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .recordar label {
+    font-size: 14px;
+    color: #666;
+  }

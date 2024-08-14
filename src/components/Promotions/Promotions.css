@@ -1,26 +1,30 @@
 .promotions {
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .promotions h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .promotion {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-  }
-  
-  .promotion h3 {
-    margin-top: 0;
-  }
-  
-  .promotion p {
-    margin: 0;
-  }
-  
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.promotions h2 {
+  margin-bottom: 20px;
+}
+
+.promotion {
+  padding: 20px;
+}
+
+.promotion img {
+  width: 40%;
+  position: relative;
+  margin-left: 30%;
+  justify-content: center;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.promotion h3 {
+  margin-top: 15px;
+}
+
+.promotion p {
+  font-size: 16px;
+}

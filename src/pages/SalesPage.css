@@ -1,0 +1,62 @@
+.sales-page {
+    margin: 20px;
+  }
+  
+  .sales-form {
+    margin-bottom: 20px;
+  }
+  
+  .sales-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .sales-form input,
+  .sales-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .sales-form button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .sales-form button:hover {
+    background-color: #218838;
+  }
+  
+  .existing-games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .game-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .game-card img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .game-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  

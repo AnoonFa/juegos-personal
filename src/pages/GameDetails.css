@@ -1,44 +1,38 @@
-.game-detail {
-    padding: 20px;
-    background-color: #1c1c1c;
-    color: white;
-  }
-  
-  .game-detail h2 {
-    margin-bottom: 20px;
-  }
-  
-  .game-detail-content {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .game-images img {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    border-radius: 5px;
-  }
-  
-  .game-info {
-    flex: 1;
-  }
-  
-  .game-info p {
-    margin: 5px 0;
-  }
-  
-  .game-info button {
-    background-color: #444;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .game-info button:hover {
-    background-color: #555;
-  }
-  
+.game-details {
+  display: flex;
+  margin: 20px;
+}
+
+.game-details img {
+  width: 300px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.details {
+  flex: 1;
+}
+
+.details h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.details p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.details button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.details button:hover {
+  background-color: #218838;
+}
