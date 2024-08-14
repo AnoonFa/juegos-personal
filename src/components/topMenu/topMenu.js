@@ -44,7 +44,7 @@ const TopMenu = ({ title }) => {
           className="cart-icon"
           onClick={handleCartClick}
         />
-        <span></span>
+        <span className="espacio"> </span>
 
         {/* Muestra el botón de Iniciar sesión o Cerrar sesión */}
         <button className="auth-button" onClick={handleLoginLogout}>

@@ -1,5 +1,9 @@
 import React, { createContext, useState } from 'react';
 
+import juego1 from '../assets/images/calof.png';
+import juego2 from '../assets/images/rompe.png';
+import juego3 from '../assets/images/apex.png';
+import juego4 from '../assets/images/fifa.png';
 export const GamesContext = createContext();
 
 const initialGames = [
@@ -11,17 +15,17 @@ const initialGames = [
     price: 100,
     licensesAvailable: 30,
     licensesSold: 5,
-    image: "rompe.png"
+    image: {juego2}
   },
   {
     id: 2,
-    name: "Action Hero",
+      name: "Action Hero",
     category: "acción",
     size: 15000,
     price: 200,
     licensesAvailable: 15,
     licensesSold: 10,
-    image: "apex.png"
+    image: {juego3}
   },
   {
     id: 3,
@@ -31,7 +35,7 @@ const initialGames = [
     price: 120,
     licensesAvailable: 20,
     licensesSold: 8,
-    image: "fifa.png"
+    image: {juego4}
   },
   {
     id: 4,
@@ -41,7 +45,7 @@ const initialGames = [
     price: 90,
     licensesAvailable: 50,
     licensesSold: 12,
-    image: "calof.png"
+    image: {juego1}
   }
 ];
 

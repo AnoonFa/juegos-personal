@@ -1,21 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GamesContext } from '../context/GameContext';
+import { GamesContext } from '../../context/GameContext';
 import './Purchase.css';
 
-
 const PurchasePage = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // ID del juego desde la URL
   const { games, updateGameLicenses } = useContext(GamesContext);
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [licenseType, setLicenseType] = useState('Standard');
   const [paymentMethod, setPaymentMethod] = useState('CreditCard');
 
+  // Encuentra el juego usando el ID
   const game = games.find(game => game.id === parseInt(id));
 
   if (!game) {
-    return <p>Juego no encontrado</p>;
+    return <p>Juego no encontrado</p>; // Mensaje si el juego no se encuentra
   }
 
   const handleTransaction = () => {
@@ -24,7 +24,7 @@ const PurchasePage = () => {
     } else {
       updateGameLicenses(game.id, quantity, true);
       alert('Compra realizada con éxito!');
-      navigate('/cart');
+      navigate('/Home'); // Redirige al inicio o a la página deseada
     }
   };
 
@@ -98,7 +98,6 @@ const PurchasePage = () => {
         <p>Precio Unitario: ${game.price.toLocaleString()}</p>
         <p>Cantidad: {quantity}</p>
         <p>Total: ${(game.price * quantity).toLocaleString()}</p>
-
       </div>
     </div>
   );
