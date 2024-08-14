@@ -3,7 +3,8 @@ import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { GamesContext } from '../../context/GameContext';
 import { ThemeProvider } from '@mui/material/styles';
-import { sortedSalesTableTheme } from '../../theme'; // Ajusta la ruta
+import { statsTableTheme, sortedSalesTableTheme } from '../../theme'; // Ajusta la ruta
+
 
 const SortedSalesTable = () => {
   const { games } = useContext(GamesContext);
@@ -59,15 +60,25 @@ const SortedSalesTable = () => {
       <div style={{ height: 400, width: '100%' }}>
         <h3>Top Juegos Más Vendidos</h3>
         <DataGrid
-          rows={rows}
+          rows={games}
           columns={columns}
-          pagination
-          pageSize={5}
-          rowsPerPageOptions={[5, 10]}
-        />
+          pageSize={4}
+          rowsPerPageOptions={[4]}
+          componentsProps={{
+          pagination: {
+          style: {
+          backgroundColor: '#1e1e1e',
+          color: 'white',
+      },  
+    },
+  }}
+/>
       </div>
     </ThemeProvider>
   );
 };
+
+
+
 
 export default SortedSalesTable;

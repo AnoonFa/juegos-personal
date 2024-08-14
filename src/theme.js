@@ -1,6 +1,6 @@
-// theme.js
 import { createTheme } from '@mui/material/styles';
 
+// Tema para la tabla de estadísticas
 export const statsTableTheme = createTheme({
   components: {
     MuiDataGrid: {
@@ -9,14 +9,19 @@ export const statsTableTheme = createTheme({
           color: 'white',
         },
         columnHeaders: {
-          backgroundColor: ' #1e1e1e',
-          color: 'white',
-        },  
+          backgroundColor: '#1e1e1e',
+          color: 'black',
+        },
         cell: {
           color: 'white',
         },
         footerContainer: {
-          backgroundColor: ' #1e1e1e',
+          backgroundColor: '#1e1e1e',
+          color: 'white',
+        },
+        // Aquí se aplica el estilo a la barra de paginación
+        toolbarContainer: {
+          backgroundColor: '#1e1e1e',
           color: 'white',
         },
       },
@@ -24,23 +29,28 @@ export const statsTableTheme = createTheme({
   },
 });
 
+// Tema para la tabla de ventas ordenadas
 export const sortedSalesTableTheme = createTheme({
   components: {
     MuiDataGrid: {
       styleOverrides: {
         root: {
-          color: 'lightgray',
+          color: 'black',
         },
         columnHeaders: {
-          backgroundColor: '#444',
-          color: 'lightgray',
+          backgroundColor: '#ffffff',
+          color: 'black',
         },
         cell: {
-          color: 'lightgray',
+          color: 'black',
         },
         footerContainer: {
-          backgroundColor: '#444',
-          color: 'lightgray',
+          backgroundColor: '#ffffff',
+          color: 'black',
+        },
+        toolbarContainer: {
+          backgroundColor: '#ffffff',
+          color: 'black',
         },
       },
     },

@@ -46,3 +46,20 @@
 .tablas {
   color: #ddd; /* Color de texto en el contenedor de tablas */
 }
+
+.MuiTablePagination-toolbar {
+  background-color: #1e1e1e !important; /* Fondo para la barra de paginación */
+  color: white !important; /* Color del texto en la barra de paginación */
+}
+
+.MuiTablePagination-select {
+  color: white !important; /* Color del texto del selector de filas por página */
+}
+
+.MuiTablePagination-selectIcon {
+  color: white !important; /* Color del icono del selector de filas por página */
+}
+
+.MuiTablePagination-actions .MuiIconButton-root {
+  color: white !important; /* Color de los botones de paginación */
+}
