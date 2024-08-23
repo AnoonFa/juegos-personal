@@ -1,24 +1,40 @@
 import React, { useState, useContext } from 'react';
 import { GamesContext } from '../../context/GameContext';
+import { db } from '../../firebaseConfig';
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";  // Importar Firestore
+import { useAuth } from '../../context/AuthContext';  // Para obtener la autenticación del usuario
 import './Sales.css';
 
 const Sales = () => {
-  const { games, updateGameLicenses } = useContext(GamesContext);
+  const { games, setGames, updateGameLicenses } = useContext(GamesContext);
+  const { user } = useAuth();  // Obtenemos el usuario autenticado
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('rompecabezas');
+  const [category, setCategory] = useState('');
   const [size, setSize] = useState(0);
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [image, setImage] = useState('');
 
-  const handleSell = () => {
+  const handleSell = async () => {
+    if (!user) {
+      alert('Debes estar autenticado para vender juegos.');
+      return;
+    }
+
     const existingGame = games.find(game => game.name.toLowerCase() === name.toLowerCase());
     if (existingGame) {
+      // Actualizar licencias en un juego existente
+      const gameRef = doc(db, "games", existingGame.id);
+      await updateDoc(gameRef, {
+        licensesAvailable: existingGame.licensesAvailable + quantity
+      });
+
+      // Actualizar en el estado local
       updateGameLicenses(existingGame.id, quantity, false);
       alert('Licencias añadidas al juego existente!');
     } else {
-      const newGame = {
-        id: games.length + 1,
+      // Crear un nuevo juego en Firestore
+      const newGameRef = await addDoc(collection(db, "games"), {
         name,
         category,
         size,
@@ -26,8 +42,10 @@ const Sales = () => {
         licensesAvailable: quantity,
         licensesSold: 0,
         image
-      };
-      games.push(newGame);  // Simulación de añadir el juego al estado global
+      });
+
+      // Actualizar en el estado local
+      setGames(prevGames => [...prevGames, { id: newGameRef.id, name, category, size, price, licensesAvailable: quantity, licensesSold: 0, image }]);
       alert('Juego nuevo añadido y licencias vendidas!');
     }
     resetForm();
