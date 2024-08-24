@@ -6,6 +6,7 @@ import './Home.css';
 import GameList from '../../components/GameList/GameList';
 import SortedSalesTable from '../../components/Tablas/TablaOrdenada';
 
+
 const Home = () => (
   <div className="home">
     <Carousel />

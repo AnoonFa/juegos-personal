@@ -49,6 +49,8 @@ const initialGames = [
   }
 ];
 
+
+
 export const GamesProvider = ({ children }) => {
     const [games, setGames] = useState(initialGames);
     const [cart, setCart] = useState([]);

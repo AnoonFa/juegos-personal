@@ -18,14 +18,16 @@ import PurchasePage from './pages/Purchase/PurchasePage';
 import Login from './components/login';
 import RegisterForm from './components/register';
 import store from './redux/store';
-
+import { GamesProvider } from './context/GameContext';
+import './App.css';
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store}><Router>
       <AuthProvider>
+        <GamesProvider>
         <CartProvider>
-          <Router>
+          
             <TopMenu title="App Store" />
             <LeftMenus/>
             <main>
@@ -43,9 +45,10 @@ function App() {
                 <Route path="/register" element={<RegisterForm />} />
               </Routes>
             </main>
-          </Router>
+          
         </CartProvider>
-      </AuthProvider>
+        </GamesProvider>
+      </AuthProvider></Router>
     </Provider>
   );
 }

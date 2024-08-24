@@ -10,7 +10,6 @@ service cloud.firestore {
 
     // Reglas específicas para usuarios
     match /users/{userId} {
-      // Permitir que un usuario vea y modifique solo su propia información
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 

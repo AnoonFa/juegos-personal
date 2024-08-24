@@ -29,7 +29,7 @@ const LeftMenus = () => {
         <button className="closeButton" type="button">X</button>
 
         <div className="icons">
-          {isAuthenticated && user.role === 'admin' && (
+          {isAuthenticated && user.role === 'administrador' && (
             <div onClick={() => navigate("/Users")}>
               <img src={usersIcon} alt="users" />
               <label>Usuarios</label>

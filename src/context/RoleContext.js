@@ -15,7 +15,7 @@ export const RoleProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       // Aquí puedes agregar la lógica para asignar roles basados en la información del usuario
-      setRole(user.email === 'admin@example.com' ? 'admin' : 'client');  // Ejemplo básico
+      setRole(user.email === 'admin@example.com' ? 'administrador' : 'client');  // Ejemplo básico
     } else {
       setRole('nolog');
     }

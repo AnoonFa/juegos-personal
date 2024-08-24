@@ -1,43 +1,78 @@
 import React, { useState } from 'react';
 import './register.css';
-import { FaUser, FaPhone, FaEnvelope, FaLock, FaBriefcase,} from "react-icons/fa";
+import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
+import { auth ,createUserWithEmailAndPassword } from '../firebaseConfig';
+import { setDoc, doc, getDocs, collection, query, where } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 const RegisterForm = () => {
-  const [role, setRole] = useState('cliente');
+  //variables que pregunta en el formulario
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
     correo: '',
+    username: '',
     contrasena: '',
-    foto: null,
-    huella: null,
   });
 
+  //funcion que se ejecuta al presionar el boton registrar
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  //
+  //funcion que se ejecuta al presionar el boton iniciar sesion
+  
+  const checkIfUserExists = async (email, username) => {
+    // Consultamos a Firestore para verificar si el correo o el nombre de usuario ya están en uso.
+    const usersRef = collection(db, 'users');
+    const emailQuery = query(usersRef, where('email', '==', email));
+    const usernameQuery = query(usersRef, where('username', '==', username));
+
+    const emailSnapshot = await getDocs(emailQuery);
+    const usernameSnapshot = await getDocs(usernameQuery);
+
+    // Si el correo o el nombre de usuario ya están en uso, lanzamos una excepción.
+    if (!emailSnapshot.empty || !usernameSnapshot.empty) {
+      throw new Error('El correo o el nombre de usuario ya están en uso.');
     }
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Usuario registrado:
-            \nNombre: ${formData.nombre}
-            \nTeléfono: ${formData.telefono}
-            \nCorreo: ${formData.correo}
-            \nContraseña: ${formData.contrasena}
-            \nRol: ${role}`);
-    console.log(formData);
+
+    try {
+      await checkIfUserExists(formData.correo, formData.username);
+
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.correo, formData.contrasena);
+      const user = userCredential.user;
+
+      const userData = {
+        nombre: formData.nombre,
+        telefono: formData.telefono,
+        correo: formData.correo,
+        username: formData.username,
+        role: 'administrador',
+        membership: true,
+      };
+
+      await setDoc(doc(db, 'users', user.uid), userData);
+
+      alert('Registro exitoso. Puedes iniciar sesión ahora.');
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      alert('Error en el registro: ' + error.message);
+    }
   };
+
+  const handleRegisterClick = () => {
+  
+  }
 
   return (
     <div className="fondo-wrapper">
@@ -45,15 +80,6 @@ const RegisterForm = () => {
         <div className="contenedor-form">
           <h2>Registro</h2>
           <form onSubmit={handleSubmit}>
-            <div className="contenedor-input">
-              <select name="role" value={role} onChange={(e) => setRole(e.target.value)} required>
-                <option value="" disabled>Selecciona tu rol</option>
-                <option value="cliente">Cliente</option>
-                <option value="empleado">Empresa</option>
-                <option value="administrador">Administrador</option>
-              </select>
-              <FaBriefcase className='icono' />
-            </div>
             <div className="contenedor-input">
               <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
               <FaUser className='icono' />
@@ -67,11 +93,12 @@ const RegisterForm = () => {
               <FaEnvelope className='icono' />
             </div>
             <div className="contenedor-input">
+              <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" required />
+              <FaUser className='icono' />
+            </div>
+            <div className="contenedor-input">
               <input type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} placeholder="Contraseña" required />
               <FaLock className='icono' />
-            </div>
-            <div className="upload-section">
-
             </div>
             <button type="submit" className="btn">Registrar</button>
           </form>

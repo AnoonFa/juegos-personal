@@ -1,37 +1,61 @@
-// Importamos React y el hook personalizado useAuth
 import React, { useState } from 'react';
 import './login.css';
-import { useAuth } from '../context/AuthContext';
-import { FaUser, FaLock, FaBriefcase } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';  // Importamos el contexto de autenticación
+import { FaUser, FaLock } from 'react-icons/fa';  // Iconos
 import { useNavigate } from 'react-router-dom';
+import { getDoc, doc } from 'firebase/firestore';  // Para obtener el rol desde Firestore
+import { auth ,db } from '../firebaseConfig';  // Configuración de Firebase
+import { signInWithEmailAndPassword } from 'firebase/auth';  // Importa la función específica de autenticación
+import {  collection, query, where, getDocs } from 'firebase/firestore';
 
-// Definimos el componente Login como una función flecha
+
 const Login = () => {
-    // Obtenemos setUser del contexto para actualizar el estado del usuario
-    const { setUser } = useAuth();
-    // Estado local para manejar el rol del usuario, nombre y contraseña
-    const [role, setRole] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const { setUser } = useAuth();  // Obtenemos el método para actualizar el estado del usuario
+    const [identifier, setIdentifier] = useState('');  // Estado para almacenar el email
+    const [password, setPassword] = useState('');  // Estado para almacenar la contraseña
     const navigate = useNavigate();
-  
+
     // Función para manejar el inicio de sesión
-    const handleLogin = () => {
-      // Dependiendo del rol lo dirige a su pagina
-      if (role && username && password) {
-        // Actualiza el estado del usuario con el rol y el nombre de usuario
-        setUser({ role, username });
-        // Lógica de autenticación
-        if (role === 'client') {
-          navigate('/Home');
-        } else if (role === 'admin' || role === 'employee') {
-          navigate('/Home');
+    const handleLogin = async () => {
+      try {
+        // Autenticación de Firebase (aquí debería estar tu lógica para autenticar con Firebase)
+        let userCredential;
+        const usersRef = collection(db, 'users');
+        const userQuery = query(usersRef, where('email', '==', identifier));
+
+
+        let userSnapshot = await getDocs(userQuery);
+        if (userSnapshot.empty) {
+          const usernameQuery = query(usersRef, where('username', '==', identifier));
+          userSnapshot = await getDocs(usernameQuery);
         }
-      } else {
-        alert('Por favor, completa todos los campos y selecciona un rol válido');
+
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+          userCredential = await signInWithEmailAndPassword(auth, userData.correo, password);
+        } else {
+          throw new Error('Usuario no encontrado');
+        }
+        
+        // Obtener información adicional del usuario desde Firestore
+        const user = userCredential.user;
+        const userDoc = await getDoc(userSnapshot.docs[0].ref);
+  
+        if (userDoc.exists()) {
+          setUser({ ...userDoc.data(), email: user.email });
+          if (userDoc.data().role === 'administrador') {
+            navigate('/admin');
+          } else {
+            navigate('/home');
+          }
+        } else {
+          alert('No se encontraron datos para este usuario.');
+        }
+      } catch (error) {
+        console.error('Error en el inicio de sesión:', error);
+        alert('Error en el inicio de sesión: ' + error.message);
       }
     };
-  
     return (
       <div className="fondo-wrapper">
         <div className="fondo">
@@ -39,37 +63,24 @@ const Login = () => {
             <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
               <h2>Iniciar sesión</h2>
               <div className="contenedor-input">
-                <input 
-                  type="text" 
-                  placeholder='Username' 
-                  value={username} 
-                  onChange={(e) => setUsername(e.target.value)} 
-                  required 
-                />
+              <input 
+                type="text" 
+                placeholder='Correo o Username' 
+                value={identifier} 
+                onChange={(e) => setIdentifier(e.target.value)} 
+                required 
+              />
                 <FaUser className='icono' />
               </div>
               <div className="contenedor-input">
                 <input 
                   type="password" 
-                  placeholder='Password' 
+                  placeholder='Contraseña' 
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)} 
                   required 
                 />
                 <FaLock className='icono' />
-              </div>
-              <div className="contenedor-input">
-                <select 
-                  value={role} 
-                  onChange={(e) => setRole(e.target.value)} 
-                  required
-                >
-                  <option value="" disabled>Selecciona tu rol</option>
-                  <option value="admin">Administrador</option>
-                  <option value="employee">Empresa</option>
-                  <option value="client">Cliente</option>
-                </select>
-                <FaBriefcase className='icono' />
               </div>
               <div className="recordar">
                 <label><input type="checkbox" /> Recordar sesión</label>
@@ -83,6 +94,6 @@ const Login = () => {
         </div>
       </div>
     );
-  };
-  
-  export default Login;
+};
+
+export default Login;

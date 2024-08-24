@@ -10,7 +10,7 @@ const cartIcon = require('../../assets/icons/carrito-de-compras.png');
 // Componente del menú superior
 const TopMenu = ({title}) => {
   // Desestructuramos 'user' desde el contexto de autenticación
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const  navigate  = useNavigate(); // Obtenemos la función de navegación
 
   const handleCartClick = () => {
@@ -22,7 +22,7 @@ const TopMenu = ({title}) => {
     if (user && user.role !== 'nolog') {
       // Cerrar sesión
       setUser({ role: 'nolog' });
-      navigate('/Home');
+      navigate('/login');
     } else {
       // Redirigir a la página de inicio de sesión
       navigate('/login');

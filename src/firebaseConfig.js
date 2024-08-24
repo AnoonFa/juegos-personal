@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword  } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 
@@ -17,6 +17,7 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);  // Asegúrate de exportar auth después de inicializarlo
+export const auth = getAuth(app);  
 export const db = getFirestore(app);
+export { createUserWithEmailAndPassword }; 
 
