@@ -1,26 +1,25 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+// Importamos React y el hook useAuth para obtener la información de autenticación
+import React from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './topMenu.css';
-import { useAuth } from '../../context/RoleContext';
 
 // Ruta a los íconos
 const cartIcon = require('../../assets/icons/carrito-de-compras.png');
 
-const TopMenu = ({ title }) => {
-  const navigate = useNavigate();
-  const { user, setUser } = useAuth(); // Obtenemos el usuario del contexto
+// Componente del menú superior
+const TopMenu = ({title}) => {
+  // Desestructuramos 'user' desde el contexto de autenticación
+  const { user } = useAuth();
+  const  navigate  = useNavigate(); // Obtenemos la función de navegación
 
   const handleCartClick = () => {
-    if (user.role !== 'nolog') {
       navigate('/CartPage'); // Navega a la página del carrito
-    } else {
-      alert('Por favor, inicia sesión para acceder al carrito.');
-      navigate('/Home');
-    }
   };
 
   const handleLoginLogout = () => {
-    if (user.role !== 'nolog') {
+    // Verifica si el usuario está autenticado y tiene un rol distinto a 'nolog'
+    if (user && user.role !== 'nolog') {
       // Cerrar sesión
       setUser({ role: 'nolog' });
       navigate('/Home');
@@ -48,8 +47,7 @@ const TopMenu = ({ title }) => {
 
         {/* Muestra el botón de Iniciar sesión o Cerrar sesión */}
         <button className="auth-button" onClick={handleLoginLogout}>
-          {user.role !== 'nolog' ? 'Cerrar sesión' : 'Iniciar sesión'}
-        </button>
+          {user && user.role !== 'nolog' ? 'Cerrar sesión' : 'Iniciar sesión'}        </button>
       </div>
     </div>
   );

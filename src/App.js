@@ -1,23 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import LeftMenu from './components/LetfMenu/LeftMenu';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
-import Home from './pages/Home/HomePage';
-import PurchasePage from './pages/Purchase/PurchasePage';
-import Login from './components/login';
+import CartProvider from './context/CartContext';
+import TopMenu from './components/topMenu/topMenu';
+import LeftMenus from './components/LetfMenu/LeftMenu';
 import Categories from './components/CategoriaJuego/CategoriaJuego';
-import CartPage from './pages/CarritoPage/CarritoPage';
-import GameDetails from './pages/GameDetails/GameDetail';
-import SalesPage from './pages/SalePage/SalesPage';
-import PromotionsPage from './pages/Promotions/PromotionsPage';
+import CategoryGames from './components/CategoriaJuego/CategoryGames';
 import ProtectedRoute from './components/ProtectedRoutute';
 import MasVPage from './pages/VentasPage/MasVPage';
-import CategoryGames from './components/CategoriaJuego/CategoryGames';
+import PromotionsPage from './pages/Promotions/PromotionsPage';
+import SalesPage from './pages/SalePage/SalesPage';
+import Home from './pages/Home/HomePage';
+import GameDetails from './pages/GameDetails/GameDetail';
+import CartPage from './pages/CarritoPage/CarritoPage';
+import PurchasePage from './pages/Purchase/PurchasePage';
+import Login from './components/login';
 import RegisterForm from './components/register';
-import TopMenu from './components/topMenu/topMenu';
+import store from './redux/store';
 
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <CartProvider>
           <Router>
             <TopMenu title="App Store" />
-            
+            <LeftMenus/>
             <main>
               <Routes>
                 <Route path="/" element={<Categories />} />
@@ -49,5 +49,6 @@ function App() {
     </Provider>
   );
 }
+
 
 export default App;

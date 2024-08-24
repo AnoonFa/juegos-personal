@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+const CartProvider = ({ children }) => {
   const { currentUser } = useAuth();
   const [cart, setCart] = useState([]);
 
@@ -53,4 +53,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+export default CartProvider;
 export const useCart = () => useContext(CartContext);

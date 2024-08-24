@@ -1,7 +1,7 @@
 // Importamos React y el hook personalizado useAuth
 import React, { useState } from 'react';
 import './login.css';
-import { useAuth } from '../context/RoleContext';
+import { useAuth } from '../context/AuthContext';
 import { FaUser, FaLock, FaBriefcase } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 

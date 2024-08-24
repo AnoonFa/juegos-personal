@@ -10,11 +10,14 @@ import promocionesIcon from '../../assets/icons/promocion.png';
 import compraIcon from '../../assets/icons/compra.png';
 import vendeIcon from '../../assets/icons/ventas.png';
 import flechaIcon from '../../assets/icons/mejor-vendido.png';
-import { useAuth } from '../../context/RoleContext';
+import { useAuth } from '../../context/AuthContext';
 
-export const LeftMenu = () => {
+const LeftMenus = () => {
   const { user } = useAuth();  // Usamos el contexto de autenticación
   const navigate = useNavigate();
+
+   // Verificar si el usuario está autenticado
+   const isAuthenticated = user && user.role;
 
   return (
     <div className="leftMenu">
@@ -26,7 +29,7 @@ export const LeftMenu = () => {
         <button className="closeButton" type="button">X</button>
 
         <div className="icons">
-          {user.role === 'admin' && (
+          {isAuthenticated && user.role === 'admin' && (
             <div onClick={() => navigate("/Users")}>
               <img src={usersIcon} alt="users" />
               <label>Usuarios</label>
@@ -44,12 +47,10 @@ export const LeftMenu = () => {
             <img src={compraIcon} alt="compra" />
             <label>Compra</label>
           </div>
-          {user.role === 'employee' && (
             <div onClick={() => navigate("/SalesPage")}>
               <img src={vendeIcon} alt="ventas" />
               <label>Vende</label>
             </div>
-          )}
           <div onClick={() => navigate("/MasVPage/")}>
             <img src={flechaIcon} alt="mas-vendidos" />
             <label>El mas vendido</label>
@@ -59,3 +60,5 @@ export const LeftMenu = () => {
     </div>
   );
 };
+
+export default LeftMenus;

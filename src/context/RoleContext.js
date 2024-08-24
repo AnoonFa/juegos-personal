@@ -1,38 +1,33 @@
+// Importamos las bibliotecas necesarias de React y el contexto de autenticación
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { auth } from '../firebaseConfig';  // Firebase Auth import
-import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from './AuthContext';  // Usamos el contexto de autenticación
 
-const AuthContext = createContext();
+// Creamos el contexto de roles
+const RoleContext = createContext();
 
+// Este componente provee el contexto de roles a toda la aplicación
 export const RoleProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : { role: 'nolog' };
-  });
+  // Usamos el estado 'role' para almacenar el rol del usuario
+  const [role, setRole] = useState('nolog');  // 'nolog' indica que no hay sesión iniciada
+  const { user } = useAuth();  // Obtenemos el usuario autenticado
 
+  // Usamos useEffect para actualizar el rol cada vez que el usuario cambia
   useEffect(() => {
-    // Firebase authentication listener
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        // Aquí podrías obtener más detalles del usuario de Firebase, como su rol
-        setUser({ uid: currentUser.uid, email: currentUser.email, role: 'cliente' }); // Supongamos que es cliente
-      } else {
-        setUser({ role: 'nolog' });
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    // Guardar el rol del usuario en el almacenamiento local
-    localStorage.setItem('user', JSON.stringify(user));
+    if (user) {
+      // Aquí puedes agregar la lógica para asignar roles basados en la información del usuario
+      setRole(user.email === 'admin@example.com' ? 'admin' : 'client');  // Ejemplo básico
+    } else {
+      setRole('nolog');
+    }
   }, [user]);
 
+  // Proveemos el estado 'role' y su función de actualización a través del contexto
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <RoleContext.Provider value={{ role, setRole }}>
       {children}
-    </AuthContext.Provider>
+    </RoleContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+// Hook personalizado para usar el contexto de roles
+export const useRole = () => useContext(RoleContext);
