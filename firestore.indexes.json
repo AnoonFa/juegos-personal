@@ -1,12 +1,4 @@
 {
-  "indexes": [
-    {
-      "collectionGroup": "games",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "category", "order": "ASCENDING" },
-        { "fieldPath": "price", "order": "DESCENDING" }
-      ]
-    }
-  ]
+  "indexes": [],
+  "fieldOverrides": []
 }

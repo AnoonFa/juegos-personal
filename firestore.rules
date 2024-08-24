@@ -2,42 +2,8 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Reglas generales para usuarios autenticados
     match /{document=**} {
-      allow read, write: if request.auth != null;
-    }
-
-    // Reglas específicas para usuarios
-    match /users/{userId} {
-      // Permitir que un usuario vea y modifique solo su propia información
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // Reglas para compras
-    match /purchases/{purchaseId} {
-      // Permitir que un usuario vea y modifique solo sus propias compras
-      allow read, write: if request.auth != null && request.auth.uid == resource.data.buyerId;
-    }
-
-    // Reglas para juegos
-    match /games/{gameId} {
-      // Permitir que todos los usuarios autenticados vean los juegos
-      allow read: if request.auth != null;
-      // Solo los administradores pueden modificar juegos
-      allow write: if request.auth != null && request.auth.token.role == 'administrador';
-    }
-
-    // Reglas para ventas
-    match /sales/{saleId} {
-      // Solo los administradores pueden ver y modificar las ventas
-      allow read, write: if request.auth != null && request.auth.token.role == 'administrador';
-    }
-
-    // Regla general para administradores
-    match /{document=**} {
-      // Permitir que los administradores lean y escriban en cualquier documento
-      allow read, write: if request.auth != null && request.auth.token.role == 'administrador';
+      allow read, write: if false;
     }
   }
 }
