@@ -57,8 +57,9 @@ const RegisterForm = () => {
         telefono: formData.telefono,
         correo: formData.correo,
         username: formData.username,
-        role: 'administrador',
-        membership: true,
+        role: 'cliente',
+        membership: false,
+        gamesOwned: {}
       };
 
       await setDoc(doc(db, 'users', user.uid), userData);
@@ -70,9 +71,7 @@ const RegisterForm = () => {
     }
   };
 
-  const handleRegisterClick = () => {
   
-  }
 
   return (
     <div className="fondo-wrapper">

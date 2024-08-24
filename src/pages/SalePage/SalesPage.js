@@ -12,7 +12,7 @@ const SalesPage = () => (
     <Promotions />
     <StatsTables />
     <GameList />
-   {UserActivation.role ==='empresa'&&( <Sales/>)}
+   {UserActivation.role ==='administrador'&&( <Sales/>)}
   </div>
 );
 
