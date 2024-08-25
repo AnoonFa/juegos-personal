@@ -1,84 +1,46 @@
-// SortedSalesTable.js
 import React, { useContext } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import { GamesContext } from '../../context/GameContext';
-import { ThemeProvider } from '@mui/material/styles';
-import { statsTableTheme, sortedSalesTableTheme } from '../../theme'; // Ajusta la ruta
-
+import './Tablas.css';
 
 const SortedSalesTable = () => {
   const { games } = useContext(GamesContext);
-
   const sortedGames = [...games].sort((a, b) => b.licensesSold - a.licensesSold);
 
-  const columns = [
-    { field: 'name', headerName: 'Nombre', width: 200 },
-    { field: 'category', headerName: 'Categoría', width: 130 },
-    { field: 'size', headerName: 'Tamaño (KB)', type: 'number', width: 150 },
-    { 
-      field: 'price',
-      headerName: 'Precio',
-      type: 'number',
-      width: 130,
-      valueFormatter: ({ value }) => {
-        if (value !== undefined && value !== null && !isNaN(value)) {
-          return `$${value.toFixed(2)}`;
-        } else {
-          return "$0.00";
-        }
-      },
-    },
-    { field: 'licensesAvailable', headerName: 'Licencias Disponibles', type: 'number', width: 180 },
-    { field: 'licensesSold', headerName: 'Licencias Vendidas', type: 'number', width: 180 },
-    { 
-      field: 'image', 
-      headerName: 'Imagen', 
-      width: 150, 
-      renderCell: (params) => (
-        <img 
-          src={`path/to/images/${params.value}`} 
-          alt="Game Thumbnail" 
-          style={{ width: '100%', height: 'auto' }} 
-        />
-      )
-    }
-  ];
-
-  const rows = sortedGames.map((game, index) => ({
-    id: index + 1,
-    name: game.name,
-    category: game.category,
-    size: game.size,
-    price: game.price,
-    licensesAvailable: game.licensesAvailable,
-    licensesSold: game.licensesSold,
-    image: game.image,
-  }));
-
   return (
-    <ThemeProvider theme={sortedSalesTableTheme}>
-      <div style={{ height: 400, width: '100%' }}>
-        <h3>Top Juegos Más Vendidos</h3>
-        <DataGrid
-          rows={games}
-          columns={columns}
-          pageSize={4}
-          rowsPerPageOptions={[4]}
-          componentsProps={{
-          pagination: {
-          style: {
-          backgroundColor: '#1e1e1e',
-          color: 'white',
-      },  
-    },
-  }}
-/>
-      </div>
-    </ThemeProvider>
+    <div className="table-container">
+      <h3>Top Juegos Más Vendidos</h3>
+      <table className="custom-table">
+        <thead>
+          <tr>
+            <th>Juego</th>
+            <th>Categoría</th>
+            <th>Tamaño (KB)</th>
+            <th>Precio</th>
+            <th>Licencias Vendidas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedGames.length === 0 ? (
+            <tr>
+              <td colSpan="5" className="empty-table">
+                No hay ventas registradas.
+              </td>
+            </tr>
+          ) : (
+            sortedGames.map((game) => (
+              <tr key={game.id}>
+                <td>{game.name}</td>
+                <td>{game.category}</td>
+                <td>{game.size}</td>
+                <td>${game.price ? game.price.toFixed(2) : 'N/A'}</td>
+                <td>{game.licensesSold}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
-
-
-
 
 export default SortedSalesTable;

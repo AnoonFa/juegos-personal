@@ -20,6 +20,9 @@ import RegisterForm from './components/register';
 import store from './redux/store';
 import { GamesProvider } from './context/GameContext';
 import './App.css';
+import BecomeSellerPage from './pages/BecomeSellerPage/BecomeSellerPage';
+import Checkout from './components/checkout/Checkout';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 function App() {
   return (
@@ -32,8 +35,11 @@ function App() {
             <LeftMenus/>
             <main>
               <Routes>
-                <Route path="/" element={<Categories />} />
-                <Route path="/categories/:category" element={<CategoryGames />} />
+                <Route path="/ProfilePage/*" element={<ProtectedRoute element={<ProfilePage />} />} />
+                <Route path="/BecomeSellerPage/*" element={<ProtectedRoute element={<BecomeSellerPage />} />} />
+                <Route path="/Checkout" element={<ProtectedRoute element={<Checkout />} />} />
+                <Route path="/" element={<ProtectedRoute element={<Categories />} />} />
+                <Route path="/categories/:category" element={<ProtectedRoute element={<CategoryGames />} />} />
                 <Route path="/MasVPage/*" element={<ProtectedRoute element={<MasVPage />} />} />
                 <Route path="/PromotionsPage/*" element={<ProtectedRoute element={<PromotionsPage />} />} />
                 <Route path="/SalesPage/*" element={<ProtectedRoute element={<SalesPage />} />} />

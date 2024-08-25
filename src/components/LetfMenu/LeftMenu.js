@@ -17,13 +17,14 @@ const LeftMenus = () => {
   const navigate = useNavigate();
 
    // Verificar si el usuario está autenticado
-   const isAuthenticated = user && user.role;
+  const isAuthenticated = user && user.role;
+  const hasMembership = user && user.membership; // Nuevo: Verificar si el usuario tiene membresía
 
   return (
     <div className="leftMenu">
       <div className="container">
         <div className="logo">
-          <h1>AppStore</h1>
+          <h1>El Rincon de Juegos</h1>
         </div>
 
         <button className="closeButton" type="button">X</button>
@@ -47,10 +48,19 @@ const LeftMenus = () => {
             <img src={compraIcon} alt="compra" />
             <label>Compra</label>
           </div>
+
+          {hasMembership ? (
             <div onClick={() => navigate("/SalesPage")}>
               <img src={vendeIcon} alt="ventas" />
               <label>Vende</label>
             </div>
+          ) : (
+            <div onClick={() => navigate("/BecomeSellerPage")}>
+              <img src={vendeIcon} alt="conviertete-en-vendedor" />
+              <label>Conviértete en Vendedor</label>
+            </div>
+          )}
+
           <div onClick={() => navigate("/MasVPage/")}>
             <img src={flechaIcon} alt="mas-vendidos" />
             <label>El mas vendido</label>

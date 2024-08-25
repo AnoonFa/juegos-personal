@@ -11,7 +11,7 @@ const GameList = () => {
     <div className="game-list">
       {games.map(game => (
         <div key={game.id} className="game-card" onClick={() => navigate(`/game/${game.id}`)}>
-          <img src={game.image} alt={game.name} />
+          <img src={game.imageUrl} alt={game.name} />
           <h3>{game.name}</h3>
           <p>Precio: ${game.price}</p>
           <p>Categoría: {game.category}</p>

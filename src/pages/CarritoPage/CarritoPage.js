@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './CarritoPage.css';
 
 const CartPage = () => {
   const { cart, updateGameLicenses } = useContext(GamesContext);
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const calculateDiscount = () => {
@@ -44,9 +46,10 @@ const CartPage = () => {
   };
 
   const handleProceedToPayment = () => {
-    if (cart.length > 0) {
-      const gameId = cart[0].id; // Obtén el ID del primer juego en el carrito
-      navigate(`/PurchasePage/${gameId}`);
+    if (!user) {
+      navigate('/login'); // Redirige al login si no está autenticado
+    } else if (cart.length > 0) {
+      navigate('/Checkout', { state: { purchaseType: 'game', cartItems: cart } });
     } else {
       alert("El carrito está vacío.");
     }

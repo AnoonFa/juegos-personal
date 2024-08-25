@@ -1,17 +1,21 @@
 // Importamos React y el hook useAuth para obtener la información de autenticación
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './topMenu.css';
 
 // Ruta a los íconos
 const cartIcon = require('../../assets/icons/carrito-de-compras.png');
+const profileIcon = require('../../assets/icons/avatar-de-usuario.png'); // Asegúrate de tener un ícono de perfil
+
 
 // Componente del menú superior
-const TopMenu = ({title}) => {
+const TopMenu = () => {
   // Desestructuramos 'user' desde el contexto de autenticación
   const { user, setUser } = useAuth();
   const  navigate  = useNavigate(); // Obtenemos la función de navegación
+  const location = useLocation();
+
 
   const handleCartClick = () => {
       navigate('/CartPage'); // Navega a la página del carrito
@@ -29,6 +33,16 @@ const TopMenu = ({title}) => {
     }
   };
 
+
+  const handleProfileClick = () => {
+    navigate('/ProfilePage');
+  };
+
+  // Mostrar el nombre de la página o el nombre de usuario si está en la página de inicio
+  const title = location.pathname === '/Home' && user && user.username 
+    ? `Bienvenido de vuelta, ${user.username}` 
+    : location.pathname.substring(1) || 'Home';
+
   return (
     <div className="topMenu-container ">
       <span></span>
@@ -45,9 +59,23 @@ const TopMenu = ({title}) => {
         />
         <span className="espacio"> </span>
 
-        {/* Muestra el botón de Iniciar sesión o Cerrar sesión */}
+
+        {/* Mostrar perfil solo si el usuario está autenticado */}
+        {user && user.role !== 'nolog' && (
+          <>
+            <img
+              src={profileIcon}
+              alt="Profile"
+              className="profile-icon"
+              onClick={handleProfileClick}
+            />
+            <span className="espacio"> </span>
+          </>
+        )}
+
         <button className="auth-button" onClick={handleLoginLogout}>
-          {user && user.role !== 'nolog' ? 'Cerrar sesión' : 'Iniciar sesión'}        </button>
+          {user && user.role !== 'nolog' ? 'Cerrar sesión' : 'Iniciar sesión'}
+        </button>
       </div>
     </div>
   );

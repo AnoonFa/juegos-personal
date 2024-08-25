@@ -1,6 +1,7 @@
-import React, { useContext , useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GamesContext } from '../../context/GameContext';
+import GameReviews from '../../components/GameReviews/GameReviews'; // Importa el componente de reseñas
 import './GameDetails.css';
 
 const GameDetails = () => {
@@ -10,7 +11,7 @@ const GameDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [showAlert, setShowAlert] = useState(false);
 
-  const game = games.find(game => game.id === parseInt(id));
+  const game = games.find(game => game.id === id);
 
   const handleAddToCart = () => {
     addToCart(game.id, quantity);
@@ -19,6 +20,7 @@ const GameDetails = () => {
 
   const handleCloseAlert = () => {
     setShowAlert(false);
+    navigate(-1);
   };
 
   return (
@@ -44,6 +46,7 @@ const GameDetails = () => {
           </div>
         )}
       </div>
+      <GameReviews gameId={game.id} /> {/* Incluye el componente de reseñas */}
     </div>
   );
 };

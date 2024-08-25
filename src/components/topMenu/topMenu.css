@@ -13,7 +13,11 @@
 }
 
 .topMenu-container .cart-icon {
-  width: 30px; /* Ajusta el tamaño del ícono del carrito */
+  width: 40px; /* Ajusta el tamaño del ícono del carrito */
+  cursor: pointer;
+}
+.topMenu-container .profile-icon {
+  width: 50px; /* Ajusta el tamaño del ícono del carrito */
   cursor: pointer;
 }
 
@@ -45,15 +49,6 @@
   margin-left: 15px;
 }
 
-.topMenu-container .profileInfo {
-  font-size: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: relative;
-  left: 70%;
-}
-
 
 .auth-button {
   padding: 8px 15px;
@@ -80,24 +75,7 @@
   align-items: flex-end;
 }
 
-.profileInfo__name {
-  font-size: 16px;
-  font-weight: bold;
-}
 
-.profileInfo__level {
-  font-size: 14px;
-  color: #666;
-}
-.topMenu-container .profileInfo__name {
-  font-weight: 600;
-  color: #fff; /* Color del nombre en modo oscuro */
-}
-
-.topMenu-container .profileInfo__level {
-  font-weight: 500;
-  color: rgb(188, 186, 186); /* Color del nivel en modo oscuro */
-}
 
 /* Responsivo para móviles */
 @media only screen and (max-width: 320px) {
@@ -137,14 +115,6 @@
     width: 16px;
   }
 
-  .topMenu-container .profile-pic {
-    right: 90px;
-  }
-
-  .topMenu-container .profileInfo {
-    right: 10px;
-    top: 25px;
-  }
 }
 
 /* Responsivo para tabletas */

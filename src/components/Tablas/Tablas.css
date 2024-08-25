@@ -1,65 +1,43 @@
 .table-container {
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 20px;
   background-color: #282828;
   color: white;
   border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .table-container h3 {
-  font-size: 18px;
   margin-bottom: 15px;
+  font-size: 1.5rem;
   color: #fff;
 }
 
-.table {
+.custom-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.table thead {
-  background-color: #444; /* Fondo oscuro para el encabezado */
-}
-
-.table th, .table td {
+.custom-table th,
+.custom-table td {
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
   text-align: left;
-  color: white; /* Color de texto blanco */
+  color: white;
 }
 
-.table th {
-  background-color: #333; /* Fondo oscuro para el encabezado de columna */
+.custom-table th {
+  background-color: #333;
   font-weight: bold;
 }
 
-.table-row {
-  background-color: #ff0000; /* Color de fondo de las filas */
-  transition: background-color 0.3s ease;
+.custom-table tr:hover {
+  background-color: #444;
 }
 
-.table-row:hover {
-  background-color: #333; /* Color de fondo al pasar el ratón */
-}
-
-.tablas {
-  color: #ddd; /* Color de texto en el contenedor de tablas */
-}
-
-.MuiTablePagination-toolbar {
-  background-color: #1e1e1e !important; /* Fondo para la barra de paginación */
-  color: white !important; /* Color del texto en la barra de paginación */
-}
-
-.MuiTablePagination-select {
-  color: white !important; /* Color del texto del selector de filas por página */
-}
-
-.MuiTablePagination-selectIcon {
-  color: white !important; /* Color del icono del selector de filas por página */
-}
-
-.MuiTablePagination-actions .MuiIconButton-root {
-  color: white !important; /* Color de los botones de paginación */
+.empty-table {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px;
 }

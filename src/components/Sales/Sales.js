@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import { db } from '../../firebaseConfig';
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";  // Importar Firestore
-import { useAuth } from '../../context/AuthContext';  // Para obtener la autenticación del usuario
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { useAuth } from '../../context/AuthContext';
 import './Sales.css';
 
 const Sales = () => {
   const { games, setGames, updateGameLicenses } = useContext(GamesContext);
-  const { user } = useAuth();  // Obtenemos el usuario autenticado
+  const { user } = useAuth();
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('rompecabezas');
   const [size, setSize] = useState(0);
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -23,17 +23,14 @@ const Sales = () => {
 
     const existingGame = games.find(game => game.name.toLowerCase() === name.toLowerCase());
     if (existingGame) {
-      // Actualizar licencias en un juego existente
       const gameRef = doc(db, "games", existingGame.id);
       await updateDoc(gameRef, {
         licensesAvailable: existingGame.licensesAvailable + quantity
       });
 
-      // Actualizar en el estado local
       updateGameLicenses(existingGame.id, quantity, false);
       alert('Licencias añadidas al juego existente!');
     } else {
-      // Crear un nuevo juego en Firestore
       const newGameRef = await addDoc(collection(db, "games"), {
         name,
         category,
@@ -41,11 +38,11 @@ const Sales = () => {
         price,
         licensesAvailable: quantity,
         licensesSold: 0,
-        image
+        imageUrl: image,
+        sellerId: user.uid 
       });
 
-      // Actualizar en el estado local
-      setGames(prevGames => [...prevGames, { id: newGameRef.id, name, category, size, price, licensesAvailable: quantity, licensesSold: 0, image }]);
+      setGames(prevGames => [...prevGames, { id: newGameRef.id, name, category, size, price, licensesAvailable: quantity, licensesSold: 0, imageUrl: image }]);
       alert('Juego nuevo añadido y licencias vendidas!');
     }
     resetForm();
@@ -98,7 +95,7 @@ const Sales = () => {
         <h2>Juegos Existentes</h2>
         {games.map(game => (
           <div key={game.id} className="game-card">
-            <img src={game.image} alt={game.name} />
+            <img src={game.imageUrl} alt={game.name} />
             <h3>{game.name}</h3>
             <p>Categoría: {game.category}</p>
             <p>Licencias Disponibles: {game.licensesAvailable}</p>
