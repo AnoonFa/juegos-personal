@@ -1,38 +1,48 @@
+// CartContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { db } from '../firebaseConfig';
-import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore";
+import axios from 'axios';
 import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const { currentUser } = useAuth();
+  const { user } = useAuth();
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    if (currentUser) {
+    if (user) {
       const fetchCart = async () => {
-        const cartCollection = collection(db, `users/${currentUser.uid}/cart`);
-        const cartSnapshot = await getDocs(cartCollection);
-        setCart(cartSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        try {
+          const response = await axios.get(`http://localhost:3000/cart?userId=${user.id}`);
+          setCart(response.data);
+        } catch (error) {
+          console.error('Error fetching cart:', error);
+        }
       };
       fetchCart();
     }
-  }, [currentUser]);
+  }, [user]);
 
   const addToCart = async (product, quantity) => {
-    if (currentUser) {
-      const cartRef = collection(db, `users/${currentUser.uid}/cart`);
-      const existingProduct = cart.find(item => item.id === product.id);
-      if (existingProduct) {
-        const productRef = doc(db, `users/${currentUser.uid}/cart`, existingProduct.id);
-        await updateDoc(productRef, {
-          quantity: existingProduct.quantity + quantity
-        });
-      } else {
-        await addDoc(cartRef, { ...product, quantity });
+    if (user) {
+      try {
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) {
+          await axios.put(`http://localhost:3000/cart/${existingProduct.id}`, {
+            ...existingProduct,
+            quantity: existingProduct.quantity + quantity,
+          });
+        } else {
+          const response = await axios.post('http://localhost:3000/cart', {
+            ...product,
+            quantity,
+            userId: user.id,
+          });
+          setCart(prevCart => [...prevCart, response.data]);
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
       }
-      setCart(prevCart => [...prevCart, { ...product, quantity }]);
     } else {
       const localCart = JSON.parse(localStorage.getItem('cart')) || [];
       const existingProduct = localCart.find(item => item.id === product.id);

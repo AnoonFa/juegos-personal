@@ -5,8 +5,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-import { getFirestore, doc, updateDoc, collection, addDoc } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
+import axios from 'axios';
 import emailjs from 'emailjs-com';
 
 const sendMembershipEmail = (to_name, to_email) => {
@@ -84,7 +84,6 @@ export default function Checkout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const db = getFirestore();
 
   const { purchaseType, cartItems = [] } = location.state || {
     purchaseType: null,
@@ -158,22 +157,17 @@ export default function Checkout() {
 
       if (purchaseType === 'membership') {
         totalPrice = 19;
-        const userRef = doc(db, 'users', user?.uid);
-        if (!userRef) {
-          throw new Error('Usuario no autenticado o no encontrado.');
-        }
-        await updateDoc(userRef, { membership: true });
-
+        await axios.put(`http://localhost:3000/users/${user.id}`, { membership: true });
         sendMembershipEmail(formData.to_name, formData.to_email);
 
       } else if (purchaseType === 'game' && cartItems.length > 0) {
         for (const item of cartItems) {
-          if (!item.sellerId || !user?.uid || !item.id) {
+          if (!item.sellerId || !user?.id || !item.id) {
             throw new Error(`Datos insuficientes para registrar la compra. Verifica el vendedor, el usuario y el ID del juego.`);
           }
 
           const purchaseData = {
-            buyerId: user.uid,
+            buyerId: user.id,
             sellerId: item.sellerId,
             gameId: item.id,
             quantity: item.quantity,
@@ -183,10 +177,9 @@ export default function Checkout() {
             gameName: item.name,
           };
 
-          await addDoc(collection(db, 'purchases'), purchaseData);
+          await axios.post('http://localhost:3000/purchases', purchaseData);
 
-          const gameRef = doc(db, 'games', item.id);
-          await updateDoc(gameRef, {
+          await axios.put(`http://localhost:3000/games/${item.id}`, {
             licensesSold: item.licensesSold + item.quantity,
             licensesAvailable: item.licensesAvailable - item.quantity,
           });
@@ -203,23 +196,6 @@ export default function Checkout() {
     }
   };
 
-  // Crear un tema oscuro con Material-UI
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-      primary: {
-        main: '#90caf9',
-      },
-      background: {
-        default: '#121212',
-        paper: '#1d1d1d',
-      },
-      text: {
-        primary: '#ffffff',
-        secondary: '#b0b0b0',
-      },
-    },
-  });
 
   return (
     <ThemeProvider theme={darkTheme}>

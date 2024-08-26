@@ -1,0 +1,68 @@
+{
+    "games": [
+      {
+        "id": 1,
+        "name": "Death's Gambit",
+        "category": "acción",
+        "price": 19.99,
+        "licensesAvailable": 50,
+        "licensesSold": 10,
+        "imageUrl": "path_to_image",
+        "sellerId": 1
+      },
+      {
+        "id": 2,
+        "name": "LumberJack",
+        "category": "aventura",
+        "price": 15.99,
+        "licensesAvailable": 30,
+        "licensesSold": 5,
+        "imageUrl": "path_to_image",
+        "sellerId": 2
+      }
+    ],
+    "purchases": [
+      {
+        "id": 1,
+        "buyerId": 1,
+        "gameId": 1,
+        "quantity": 1,
+        "purchaseDate": "2024-08-25",
+        "totalPrice": 19.99
+      }
+    ],
+    "sales": [
+      {
+        "id": 1,
+        "gameId": 1,
+        "quantity": 1,
+        "saleDate": "2023-08-23",
+        "pricePerUnit": 100,
+        "sellerId": "nOugdh8ukR8TuijAiHpF",
+        "membershipApplied": true
+      }
+    ],
+    "users": [
+      {
+        "id": 1,
+        "nombre": "Alejo",
+        "telefono": "3144008868",
+        "correo": "al@lool.com",
+        "username": "Alejo",
+        "role": "cliente",
+        "membership": true,
+        "gamesOwned": [1]
+      },
+      {
+        "id": 2,
+        "nombre": "Esteban",
+        "telefono": "3144008869",
+        "correo": "esteban@gmail.com",
+        "username": "Esteban123",
+        "role": "administrador",
+        "membership": false,
+        "gamesOwned": []
+      }
+    ]
+  }
+  

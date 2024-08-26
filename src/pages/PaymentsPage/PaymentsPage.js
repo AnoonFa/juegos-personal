@@ -1,17 +1,25 @@
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { useAuth } from "../../context/AuthContext";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
+import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
 
 const PaymentPage = () => {
   const { user } = useAuth();
-  const db = getFirestore();
+  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
+
+  useEffect(() => {
+    setTitle('Pago'); // Establecer el título de la página
+  }, [setTitle]);
 
   const handlePaymentSuccess = async () => {
     if (user) {
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        membership: true,
-      });
-      // Redirigir o mostrar mensaje de éxito
+      try {
+        await axios.put(`http://localhost:3000/users/${user.id}`, { membership: true });
+        alert('Pago completado con éxito');
+        // Redirigir o mostrar mensaje de éxito
+      } catch (error) {
+        console.error('Error al actualizar membresía:', error);
+      }
     }
   };
 

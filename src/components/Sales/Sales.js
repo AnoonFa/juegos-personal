@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { GamesContext } from '../../context/GameContext';
-import { db } from '../../firebaseConfig';
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Sales.css';
+
 
 const Sales = () => {
   const { games, setGames, updateGameLicenses } = useContext(GamesContext);
@@ -42,45 +42,53 @@ const Sales = () => {
       return;
     }
 
-    const existingGame = games.find(game => game.name.toLowerCase() === name.toLowerCase() && game.sellerId === user.uid);
+    const existingGame = games.find(game => game.name.toLowerCase() === name.toLowerCase() && game.sellerId === user.id);
     if (existingGame) {
-      const gameRef = doc(db, "games", existingGame.id);
-      await updateDoc(gameRef, {
-        licensesAvailable: existingGame.licensesAvailable + quantity
-      });
+      try {
+        await axios.put(`http://localhost:3000/games/${existingGame.id}`, {
+          licensesAvailable: existingGame.licensesAvailable + quantity
+        });
 
-      updateGameLicenses(existingGame.id, quantity, false);
-      alert('Licencias añadidas al juego existente!');
+        updateGameLicenses(existingGame.id, quantity, false);
+        alert('Licencias añadidas al juego existente!');
+      } catch (error) {
+        console.error('Error al actualizar el juego existente:', error);
+      }
     } else {
-      const newGameRef = await addDoc(collection(db, "games"), {
-        name,
-        category,
-        size,
-        price,
-        licensesAvailable: quantity,
-        licensesSold: 0,
-        imageUrl: image,
-        description,
-        discount,
-        promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
-        sellerId: user.uid
-      });
+      try {
+        const response = await axios.post('http://localhost:3000/games', {
+          name,
+          category,
+          size,
+          price,
+          licensesAvailable: quantity,
+          licensesSold: 0,
+          imageUrl: image,
+          description,
+          discount,
+          promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
+          sellerId: user.id
+        });
 
-      setGames(prevGames => [...prevGames, {
-        id: newGameRef.id,
-        name,
-        category,
-        size,
-        price,
-        licensesAvailable: quantity,
-        licensesSold: 0,
-        imageUrl: image,
-        description,
-        discount,
-        promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
-        sellerId: user.uid
-      }]);
-      alert('Juego nuevo añadido y licencias vendidas!');
+
+        setGames(prevGames => [...prevGames, {
+          id: response.data.id,
+          name,
+          category,
+          size,
+          price,
+          licensesAvailable: quantity,
+          licensesSold: 0,
+          imageUrl: image,
+          description,
+          discount,
+          promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
+          sellerId: user.id
+        }]);
+        alert('Juego nuevo añadido y licencias vendidas!');
+      } catch (error) {
+        console.error('Error al añadir el nuevo juego:', error);
+      }
     }
     resetForm();
   };

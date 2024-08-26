@@ -28,6 +28,7 @@ import StatsTables from './components/Tablas/Tablas';
 import GameList from './components/GameList/GameList';
 import SortedSalesTable from './components/Tablas/TablaOrdenada';
 import AdminPage from './pages/AdminPage/AdminPage';
+import { PageTitleProvider } from './context/PageTitleContext';
 
 
 
@@ -35,9 +36,9 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        
-        <GamesProvider>
-        <CartProvider>
+        <PageTitleProvider>
+          <GamesProvider>
+            <CartProvider>
           
             <TopMenu title="App Store" />
             <LeftMenus/>
@@ -62,8 +63,9 @@ function App() {
               </Routes>
             </main>
           
-        </CartProvider>
-        </GamesProvider>
+            </CartProvider>
+          </GamesProvider>
+        </PageTitleProvider>
       </AuthProvider></Router>
     
   );

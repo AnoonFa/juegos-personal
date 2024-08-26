@@ -1,19 +1,26 @@
-import React from 'react';
-import Carousel from '../../components/CarrusePrincipal/CarruselPrincipal';
-import Categories from '../../components/CategoriaJuego/CategoriaJuego';
+import React, { useEffect } from 'react';
+import Promotions from '../../components/Promotions/Promotions';
 import StatsTables from '../../components/Tablas/Tablas';
-import '../Home/Home.css';
 import GameList from '../../components/GameList/GameList';
 import SortedSalesTable from '../../components/Tablas/TablaOrdenada';
-import Promotions from '../../components/Promotions/Promotions';
+import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
+import '../Home/Home.css';
 
-const MasVPage = () => (
-  <div className="home">
-    <Promotions />
-    <SortedSalesTable />
-    <StatsTables />
-    <GameList />
-  </div>
-);
+const MasVPage = () => {
+  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
+
+  useEffect(() => {
+    setTitle('Más Vendidos'); // Establecer el título de la página
+  }, [setTitle]);
+
+  return (
+    <div className="home">
+      <Promotions />
+      <SortedSalesTable />
+      <StatsTables />
+      <GameList />
+    </div>
+  );
+};
 
 export default MasVPage;

@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LeftMenu.css';
-
-// Asegúrate de que las imágenes se importen de forma correcta
 import logo from '../../assets/icons/logo.png';
 import usersIcon from '../../assets/icons/users.png';
 import gamesIcon from '../../assets/icons/games.png';
@@ -14,12 +12,11 @@ import { useAuth } from '../../context/AuthContext';
 import Biblioteca from '../../assets/icons/Biblioteca.png';
 
 const LeftMenus = () => {
-  const { user } = useAuth();  // Usamos el contexto de autenticación
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-   // Verificar si el usuario está autenticado
   const isAuthenticated = user && user.role;
-  const hasMembership = user && user.membership; // Nuevo: Verificar si el usuario tiene membresía
+  const hasMembership = user && user.membership;
 
   return (
     <div className="leftMenu">
@@ -31,12 +28,7 @@ const LeftMenus = () => {
         <button className="closeButton" type="button">X</button>
 
         <div className="icons">
-        {isAuthenticated && user.role === 'administrador' && (
-          <div onClick={() => navigate("/admin")}>  
-            <img src={usersIcon} alt="users" />
-            <label>Usuarios</label>
-          </div>
-        )}
+          {/* Mostrar siempre las opciones generales */}
           <div onClick={() => navigate("/Home")}>
             <img src={gamesIcon} alt="games" />
             <label>Juegos</label>
@@ -49,6 +41,18 @@ const LeftMenus = () => {
             <img src={compraIcon} alt="compra" />
             <label>Compra</label>
           </div>
+          <div onClick={() => navigate("/MasVPage")}>
+            <img src={flechaIcon} alt="mas-vendidos" />
+            <label>El más vendido</label>
+          </div>
+
+          {/* Mostrar opciones específicas según el rol del usuario */}
+          {isAuthenticated && user.role === 'administrador' && (
+            <div onClick={() => navigate("/admin")}>
+              <img src={usersIcon} alt="users" />
+              <label>Usuarios</label>
+            </div>
+          )}
 
           {hasMembership ? (
             <div onClick={() => navigate("/SalesPage")}>
@@ -62,15 +66,11 @@ const LeftMenus = () => {
             </div>
           )}
 
-          <div onClick={() => navigate("/MasVPage")}>
-            <img src={flechaIcon} alt="mas-vendidos" />
-            <label>El mas vendido</label>
-          </div>
           {isAuthenticated && user.role === 'administrador' && (
-          <div onClick={() => navigate("/Library")}>
-            <img src={Biblioteca} alt="Biblioteca" />
-            <label>Biblioteca</label>
-          </div>
+            <div onClick={() => navigate("/Library")}>
+              <img src={Biblioteca} alt="Biblioteca" />
+              <label>Biblioteca</label>
+            </div>
           )}
         </div>
       </div>

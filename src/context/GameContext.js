@@ -1,5 +1,6 @@
+// GameContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import axios from 'axios';
 
 export const GamesContext = createContext();
 
@@ -7,29 +8,23 @@ export const GamesProvider = ({ children }) => {
   const [allGames, setAllGames] = useState([]);
   const [games, setGames] = useState([]);
   const [cart, setCart] = useState([]);
-  const [error, setError] = useState(null);  // Agrega un estado para manejar errores
-  const db = getFirestore();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, 'games'),
-      (snapshot) => {
-        const gamesData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setAllGames(gamesData);
-        setGames(gamesData);
-        setError(null);  // Restablece el error si la carga es exitosa
-      },
-      (error) => {
-        console.error("Error loading games: ", error);
-        setError("No tienes permiso para ver los juegos.");  // Maneja errores de permisos
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/games');
+        setAllGames(response.data);
+        setGames(response.data);
+        setError(null);
+      } catch (error) {
+        console.error('Error loading games:', error);
+        setError('No tienes permiso para ver los juegos.');
       }
-    );
+    };
 
-    return () => unsubscribe();
-  }, [db]);
+    fetchGames();
+  }, []);
 
   const addToCart = (gameId, quantity) => {
     const game = games.find(g => g.id === gameId);
@@ -45,7 +40,7 @@ export const GamesProvider = ({ children }) => {
         }
       });
     } else {
-      console.error("Game not found");
+      console.error('Game not found');
     }
   };
 
@@ -61,12 +56,12 @@ export const GamesProvider = ({ children }) => {
             ? {
                 ...game,
                 licensesAvailable: game.licensesAvailable - quantity,
-                licensesSold: game.licensesSold + quantity
+                licensesSold: game.licensesSold + quantity,
               }
             : {
                 ...game,
                 licensesAvailable: game.licensesAvailable + quantity,
-                licensesSold: game.licensesSold - quantity
+                licensesSold: game.licensesSold - quantity,
               }
           : game
       )
@@ -76,7 +71,7 @@ export const GamesProvider = ({ children }) => {
   return (
     <GamesContext.Provider value={{ allGames, games, cart, addToCart, removeFromCart, updateGameLicenses, setGames, error }}>
       {children}
-      {error && <div className="error-message">{error}</div>}  // Muestra el mensaje de error si existe
+      {error && <div className="error-message">{error}</div>}
     </GamesContext.Provider>
   );
 };

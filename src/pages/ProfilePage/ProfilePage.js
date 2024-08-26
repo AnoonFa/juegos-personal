@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-import { db } from '../../firebaseConfig';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import './ProfilePage.css'; // Crea un archivo CSS para estilizar la página
+import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
+import './ProfilePage.css'; 
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -11,18 +11,23 @@ const ProfilePage = () => {
     email: '',
     telefono: ''
   });
+  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
 
   useEffect(() => {
+    setTitle('Perfil'); // Establecer el título de la página
+
     const fetchUserData = async () => {
-      if (user && user.uid) {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          setFormData(userDoc.data());
+      if (user && user.id) {
+        try {
+          const response = await axios.get(`http://localhost:3000/users/${user.id}`);
+          setFormData(response.data);
+        } catch (error) {
+          console.error('Error al obtener datos del usuario:', error);
         }
       }
     };
     fetchUserData();
-  }, [user]);
+  }, [user, setTitle]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +39,13 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user && user.uid) {
-      await updateDoc(doc(db, 'users', user.uid), formData);
-      alert('Datos actualizados exitosamente');
+    if (user && user.id) {
+      try {
+        await axios.put(`http://localhost:3000/users/${user.id}`, formData);
+        alert('Datos actualizados exitosamente');
+      } catch (error) {
+        console.error('Error al actualizar datos:', error);
+      }
     }
   };
 

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './register.css';
 import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
-import { auth ,createUserWithEmailAndPassword } from '../firebaseConfig';
-import { setDoc, doc, getDocs, collection, query, where } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { usePageTitle } from '../context/PageTitleContext';
+
 
 
 const RegisterForm = () => {
-  //variables que pregunta en el formulario
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -17,8 +16,14 @@ const RegisterForm = () => {
     contrasena: '',
   });
 
-  const navigate = useNavigate(); // Usar useNavigate
-  //funcion que se ejecuta al presionar el boton registrar
+  const navigate = useNavigate();
+  const { setTitle } = usePageTitle();
+
+
+  useEffect(() => {
+    setTitle('Registro'); // Establecer el título de la página
+  }, [setTitle]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,59 +32,30 @@ const RegisterForm = () => {
     });
   };
 
-  //
-  //funcion que se ejecuta al presionar el boton iniciar sesion
-  
-  const checkIfUserExists = async (email, username) => {
-    // Consultamos a Firestore para verificar si el correo o el nombre de usuario ya están en uso.
-    const usersRef = collection(db, 'users');
-    const emailQuery = query(usersRef, where('email', '==', email));
-    const usernameQuery = query(usersRef, where('username', '==', username));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const emailSnapshot = await getDocs(emailQuery);
-    const usernameSnapshot = await getDocs(usernameQuery);
+    try {
+      const response = await axios.post('http://localhost:3000/register', formData);
 
-    // Si el correo o el nombre de usuario ya están en uso, lanzamos una excepción.
-    if (!emailSnapshot.empty || !usernameSnapshot.empty) {
-      throw new Error('El correo o el nombre de usuario ya están en uso.');
+      if (response.status === 201) {
+        alert('Registro exitoso. Puedes iniciar sesión ahora.');
+        navigate('/login');
+      } else {
+        throw new Error('Error en el registro');
+      }
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      alert('Error en el registro: ' + error.message);
     }
   };
+const ExamplePage = () => {
+  const { setTitle } = usePageTitle();
 
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    // Verificar si el correo o el nombre de usuario ya están en uso
-    await checkIfUserExists(formData.correo, formData.username);
-
-    // Crear el usuario en Firebase Authentication
-    const userCredential = await createUserWithEmailAndPassword(auth, formData.correo, formData.contrasena);
-    const user = userCredential.user;
-
-    // Crear el documento del usuario en Firestore
-    const userData = {
-      nombre: formData.nombre,
-      telefono: formData.telefono,
-      correo: formData.correo,
-      username: formData.username,
-      role: 'cliente',
-      membership: false,
-      gamesOwned: {}
-    };
-
-    // Verificar si tienes permisos para escribir en Firestore
-    await setDoc(doc(db, 'users', user.uid), userData);
-
-    alert('Registro exitoso. Puedes iniciar sesión ahora.');
-    navigate('/login'); 
-  } catch (error) {
-    console.error('Error en el registro:', error);
-    alert('Error en el registro: ' + error.message);
-  }
+  useEffect(() => {
+    setTitle('Título de la Página');
+  }, [setTitle]);
 };
-  
-
   return (
     <div className="fondo-wrapper">
       <div className="fondo">
@@ -115,3 +91,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+

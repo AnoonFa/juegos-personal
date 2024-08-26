@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './SalesHistory.css';
 
@@ -11,15 +10,16 @@ const SalesHistory = () => {
   useEffect(() => {
     if (!user) return;
 
-    const q = query(collection(db, 'sales'), where('sellerId', '==', user.uid));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const salesData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setSales(salesData);
-    });
-    return () => unsubscribe();
+    const fetchSales = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/sales?sellerId=${user.id}`);
+        setSales(response.data);
+      } catch (error) {
+        console.error('Error fetching sales history:', error);
+      }
+    };
+
+    fetchSales();
   }, [user]);
 
   return (

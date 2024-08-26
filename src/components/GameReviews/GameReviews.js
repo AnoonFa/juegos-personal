@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot, addDoc } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import axios from 'axios';
 import './GameReviews.css';
 import { useAuth } from '../../context/AuthContext';
 
@@ -11,35 +10,38 @@ const GameReviews = ({ gameId }) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const q = query(collection(db, 'reviews'), where('gameId', '==', gameId));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const reviewsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setReviews(reviewsData);
-    });
-    return () => unsubscribe();
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}`);
+        setReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
   }, [gameId]);
 
-  // Función para manejar el envío de la reseña
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
     if (user) {
       try {
-        await addDoc(collection(db, 'reviews'), {
+        const reviewData = {
           gameId,
           username: user.username,
           comment: newReview,
           rating: rating,
-          userId: user.uid, // Guardar el ID del usuario para validar en Firestore
-          createdAt: new Date(),
-        });
+          userId: user.id, 
+          createdAt: new Date().toISOString(),
+        };
+
+        await axios.post('http://localhost:3000/reviews', reviewData);
+        setReviews([...reviews, reviewData]);
         setNewReview('');
         setRating(1);
       } catch (error) {
-        console.error('Error al enviar la reseña:', error);
+        console.error('Error submitting review:', error);
       }
     } else {
       alert('Debes estar logueado para dejar una reseña.');

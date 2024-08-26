@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GamesContext } from '../../context/GameContext';
-import GameReviews from '../../components/GameReviews/GameReviews'; 
+import GameReviews from '../../components/GameReviews/GameReviews';
+import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
 import './GameDetails.css';
 
 const GameDetails = () => {
@@ -11,38 +12,35 @@ const GameDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [showAlert, setShowAlert] = useState(false);
   const [game, setGame] = useState(null);
+  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
 
-  // Buscar el juego por id al cargar la página o cuando cambie el id
   useEffect(() => {
     const foundGame = games.find(game => game.id === id);
     if (foundGame) {
       setGame(foundGame);
+      setTitle(foundGame.name); // Establecer el título de la página
     }
-  }, [id, games]);
+  }, [id, games, setTitle]);
 
   if (!game) {
     return <p>Juego no encontrado o cargando...</p>;
   }
 
-  // Maneja la adición del juego al carrito
   const handleAddToCart = () => {
-    addToCart(game.id, quantity); // Solo envía el id del juego y la cantidad
+    addToCart(game.id, quantity);
     setShowAlert(true);
   };
 
-  // Maneja la compra inmediata del juego
   const handleBuyNow = () => {
-    addToCart(game.id, quantity); // Solo envía el id del juego y la cantidad
+    addToCart(game.id, quantity);
     navigate('/checkout', { state: { purchaseType: 'game', cartItems: [{ ...game, price: calculateDiscountedPrice(), quantity }] } });
   };
 
-  // Cierra la alerta y regresa a la página anterior
   const handleCloseAlert = () => {
     setShowAlert(false);
     navigate(-1);
   };
 
-  // Calcula el precio con descuento si aplica
   const calculateDiscountedPrice = () => {
     const currentDate = new Date();
     const discountEndDate = new Date(game.promoEndDate);
@@ -53,7 +51,6 @@ const GameDetails = () => {
     return game.price;
   };
 
-  // Precio con descuento
   const discountedPrice = calculateDiscountedPrice();
 
   return (

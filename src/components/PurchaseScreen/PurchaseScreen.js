@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { db } from '../../firebaseConfig';
-import { doc, updateDoc } from "firebase/firestore";  // Importar Firestore para actualizar
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './PurchaseScreen.css';
 
@@ -9,9 +8,20 @@ const PurchaseScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [game, setGame] = useState(null);
 
-  const games = []; // Suponiendo que lo obtienes de algún lugar (puedes cambiar esto para obtener los juegos de Firestore)
-  const game = games.find(game => game.id === parseInt(id));
+  useEffect(() => {
+    const fetchGame = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/games/${id}`);
+        setGame(response.data);
+      } catch (error) {
+        console.error('Error fetching game:', error);
+      }
+    };
+
+    fetchGame();
+  }, [id]);
 
   if (!game) {
     return <p>Juego no encontrado</p>;
@@ -23,7 +33,6 @@ const PurchaseScreen = () => {
       return;
     }
 
-    const gameRef = doc(db, "games", id);
     const newLicensesAvailable = game.licensesAvailable - 1;
 
     if (newLicensesAvailable < 0) {
@@ -31,13 +40,18 @@ const PurchaseScreen = () => {
       return;
     }
 
-    await updateDoc(gameRef, {
-      licensesAvailable: newLicensesAvailable,
-      licensesSold: game.licensesSold + 1
-    });
+    try {
+      await axios.put(`http://localhost:3000/games/${id}`, {
+        licensesAvailable: newLicensesAvailable,
+        licensesSold: game.licensesSold + 1,
+      });
 
-    alert('Compra realizada con éxito!');
-    navigate(`/purchase/${id}`);
+      alert('Compra realizada con éxito!');
+      navigate(`/purchase/${id}`);
+    } catch (error) {
+      console.error('Error processing purchase:', error);
+      alert('Hubo un error al procesar la compra.');
+    }
   };
 
   return (

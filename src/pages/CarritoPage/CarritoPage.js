@@ -1,13 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
 import './CarritoPage.css';
 
 const CartPage = () => {
   const { cart, updateGameLicenses, removeFromCart } = useContext(GamesContext);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
+
+  useEffect(() => {
+    setTitle('Carrito de Compras'); // Establecer el título de la página
+  }, [setTitle]);
 
   const calculateDiscount = () => {
     let total = 0;
@@ -21,20 +27,17 @@ const CartPage = () => {
       const currentDate = new Date();
       const discountEndDate = new Date(item.promoEndDate);
 
-      // Aplicar descuento si el juego tiene un descuento vigente
       if (item.discount && currentDate <= discountEndDate) {
         itemPrice = itemPrice - (itemPrice * (item.discount / 100));
       }
 
       total += itemPrice * item.quantity;
 
-      // Acumular cantidades según la categoría para aplicar descuentos adicionales
       if (item.category === "Rompecabezas") totalPuzzles += item.quantity;
       if (item.category === "Deportes") totalSports += item.quantity;
       if (item.category === "Acción") totalAction += item.quantity;
     });
 
-    // Aplicar descuentos adicionales según las categorías
     let discount = 0;
     if (totalPuzzles >= 25) {
       discount = 0.20;
@@ -79,7 +82,6 @@ const CartPage = () => {
       <div className="cart-items">
         {cart.map((item, index) => (
           <div key={index} className="cart-item">
-            {/* Usar el campo correcto para la imagen */}
             <img src={item.imageUrl} alt={item.name} />
             <div className="item-details">
               <h3>{item.name}</h3>
