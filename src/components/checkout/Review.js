@@ -8,7 +8,7 @@ export default function Review({ purchaseType, cartItems }) {
         <ListItem key={index}>
           <ListItemText 
             primary={`Juego: ${item.name}`} 
-            secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
+            secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`} // Usar el precio ya calculado
           />
         </ListItem>
       ))}
@@ -22,10 +22,9 @@ export default function Review({ purchaseType, cartItems }) {
   );
 
   const getTotalPrice = () => {
-    if (purchaseType === 'membership') return 100;
     let totalPrice = 0;
     cartItems.forEach(item => {
-      totalPrice += item.price * item.quantity;
+      totalPrice += item.price * item.quantity; // Usar el precio ya calculado
     });
     return totalPrice;
   };
@@ -45,7 +44,7 @@ export default function Review({ purchaseType, cartItems }) {
           {purchaseType === 'membership' && renderMembershipDetails()}
           <Divider />
           <ListItem>
-            <ListItemText primary="Total" secondary={`$${getTotalPrice().toFixed(2)}`} />
+            <ListItemText primary="Total con Descuento" secondary={`$${getTotalPrice().toFixed(2)}`} />
           </ListItem>
         </List>
       </CardContent>

@@ -17,17 +17,25 @@ import CartPage from './pages/CarritoPage/CarritoPage';
 import PurchasePage from './pages/Purchase/PurchasePage';
 import Login from './components/login';
 import RegisterForm from './components/register';
-import store from './redux/store';
 import { GamesProvider } from './context/GameContext';
 import './App.css';
 import BecomeSellerPage from './pages/BecomeSellerPage/BecomeSellerPage';
 import Checkout from './components/checkout/Checkout';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import Library from './components/Library/Library';
+import Carousel from './components/CarrusePrincipal/CarruselPrincipal';
+import StatsTables from './components/Tablas/Tablas';
+import GameList from './components/GameList/GameList';
+import SortedSalesTable from './components/Tablas/TablaOrdenada';
+import AdminPage from './pages/AdminPage/AdminPage';
+
+
 
 function App() {
   return (
-    <Provider store={store}><Router>
+    <Router>
       <AuthProvider>
+        
         <GamesProvider>
         <CartProvider>
           
@@ -35,6 +43,8 @@ function App() {
             <LeftMenus/>
             <main>
               <Routes>
+                <Route path="/admin" element={<ProtectedRoute element={<AdminPage />} />} />                
+                <Route path="/Library/*" element={<ProtectedRoute element={<Library />}/>} />
                 <Route path="/ProfilePage/*" element={<ProtectedRoute element={<ProfilePage />} />} />
                 <Route path="/BecomeSellerPage/*" element={<ProtectedRoute element={<BecomeSellerPage />} />} />
                 <Route path="/Checkout" element={<ProtectedRoute element={<Checkout />} />} />
@@ -55,7 +65,7 @@ function App() {
         </CartProvider>
         </GamesProvider>
       </AuthProvider></Router>
-    </Provider>
+    
   );
 }
 

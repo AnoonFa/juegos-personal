@@ -25,7 +25,8 @@ const SalesPage = () => {
   return (
   <div className="home">
     <Promotions />
-    <SearchAndFilterBar />    
+
+   
     <GameList onGameSelect={handleGameSelect} />  {/* Maneja la selección del juego */}
 
     <GamesTable />
@@ -37,7 +38,7 @@ const SalesPage = () => {
           <GameReviews gameId={selectedGame.id} />  {/* Pasa el ID del juego seleccionado */}
         </>
       )}
-      <SalesHistory />
+     {/* <SalesHistory />*/}
     </div>
 );
 };

@@ -1,38 +1,88 @@
 .game-details {
   display: flex;
-  margin: 20px;
+  background-color: #1b1b1b;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
 }
 
-.game-details img {
-  width: 300px;
-  border-radius: 8px;
+.game-image {
+  max-width: 300px;
+  border-radius: 10px;
   margin-right: 20px;
 }
 
 .details {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .details h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.details p {
-  font-size: 16px;
-  color: #555;
+  font-size: 28px;
   margin-bottom: 10px;
 }
 
-.details button {
+.details p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.quantity-controls button {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity-controls input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.add-to-cart-button {
   background-color: #28a745;
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.details button:hover {
-  background-color: #218838;
+.alert {
+  background-color: #ffcc00;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
 }
+
+.original-price {
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+.discounted-price {
+  color: #ff5733;
+  font-weight: bold;
+}
+
+.buy-now-button {
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Espacio entre los botones */
+  width: 100%;
+  font-size: 16px;
+}
+

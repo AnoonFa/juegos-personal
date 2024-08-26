@@ -7,7 +7,6 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDgRoio1ViGyHy9Pl0j94P7m4FvV6j9tGs",
   authDomain: "appstorejuegos-1a66c.firebaseapp.com",
-  databaseURL: "https://appstorejuegos-1a66c-default-rtdb.firebaseio.com",
   projectId: "appstorejuegos-1a66c",
   storageBucket: "appstorejuegos-1a66c.appspot.com",
   messagingSenderId: "1095253396640",

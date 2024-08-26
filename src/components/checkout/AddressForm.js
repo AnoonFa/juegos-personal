@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { Grid, Typography, TextField, ListItem, ListItemText } from '@mui/material';
 
-export default function AddressForm({ purchaseType, cartItems }) {
+export default function AddressForm({ formData, handleInputChange, purchaseType, cartItems }) {
   const renderCartDetails = () => (
     <>
       {cartItems.map((item, index) => (
@@ -24,6 +24,33 @@ export default function AddressForm({ purchaseType, cartItems }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
+        Información del Comprador
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="to_name"
+            name="to_name"
+            label="Nombre Completo"
+            fullWidth
+            value={formData.to_name}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="to_email"
+            name="to_email"
+            label="Correo Electrónico"
+            fullWidth
+            value={formData.to_email}
+            onChange={handleInputChange}
+          />
+        </Grid>
+      </Grid>
+      <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
         Detalles de la Compra
       </Typography>
       <Grid container spacing={3}>

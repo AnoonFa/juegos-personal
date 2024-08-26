@@ -7,6 +7,7 @@ const CategoryGames = () => {
   const { category } = useParams(); // Obtenemos la categoría desde la URL
   const { games } = useContext(GamesContext);
 
+  // Filtrar juegos basados en la categoría, respetando mayúsculas y acentos
   const filteredGames = games.filter(game => game.category === category);
 
   return (
@@ -16,7 +17,11 @@ const CategoryGames = () => {
         {filteredGames.length > 0 ? (
           filteredGames.map(game => (
             <div key={game.id} className="game-card">
-              <img src={game.image} alt={game.name} />
+              {game.imageUrl ? (
+                <img src={game.imageUrl} alt={game.name} className="game-image" />
+              ) : (
+                <div className="no-image">Imagen no disponible</div>
+              )}
               <h3>{game.name}</h3>
               <p>Tamaño: {game.size} KB</p>
               <p>Precio: ${game.price}</p>

@@ -18,29 +18,28 @@ const Login = () => {
     // Función para manejar el inicio de sesión
     const handleLogin = async () => {
       try {
-        // Autenticación de Firebase (aquí debería estar tu lógica para autenticar con Firebase)
+        // Autenticación de Firebase
         let userCredential;
         const usersRef = collection(db, 'users');
         const userQuery = query(usersRef, where('email', '==', identifier));
-
-
+    
         let userSnapshot = await getDocs(userQuery);
         if (userSnapshot.empty) {
           const usernameQuery = query(usersRef, where('username', '==', identifier));
           userSnapshot = await getDocs(usernameQuery);
         }
-
+    
         if (!userSnapshot.empty) {
           const userData = userSnapshot.docs[0].data();
           userCredential = await signInWithEmailAndPassword(auth, userData.correo, password);
         } else {
           throw new Error('Usuario no encontrado');
         }
-        
+    
         // Obtener información adicional del usuario desde Firestore
         const user = userCredential.user;
         const userDoc = await getDoc(userSnapshot.docs[0].ref);
-  
+    
         if (userDoc.exists()) {
           setUser({ ...userDoc.data(), email: user.email });
           if (userDoc.data().role === 'administrador') {
@@ -56,6 +55,7 @@ const Login = () => {
         alert('Error en el inicio de sesión: ' + error.message);
       }
     };
+    
     return (
       <div className="fondo-wrapper">
         <div className="fondo">
@@ -87,7 +87,7 @@ const Login = () => {
               </div>
               <button type="submit" className="btn">Iniciar sesión</button>
               <div className="registro-link">
-                <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
+                <p className='notiene'>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
               </div>
             </form>
           </div>

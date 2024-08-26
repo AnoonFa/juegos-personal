@@ -11,6 +11,7 @@ import compraIcon from '../../assets/icons/compra.png';
 import vendeIcon from '../../assets/icons/ventas.png';
 import flechaIcon from '../../assets/icons/mejor-vendido.png';
 import { useAuth } from '../../context/AuthContext';
+import Biblioteca from '../../assets/icons/Biblioteca.png';
 
 const LeftMenus = () => {
   const { user } = useAuth();  // Usamos el contexto de autenticación
@@ -30,12 +31,12 @@ const LeftMenus = () => {
         <button className="closeButton" type="button">X</button>
 
         <div className="icons">
-          {isAuthenticated && user.role === 'administrador' && (
-            <div onClick={() => navigate("/Users")}>
-              <img src={usersIcon} alt="users" />
-              <label>Usuarios</label>
-            </div>
-          )}
+        {isAuthenticated && user.role === 'administrador' && (
+          <div onClick={() => navigate("/admin")}>  
+            <img src={usersIcon} alt="users" />
+            <label>Usuarios</label>
+          </div>
+        )}
           <div onClick={() => navigate("/Home")}>
             <img src={gamesIcon} alt="games" />
             <label>Juegos</label>
@@ -61,10 +62,16 @@ const LeftMenus = () => {
             </div>
           )}
 
-          <div onClick={() => navigate("/MasVPage/")}>
+          <div onClick={() => navigate("/MasVPage")}>
             <img src={flechaIcon} alt="mas-vendidos" />
             <label>El mas vendido</label>
           </div>
+          {isAuthenticated && user.role === 'administrador' && (
+          <div onClick={() => navigate("/Library")}>
+            <img src={Biblioteca} alt="Biblioteca" />
+            <label>Biblioteca</label>
+          </div>
+          )}
         </div>
       </div>
     </div>

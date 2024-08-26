@@ -101,19 +101,6 @@ export default function PaymentForm({ formData, handleInputChange }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            required
-            id="email"
-            name="email"
-            label="Correo Electrónico"
-            fullWidth
-            autoComplete="email"
-            type="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="saveCard" value="yes" />}
             label="Recordar detalles de la tarjeta para la próxima vez"

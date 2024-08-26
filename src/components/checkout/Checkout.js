@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Paper, Stepper, Step, StepLabel, Button, Typography, CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { getFirestore, doc, updateDoc, collection, addDoc } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
-import emailjs from 'emailjs-com';  // Importación para el envío de correos
+import emailjs from 'emailjs-com';
 
-// Función para enviar correos de confirmación de membresía
 const sendMembershipEmail = (to_name, to_email) => {
   if (!to_name || !to_email) {
     console.error('Datos insuficientes para enviar el correo de membresía.');
@@ -29,7 +29,6 @@ const sendMembershipEmail = (to_name, to_email) => {
     });
 };
 
-// Función para enviar correos de confirmación de compra de juegos
 const sendGamesEmail = (to_name, to_email, games, totalPrice) => {
   if (!to_name || !to_email || games.length === 0) {
     console.error('Datos insuficientes para enviar el correo de juegos.');
@@ -61,7 +60,7 @@ const steps = ['Detalles de la compra', 'Método de pago', 'Revisar orden'];
 function getStepContent(step, formData, handleInputChange, purchaseType, cartItems) {
   switch (step) {
     case 0:
-      return <AddressForm purchaseType={purchaseType} cartItems={cartItems} />;
+      return <AddressForm formData={formData} handleInputChange={handleInputChange} purchaseType={purchaseType} cartItems={cartItems} />;
     case 1:
       return <PaymentForm formData={formData} handleInputChange={handleInputChange} />;
     case 2:
@@ -74,11 +73,12 @@ function getStepContent(step, formData, handleInputChange, purchaseType, cartIte
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
+    to_name: '',
+    to_email: '',
     cardType: '',
     cardNumber: '',
     expDate: '',
     cvv: '',
-    email: '',
   });
 
   const location = useLocation();
@@ -86,10 +86,36 @@ export default function Checkout() {
   const { user } = useAuth();
   const db = getFirestore();
 
-  const { purchaseType, cartItems } = location.state || {
+  const { purchaseType, cartItems = [] } = location.state || {
     purchaseType: null,
     cartItems: []
   };
+
+  const calculateDiscount = () => {
+    let total = 0;
+    let totalPuzzles = 0;
+    let totalSports = 0;
+    let totalAction = 0;
+
+    cartItems.forEach(item => {
+      total += item.price * item.quantity;
+      if (item.category === "rompecabezas") totalPuzzles += item.quantity;
+      if (item.category === "deporte") totalSports += item.quantity;
+      if (item.category === "acción") totalAction += item.quantity;
+    });
+
+    let discount = 0;
+    if (totalPuzzles >= 25) {
+      discount = 0.20;
+    } else if (totalSports >= 20 && totalAction >= 15) {
+      discount = 0.15;
+    }
+
+    const discountedTotal = total - (total * discount);
+    return { total, discountedTotal, discount };
+  };
+
+  const { total, discountedTotal, discount } = calculateDiscount();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -101,8 +127,10 @@ export default function Checkout() {
 
   const isFormValid = () => {
     switch (activeStep) {
+      case 0:
+        return formData.to_name.trim() !== '' && formData.to_email.trim() !== '';
       case 1:
-        return ['cardType', 'cardNumber', 'expDate', 'cvv', 'email'].every(field => formData[field].trim() !== '');
+        return ['cardType', 'cardNumber', 'expDate', 'cvv'].every(field => formData[field].trim() !== '');
       default:
         return true;
     }
@@ -124,56 +152,26 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  const applyDiscounts = (totalPrice) => {
-    let puzzleLicenses = 0;
-    let sportsLicenses = 0;
-    let actionLicenses = 0;
-
-    cartItems.forEach(item => {
-      if (item.category === 'rompecabezas') {
-        puzzleLicenses += item.quantity;
-      } else if (item.category === 'deporte') {
-        sportsLicenses += item.quantity;
-      } else if (item.category === 'acción') {
-        actionLicenses += item.quantity;
-      }
-    });
-
-    if (puzzleLicenses >= 25) {
-      return totalPrice * 0.8;
-    } else if (sportsLicenses >= 20 && actionLicenses >= 15) {
-      return totalPrice * 0.85;
-    }
-
-    return totalPrice;
-  };
-
   const handlePayment = async () => {
     try {
-      let totalPrice = 0;
-  
+      let totalPrice = discountedTotal;
+
       if (purchaseType === 'membership') {
-        totalPrice = 19;  // Precio de la membresía
-        const userRef = doc(db, 'users', user.uid);
+        totalPrice = 19;
+        const userRef = doc(db, 'users', user?.uid);
+        if (!userRef) {
+          throw new Error('Usuario no autenticado o no encontrado.');
+        }
         await updateDoc(userRef, { membership: true });
-  
-        // Enviar correo de confirmación de membresía con validación
-        sendMembershipEmail(user.displayName, formData.email);
-  
+
+        sendMembershipEmail(formData.to_name, formData.to_email);
+
       } else if (purchaseType === 'game' && cartItems.length > 0) {
-        cartItems.forEach(item => {
-          totalPrice += item.price * item.quantity;
-        });
-  
-        totalPrice = applyDiscounts(totalPrice);
-        totalPrice *= 1.1;
-  
         for (const item of cartItems) {
-          // Verificar que `sellerId` esté definido
-          if (!item.sellerId) {
-            throw new Error(`El juego ${item.name} no tiene un vendedor asignado.`);
+          if (!item.sellerId || !user?.uid || !item.id) {
+            throw new Error(`Datos insuficientes para registrar la compra. Verifica el vendedor, el usuario y el ID del juego.`);
           }
-  
+
           const purchaseData = {
             buyerId: user.uid,
             sellerId: item.sellerId,
@@ -184,31 +182,47 @@ export default function Checkout() {
             totalPrice: item.price * item.quantity,
             gameName: item.name,
           };
-  
-          // Registrar la compra en la colección de 'purchases'
+
           await addDoc(collection(db, 'purchases'), purchaseData);
-  
-          // Actualizar licencias vendidas y disponibles del juego en la colección 'games'
+
           const gameRef = doc(db, 'games', item.id);
           await updateDoc(gameRef, {
             licensesSold: item.licensesSold + item.quantity,
             licensesAvailable: item.licensesAvailable - item.quantity,
           });
         }
-  
-        // Enviar correo de confirmación de compra de juegos con validación
-        sendGamesEmail(user.displayName, formData.email, cartItems, totalPrice);
+
+        sendGamesEmail(formData.to_name, formData.to_email, cartItems, totalPrice);
       }
-  
+
       console.log(`Compra registrada con éxito por un total de: $${totalPrice.toFixed(2)}`);
-  
+
     } catch (error) {
       console.error('Error al procesar el pago:', error);
       alert(`Hubo un error al procesar el pago: ${error.message}`);
     }
   };
+
+  // Crear un tema oscuro con Material-UI
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#90caf9',
+      },
+      background: {
+        default: '#121212',
+        paper: '#1d1d1d',
+      },
+      text: {
+        primary: '#ffffff',
+        secondary: '#b0b0b0',
+      },
+    },
+  });
+
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <main>
         <Paper
@@ -218,6 +232,8 @@ export default function Checkout() {
             marginBottom: '10.6rem',
             marginTop: '15rem',
             padding: '5rem',
+            backgroundColor: 'background.paper',
+            color: 'text.primary',
           }}
         >
           <Typography component="h1" variant="h4" align="center">
@@ -247,6 +263,6 @@ export default function Checkout() {
           </div>
         </Paper>
       </main>
-    </>
+    </ThemeProvider>
   );
 }

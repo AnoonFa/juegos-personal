@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot, addDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import './GameReviews.css';
@@ -22,14 +22,11 @@ const GameReviews = ({ gameId }) => {
     return () => unsubscribe();
   }, [gameId]);
 
-  // Función para verificar si el usuario posee el juego
-  const userOwnsGame = user?.gamesOwned && user.gamesOwned[gameId];
-
   // Función para manejar el envío de la reseña
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
-    if (userOwnsGame) {
+    if (user) {
       try {
         await addDoc(collection(db, 'reviews'), {
           gameId,
@@ -45,7 +42,7 @@ const GameReviews = ({ gameId }) => {
         console.error('Error al enviar la reseña:', error);
       }
     } else {
-      alert('Debes poseer el juego para dejar una reseña.');
+      alert('Debes estar logueado para dejar una reseña.');
     }
   };
 
@@ -64,7 +61,7 @@ const GameReviews = ({ gameId }) => {
         <p>No hay reseñas disponibles.</p>
       )}
 
-      {userOwnsGame && (
+      {user && (
         <form onSubmit={handleReviewSubmit} className="review-form">
           <textarea
             value={newReview}

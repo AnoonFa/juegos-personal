@@ -2,6 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
+
+const medalla = require('../../assets/icons/medalla.png');
+
 const BecomeSellerPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -15,46 +18,83 @@ const BecomeSellerPage = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>Conviértete en Vendedor</h1>
+    <div style={styles.container}>
+      <h1 style={styles.title}>Conviértete en Vendedor</h1>
       <img 
-        src="/path_to_your_image/logo.png" 
+        src={medalla} 
         alt="Colaborador" 
-        style={{ borderRadius: '50%', width: '150px', marginBottom: '20px' }}
+        style={styles.image}
       />
-      <h2>Como agradecimiento por tu colaboración</h2>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-        <div style={{ margin: '0 20px' }}>
-          <img src="/path_to_your_image/badge.png" alt="Insignia" style={{ width: '60px' }} />
-          <p>Insignia de Colaborador</p>
-        </div>
-        <div style={{ margin: '0 20px' }}>
-          <img src="/path_to_your_image/group.png" alt="Grupo de Colaboradores" style={{ width: '60px' }} />
-          <p>Grupo de Colaboradores</p>
-        </div>
-      </div>
-      <h3>Beneficios para Colaboradores</h3>
-      <ul style={{ textAlign: 'left', display: 'inline-block', marginBottom: '20px' }}>
+      <h2 style={styles.subtitle}>Vende juegos, Comparalos y mas!!</h2>
+      <h3 style={styles.benefitsTitle}>Beneficios para Colaboradores</h3>
+      <ul style={styles.benefitsList}>
         <li>Vender tus propios juegos en la plataforma</li>
-        <li>Comisión del 10% en ventas</li>
+        <li>Compara las estadisticas de tus juegos</li>
         <li>Acceso exclusivo a estadísticas y reportes de ventas</li>
       </ul>
-      <p>$19.00 por mes | Cancela cuando quieras</p>
+      <p style={styles.price}>COP $30000 Pago único</p>
       <button 
         onClick={handleBecomeSeller} 
-        style={{
-          backgroundColor: '#007BFF', 
-          color: 'white', 
-          padding: '10px 20px', 
-          border: 'none', 
-          borderRadius: '5px',
-          cursor: 'pointer'
-        }}
+        style={styles.button}
       >
         QUIERO COLABORAR
       </button>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    textAlign: 'center',
+    padding: '20px',
+    backgroundColor: '#121212', // Fondo oscuro
+    color: '#e0e0e0', // Texto claro
+    minHeight: '100vh', // Asegura que cubra toda la pantalla
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: '2.5em',
+    marginBottom: '20px',
+    color: '#BB86FC', // Color de acento
+  },
+  image: {
+    borderRadius: '50%',
+    width: '150px',
+    marginBottom: '20px',
+    border: '2px solid #BB86FC', // Añade un borde de color acento
+  },
+  subtitle: {
+    fontSize: '1.5em',
+    marginBottom: '20px',
+  },
+  benefitsTitle: {
+    fontSize: '1.3em',
+    marginBottom: '10px',
+    color: '#03DAC6', // Otro color de acento
+  },
+  benefitsList: {
+    textAlign: 'left',
+    display: 'inline-block',
+    marginBottom: '20px',
+    lineHeight: '1.6',
+  },
+  price: {
+    fontSize: '1.2em',
+    marginBottom: '20px',
+  },
+  button: {
+    backgroundColor: '#03DAC6', // Color del botón
+    color: '#121212', // Texto oscuro para contrastar con el botón
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '1em',
+    transition: 'background-color 0.3s',
+  }
 };
 
 export default BecomeSellerPage;
