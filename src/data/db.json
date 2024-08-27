@@ -1,17 +1,9 @@
 {
   "games": [
     {
-      "id": 1,
-      "name": "Death's Gambit",
-      "category": "acción",
-      "price": 19.99,
-      "licensesAvailable": 50,
-      "licensesSold": 10,
-      "imageUrl": "https://i.ibb.co/pZ2JsQ4/3a5b6745-a401-4e6e-b5aa-99a02f86ff14.webp",
-      "sellerId": 1,
-      "description": "Un desafiante juego de acción y plataformas.",
-      "discount": 20,
-      "promoEndDate": "2024-12-31"
+      "licensesSold": 6,
+      "licensesAvailable": 29,
+      "id": "2"
     },
     {
       "id": 2,
