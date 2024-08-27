@@ -37,7 +37,7 @@ const LeftMenus = () => {
             <img src={promocionesIcon} alt="promociones" />
             <label>Promociones</label>
           </div>
-          <div onClick={() => navigate("/SalesPage")}>
+          <div onClick={() => navigate("/PurchasePage")}>
             <img src={compraIcon} alt="compra" />
             <label>Compra</label>
           </div>

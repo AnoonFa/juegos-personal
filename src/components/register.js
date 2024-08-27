@@ -18,7 +18,7 @@ const RegisterForm = () => {
   const { setTitle } = usePageTitle();
 
   useEffect(() => {
-    setTitle('Registro'); // Establecer el título de la página
+    setTitle('Registro');
   }, [setTitle]);
 
   const handleChange = (e) => {
@@ -32,19 +32,19 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crear el objeto de usuario con los valores predeterminados
     const newUser = {
       nombre: formData.nombre,
       telefono: formData.telefono,
       correo: formData.correo,
       username: formData.username,
-      role: 'cliente',          // Rol predeterminado
-      membership: false,        // Membresía predeterminada
-      gamesOwned: []            // Juegos predeterminados (vacío)
+      contrasena: formData.contrasena, 
+      role: 'cliente',
+      membership: false,
+      gamesOwned: [],
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/users', newUser); // Cambiado a /users
+      const response = await axios.post('http://localhost:3000/users', newUser);
 
       if (response.status === 201) {
         alert('Registro exitoso. Puedes iniciar sesión ahora.');

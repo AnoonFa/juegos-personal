@@ -9,31 +9,32 @@ import { usePageTitle } from '../context/PageTitleContext';
 const Login = () => {
   const { setUser } = useAuth();
   const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+  const [contrasena, setContrasena] = useState(''); 
   const navigate = useNavigate();
   const { setTitle } = usePageTitle();
 
   useEffect(() => {
-    setTitle('Iniciar Sesión'); // Establecer el título de la página
+    setTitle('Iniciar Sesión'); 
   }, [setTitle]);
-
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/users', {
-        identifier,
-        password,
-      });
+      const response = await axios.get(`http://localhost:3000/users`);
+      const user = response.data.find(
+        (user) =>
+          (user.username === identifier || user.correo === identifier) &&
+          user.contrasena === contrasena 
+      );
 
-      if (response.data) {
-        setUser(response.data);
-        if (response.data.role === 'administrador') {
+      if (user) {
+        setUser(user);
+        if (user.role === 'administrador') {
           navigate('/admin');
         } else {
           navigate('/home');
         }
       } else {
-        throw new Error('Usuario no encontrado');
+        throw new Error('Usuario no encontrado o contraseña incorrecta');
       }
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
@@ -61,8 +62,8 @@ const Login = () => {
               <input 
                 type="password" 
                 placeholder='Contraseña' 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+                value={contrasena} 
+                onChange={(e) => setContrasena(e.target.value)} 
                 required 
               />
               <FaLock className='icono' />

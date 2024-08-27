@@ -1,26 +1,20 @@
 {
   "games": [
     {
-      "licensesSold": 6,
-      "licensesAvailable": 29,
-      "id": "2"
-    },
-    {
-      "id": 2,
+      "id": "2",
       "name": "LumberJack",
       "category": "deportes",
       "price": 15.99,
-      "licensesAvailable": 30,
-      "licensesSold": 5,
+      "licensesAvailable": 29,
+      "licensesSold": 6,
       "imageUrl": "path_to_image",
       "sellerId": 2,
       "description": "Una aventura emocionante en los bosques.",
       "discount": 15,
       "promoEndDate": "2024-11-30"
-    
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Rompete",
       "category": "rompecabezas",
       "price": 15.99,
@@ -31,53 +25,127 @@
       "description": "Uno de los mas dificiles para romperte la cabeza.",
       "discount": 0,
       "promoEndDate": ""
+    },
+    {
+      "id": "5ffc",
+      "name": "213",
+      "category": "Rompecabezas",
+      "size": 321321,
+      "price": 321321,
+      "licensesAvailable": 0,
+      "licensesSold": 1,
+      "imageUrl": "vew",
+      "description": "cwewcecw",
+      "discount": 10,
+      "promoEndDate": "2024-08-28T18:26:24.637Z",
+      "sellerId": "faa2"
     }
   ],
   "purchases": [
     {
-      "id": 1,
-      "buyerId": 1,
-      "gameId": 1,
+      "id": "635a",
+      "buyerId": "faa2",
+      "sellerId": 2,
+      "gameId": "2",
       "quantity": 1,
-      "purchaseDate": "2024-08-25",
-      "totalPrice": 19.99
+      "purchaseDate": "2024-08-27",
+      "price": 15.99,
+      "totalPrice": 15.99,
+      "gameName": "LumberJack"
+    },
+    {
+      "id": "7794",
+      "buyerId": "faa2",
+      "sellerId": 2,
+      "gameId": "2",
+      "quantity": 1,
+      "purchaseDate": "2024-08-27",
+      "price": 13.5915,
+      "totalPrice": 13.5915,
+      "gameName": "LumberJack"
+    },
+    {
+      "id": "5c52",
+      "buyerId": "faa2",
+      "sellerId": 2,
+      "gameId": "2",
+      "quantity": 1,
+      "purchaseDate": "2024-08-27",
+      "price": 13.5915,
+      "totalPrice": 13.5915,
+      "gameName": "LumberJack"
+    },
+    {
+      "id": "312a",
+      "buyerId": "ce34",
+      "sellerId": "faa2",
+      "gameId": "5ffc",
+      "quantity": 1,
+      "purchaseDate": "2024-08-27",
+      "price": 289188.9,
+      "totalPrice": 289188.9,
+      "gameName": "213"
     }
   ],
   "sales": [
     {
-      "id": 1,
+      "id": "1",
       "gameId": 1,
       "quantity": 1,
       "saleDate": "2023-08-23",
       "pricePerUnit": 100,
-      "sellerId": "nOugdh8ukR8TuijAiHpF",
+      "sellerId": "ce34",
       "membershipApplied": true
     }
   ],
   "users": [
     {
+      "id": "faa2",
+      "nombre": "Esteban",
+      "telefono": "3144008869",
+      "correo": "nanoespinosa13@gmail.com",
+      "username": "Esteban",
+      "contrasena": "123456",
+      "role": "cliente",
       "membership": true,
-      "id": "d69c"
+      "gamesOwned": [
+        {
+          "gameId": "2",
+          "quantity": 2
+        }
+      ]
     },
     {
-      "id": "b0e8",
-      "nombre": "Alejao",
-      "telefono": "3144008843",
-      "correo": "nanoespinosa12@gmail.com",
-      "username": "Alejo2",
+      "id": "ce34",
+      "nombre": "Alex",
+      "telefono": "3144008869",
+      "correo": "nanoespinosa13@gmail.com",
+      "username": "Alex",
+      "contrasena": "123456",
+      "role": "administrador",
+      "membership": false,
+      "gamesOwned": [
+        {
+          "gameId": "5ffc",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "25e7",
+      "nombre": "Esteban",
+      "telefono": "3144008869",
+      "correo": "esteban@gmail.com",
+      "username": "Pepe",
+      "contrasena": "123456",
       "role": "cliente",
       "membership": false,
       "gamesOwned": []
-    },
-    {
-      "id": "7c05",
-      "identifier": "231",
-      "password": "123456"
     }
   ],
   "cart": [
     {
-      "id": 1,
+      "id": "1",
       "userId": "b0e8",
       "productId": 1,
       "quantity": 2
@@ -85,14 +153,14 @@
   ],
   "reviews": [
     {
-      "id": 1,
+      "id": "1",
       "gameId": 1,
       "reviewerName": "John Doe",
       "rating": 4,
       "comment": "Great game!"
     },
     {
-      "id": 2,
+      "id": "2",
       "gameId": 2,
       "reviewerName": "Jane Doe",
       "rating": 5,

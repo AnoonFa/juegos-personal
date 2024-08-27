@@ -3,7 +3,7 @@ import axios from 'axios';
 import './GameReviews.css';
 import { useAuth } from '../../context/AuthContext';
 
-const GameReviews = ({ gameId, mode = 'all' }) => {
+const GameReviews = ({ gameId = null, mode = 'all' }) => {
   const [reviews, setReviews] = useState([]);
   const [gameName, setGameName] = useState('');
   const [newReview, setNewReview] = useState('');
@@ -13,21 +13,27 @@ const GameReviews = ({ gameId, mode = 'all' }) => {
 
   useEffect(() => {
     const fetchGameDetails = async () => {
-      try {
-        const gameResponse = await axios.get(`http://localhost:3000/games/${gameId}`);
-        setGameName(gameResponse.data.name);
-      } catch (error) {
-        console.error('Error fetching game details:', error);
+      if (gameId) {
+        try {
+          const gameResponse = await axios.get(`http://localhost:3000/games/${gameId}`);
+          if (gameResponse.status === 200) {
+            setGameName(gameResponse.data.name);
+          } else {
+            console.error(`Error fetching game details: ${gameResponse.statusText}`);
+          }
+        } catch (error) {
+          console.error('Error fetching game details:', error);
+        }
       }
     };
 
     const fetchReviews = async () => {
       try {
         let reviewsResponse;
-        if (mode === 'user' && user) {
-          reviewsResponse = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}&sellerId=${user.id}`);
-        } else {
+        if (gameId) {
           reviewsResponse = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}`);
+        } else {
+          reviewsResponse = await axios.get(`http://localhost:3000/reviews`);
         }
         setReviews(reviewsResponse.data);
       } catch (error) {
@@ -37,7 +43,7 @@ const GameReviews = ({ gameId, mode = 'all' }) => {
 
     fetchGameDetails();
     fetchReviews();
-  }, [gameId, mode, user]);
+  }, [gameId]);
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -69,27 +75,36 @@ const GameReviews = ({ gameId, mode = 'all' }) => {
     setVisibleReviews(prev => prev + 3); // Mostrar 3 reseñas más al hacer clic en el botón
   };
 
+  const showLessReviews = () => {
+    setVisibleReviews(3); // Volver a mostrar solo 3 reseñas
+  };
+
   return (
     <div className="game-reviews">
-      <h3>Reseñas de {gameName}</h3>
+      {gameId && <h3>Reseñas de {gameName}</h3>}
+      {!gameId && <h3>Todas las Reseñas</h3>}
       {reviews.length > 0 ? (
         <>
           {reviews.slice(0, visibleReviews).map((review, index) => (
             <div key={review.id || index} className="review">
-              <h4>{review.username}</h4>
+              <h4 className="review-username">{review.username}</h4>
+              {!gameId && <h5 className="review-game">Juego: {review.gameName}</h5>}
               <p>{review.comment}</p>
               <p>Puntuación: {review.rating}/5</p>
             </div>
           ))}
-          {visibleReviews < reviews.length && (
-            <button onClick={showMoreReviews}>Mostrar más</button>
+          {visibleReviews < reviews.length ? (
+            <button className="show-more" onClick={showMoreReviews}>Mostrar más</button>
+          ) : (
+            <button className="show-less" onClick={showLessReviews}>Mostrar menos</button>
           )}
         </>
       ) : (
         <p>No hay reseñas disponibles.</p>
       )}
 
-      {user && (
+      {/* Mostrar el formulario solo si se está viendo un juego específico */}
+      {user && gameId && (
         <form onSubmit={handleReviewSubmit} className="review-form">
           <textarea
             value={newReview}

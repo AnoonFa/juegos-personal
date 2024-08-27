@@ -1,22 +1,49 @@
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
 .carousel {
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  overflow: hidden;
+  max-width: 500px;
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
+  flex-shrink: 0;
 }
 
-.carousel-images {
+.carousel-thumbnails {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  margin-left: 20px; /* Cambiado para poner las miniaturas a la derecha */
 }
 
-.carousel-images img {
-  max-width: 100%;
+.carousel-thumbnails img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+  cursor: pointer;
   border-radius: 5px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.carousel-thumbnails img:hover,
+.carousel-thumbnails img.active {
+  border-color: #fff;
+}
+
+.carousel-info {
+  text-align: center;
+  color: white;
+  margin-top: 15px;
+}
+
+.carousel-info h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
 }
 
 .carousel button {
@@ -41,14 +68,6 @@
 .carousel button:last-child {
   right: 10px;
 }
-
-.carousel-info {
-  text-align: center;
-  color: white;
-  margin-top: 15px;
-}
-
-.carousel-info h2 {
-  font-size: 20px;
-  margin-bottom: 5px;
+.carousel .thumbs-wrapper {
+  display: none !important; /* Esto ocultará completamente las miniaturas en la parte inferior */
 }

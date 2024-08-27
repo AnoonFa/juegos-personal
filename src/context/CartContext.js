@@ -54,9 +54,12 @@ const CartProvider = ({ children }) => {
       setCart(localCart);
     }
   };
+  const clearCart = () => {
+    setCart([]); // Esta función vacía el carrito
+  };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart,setCart,clearCart, addToCart }}>
       {children}
     </CartContext.Provider>
   );

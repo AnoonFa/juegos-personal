@@ -20,7 +20,7 @@ const MasVPage = () => {
       <SortedSalesTable />
       <StatsTables />
       <GameList />
-      <GameReviews/>
+      <GameReviews mode="all" />
     </div>
   );
 };

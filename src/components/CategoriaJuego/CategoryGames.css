@@ -1,5 +1,6 @@
 .category-games {
   padding: 20px;
+  text-decoration: none;
 }
 
 .games-list {
@@ -9,6 +10,7 @@
 }
 
 .game-card {
+  text-decoration: none;
   width: 200px;
   padding: 20px;
   border: 1px solid #ddd;

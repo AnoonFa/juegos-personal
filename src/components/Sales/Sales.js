@@ -52,7 +52,8 @@ const Sales = () => {
     if (existingGame) {
       try {
         await axios.put(`http://localhost:3000/games/${existingGame.id}`, {
-          licensesAvailable: existingGame.licensesAvailable + quantity
+          licensesAvailable: existingGame.licensesAvailable + quantity,
+          licensesSold: existingGame.licensesSold
         });
 
         updateGameLicenses(existingGame.id, quantity, false);
@@ -73,9 +74,8 @@ const Sales = () => {
           description,
           discount,
           promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
-          sellerId: user.id
+          sellerId: user.id // Asegurar que el sellerId es del usuario actual
         });
-
 
         setGames(prevGames => [...prevGames, {
           id: response.data.id,
@@ -89,7 +89,7 @@ const Sales = () => {
           description,
           discount,
           promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
-          sellerId: user.id
+          sellerId: user.id // Asegurar que el sellerId es del usuario actual
         }]);
         alert('Juego nuevo añadido y licencias vendidas!');
       } catch (error) {
@@ -117,96 +117,96 @@ const Sales = () => {
     return <p>Debes iniciar sesión para ver esta página.</p>;
   }
 
-  const userGames = games.filter(game => game.sellerId === user.id && game.licensesAvailable > 0);
+  const userGames = games ? games.filter(game => game.sellerId === user.id && game.licensesAvailable > 0) : [];
 
   return (
     <div className="sales-page">
-      <h1>Vender Juego</h1>
-      <div className="sales-form">
-        <div className="form-group">
-          <label>Nombre:</label>
-          <input 
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-          />
-          {errors.name && <p className="error">{errors.name}</p>}
-        </div>
-        <div className="form-group">
-          <label>Categoría:</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="Rompecabezas">Rompecabezas</option>
-            <option value="Acción">Acción</option>
-            <option value="Deportes">Deporte</option>
-          </select>
-          {errors.category && <p className="error">{errors.category}</p>}
-        </div>
-        <div className="form-group">
-          <label>Tamaño (KB):</label>
-          <input 
-            type="number" 
-            value={size} 
-            onChange={(e) => setSize(parseInt(e.target.value))} 
-          />
-          {errors.size && <p className="error">{errors.size}</p>}
-        </div>
-        <div className="form-group">
-          <label>Precio:</label>
-          <input 
-            type="number" 
-            value={price} 
-            onChange={(e) => setPrice(parseFloat(e.target.value))} 
-          />
-          {errors.price && <p className="error">{errors.price}</p>}
-        </div>
-        <div className="form-group">
-          <label>Cantidad de Licencias:</label>
-          <input 
-            type="number" 
-            value={quantity} 
-            onChange={(e) => setQuantity(parseInt(e.target.value))} 
-          />
-          {errors.quantity && <p className="error">{errors.quantity}</p>}
-        </div>
-        <div className="form-group">
-          <label>Imagen URL:</label>
-          <input 
-            type="text" 
-            value={image} 
-            onChange={(e) => setImage(e.target.value)} 
-          />
-          {errors.image && <p className="error">{errors.image}</p>}
-        </div>
-        <div className="form-group">
-          <label>Descripción:</label>
-          <input 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
-          />
-          {errors.description && <p className="error">{errors.description}</p>}
-        </div>
-        <div className="form-group">
-          <label>Descuento (%):</label>
-          <input 
-            type="number" 
-            value={discount} 
-            onChange={(e) => setDiscount(parseFloat(e.target.value))} 
-          />
-          {errors.discount && <p className="error">{errors.discount}</p>}
-        </div>
-        <div className="form-group">
-          <label>Duración de la promoción (días):</label>
-          <input 
-            type="number" 
-            value={promoDuration} 
-            onChange={(e) => setPromoDuration(parseInt(e.target.value))} 
-          />
-          {errors.promoDuration && <p className="error">{errors.promoDuration}</p>}
-        </div>
-        <button onClick={handleSell}>Vender Juego</button>
+    <h1>Vender Juego</h1>
+    <div className="sales-form">
+      <div className="form-group">
+        <label>Nombre:</label>
+        <input 
+          type="text" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+        />
+        {errors.name && <p className="error">{errors.name}</p>}
       </div>
+      <div className="form-group">
+        <label>Categoría:</label>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="Rompecabezas">Rompecabezas</option>
+          <option value="Acción">Acción</option>
+          <option value="Deportes">Deporte</option>
+        </select>
+        {errors.category && <p className="error">{errors.category}</p>}
+      </div>
+      <div className="form-group">
+        <label>Tamaño (KB):</label>
+        <input 
+          type="number" 
+          value={size} 
+          onChange={(e) => setSize(parseInt(e.target.value))} 
+        />
+        {errors.size && <p className="error">{errors.size}</p>}
+      </div>
+      <div className="form-group">
+        <label>Precio:</label>
+        <input 
+          type="number" 
+          value={price} 
+          onChange={(e) => setPrice(parseFloat(e.target.value))} 
+        />
+        {errors.price && <p className="error">{errors.price}</p>}
+      </div>
+      <div className="form-group">
+        <label>Cantidad de Licencias:</label>
+        <input 
+          type="number" 
+          value={quantity} 
+          onChange={(e) => setQuantity(parseInt(e.target.value))} 
+        />
+        {errors.quantity && <p className="error">{errors.quantity}</p>}
+      </div>
+      <div className="form-group">
+        <label>Imagen URL:</label>
+        <input 
+          type="text" 
+          value={image} 
+          onChange={(e) => setImage(e.target.value)} 
+        />
+        {errors.image && <p className="error">{errors.image}</p>}
+      </div>
+      <div className="form-group">
+        <label>Descripción:</label>
+        <input 
+          value={description} 
+          onChange={(e) => setDescription(e.target.value)} 
+        />
+        {errors.description && <p className="error">{errors.description}</p>}
+      </div>
+      <div className="form-group">
+        <label>Descuento (%):</label>
+        <input 
+          type="number" 
+          value={discount} 
+          onChange={(e) => setDiscount(parseFloat(e.target.value))} 
+        />
+        {errors.discount && <p className="error">{errors.discount}</p>}
+      </div>
+      <div className="form-group">
+        <label>Duración de la promoción (días):</label>
+        <input 
+          type="number" 
+          value={promoDuration} 
+          onChange={(e) => setPromoDuration(parseInt(e.target.value))} 
+        />
+        {errors.promoDuration && <p className="error">{errors.promoDuration}</p>}
+      </div>
+      <button onClick={handleSell}>Vender Juego</button>
+    </div>
 
-      <div className="existing-games">
+    <div className="existing-games">
         <h2>Tus Juegos</h2>
         {userGames.length > 0 ? (
           userGames.map(game => (

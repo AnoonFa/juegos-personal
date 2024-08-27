@@ -29,6 +29,7 @@ import GameList from './components/GameList/GameList';
 import SortedSalesTable from './components/Tablas/TablaOrdenada';
 import AdminPage from './pages/AdminPage/AdminPage';
 import { PageTitleProvider } from './context/PageTitleContext';
+import Footer from './components/Footer/Footer';
 
 
 
@@ -57,11 +58,12 @@ function App() {
                 <Route path="/Home/*" element={<Home />} />
                 <Route path="/game/:id" element={<ProtectedRoute element={<GameDetails />} />} />
                 <Route path="/CartPage" element={<ProtectedRoute element={<CartPage />} />} />
-                <Route path="/PurchasePage/:id" element={<ProtectedRoute element={<PurchasePage />} />} />
+                <Route path="/PurchasePage" element={<ProtectedRoute element={<PurchasePage />} />} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<RegisterForm />} />
               </Routes>
-            </main>
+              
+            </main><Footer/>
           
             </CartProvider>
           </GamesProvider>

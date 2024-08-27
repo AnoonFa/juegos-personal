@@ -1,24 +1,16 @@
-/* Estilos para el contenedor del menú superior en modo oscuro */
 .topMenu-container {
   width: 100%;
   height: 100px;
   background-color: #0d3d5b; /* Color de fondo oscuro */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  position: absolute;
+  position: fixed; /* Cambiado a fixed para que permanezca en su lugar */
   top: 0;
   right: 0;
   display: flex;
   align-items: center;
-
-}
-
-.topMenu-container .cart-icon {
-  width: 40px; /* Ajusta el tamaño del ícono del carrito */
-  cursor: pointer;
-}
-.topMenu-container .profile-icon {
-  width: 50px; /* Ajusta el tamaño del ícono del carrito */
-  cursor: pointer;
+  justify-content: space-between; /* Distribuir elementos entre los bordes */
+  padding-right: 20px; /* Asegurar que los elementos de la derecha no estén pegados al borde */
+  z-index: 10; /* Asegurar que esté siempre en el frente */
 }
 
 .topMenu-container .title {
@@ -26,29 +18,25 @@
   text-transform: capitalize;
   color: #fff; /* Color del texto en modo oscuro */
   position: relative;
-  left: 22%;
+  margin-left: -24%;
 }
 
 .topMenu-container .image-container {
   display: flex;
   align-items: center;
-  display: flex;
-  position: relative;
-  left: 75%;
+  justify-content: flex-end;
 }
 
-.topMenu-container .image-container .icons {
-  width: 20px;
-  margin-left: 15px;
-  filter: invert(100%); /* Invertir los iconos para el modo oscuro */
+.topMenu-container .cart-icon {
+  width: 40px; /* Ajusta el tamaño del ícono del carrito */
+  cursor: pointer;
 }
 
-.topMenu-container .profile-pic {
-  width: 40px;
-  border-radius: 50%;
-  margin-left: 15px;
+.topMenu-container .profile-icon {
+  width: 50px; /* Ajusta el tamaño del ícono del perfil */
+  cursor: pointer;
+  filter: invert(100%);
 }
-
 
 .auth-button {
   padding: 8px 15px;
@@ -60,13 +48,15 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 20px; /* Separación entre el botón de autenticación y los íconos */
 }
 
 .auth-button:hover {
   background-color: #0056b3;
 }
-.espacio{
-  padding: 20px;
+
+.espacio {
+  width: 20px; /* Espacio entre íconos */
 }
 
 .profileInfo {
@@ -74,8 +64,6 @@
   flex-direction: column;
   align-items: flex-end;
 }
-
-
 
 /* Responsivo para móviles */
 @media only screen and (max-width: 320px) {
@@ -85,42 +73,26 @@
 @media only screen and (min-width: 321px) and (max-width: 767px) {
   .topMenu-container {
     height: 70px;
-    opacity: 1;
-    transition: 0.5s opacity ease-in-out;
-    z-index: 3;
   }
 
   .topMenu-container .cart-icon {
-    display: block;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    width: 30px; /* Reducir el tamaño del ícono en pantallas pequeñas */
   }
 
   .topMenu-container .title {
     font-size: 20px;
     font-weight: 500;
-    color: #fff; /* Color del texto en móvil en modo oscuro */
-    position: relative;
-    left: 15vw;
-    top: 20px;
   }
 
-  .topMenu-container .image-container {
-    width: 100%;
-    top: 15px;
+  .auth-button {
+    font-size: 12px;
   }
-
-  .topMenu-container .image-container .icons {
-    width: 16px;
-  }
-
 }
 
 /* Responsivo para tabletas */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .topMenu-container .title {
-    left: 24vw;
+    font-size: 22px;
   }
 }
 

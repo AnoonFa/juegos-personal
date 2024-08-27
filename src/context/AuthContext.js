@@ -7,21 +7,24 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/users');
-        setUser(response.data[0]); // Simula que obtenemos el usuario autenticado
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        setUser(null);
-      }
-    };
-
-    fetchUser();
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
+  const loginUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser: loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

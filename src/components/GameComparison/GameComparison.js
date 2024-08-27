@@ -5,12 +5,14 @@ import './GameComparison.css';
 const GameComparison = ({ selectedGame }) => {
   const { games, addToCart } = useContext(GamesContext);
 
-  // Filtra juegos similares por categoría y excluye el seleccionado
+  // Verificar si los juegos están cargados antes de filtrar
+  if (!games || games.length === 0) {
+    return <p>Cargando juegos...</p>;
+  }
+
   const similarGames = games.filter(game => game.category === selectedGame.category && game.id !== selectedGame.id);
 
-  // Función para manejar la adición del juego al carrito
   const handleAddToCart = (gameId) => {
-    // Por defecto agregamos 1 unidad al carrito
     addToCart(gameId, 1);
     alert('Juego agregado al carrito');
   };
@@ -26,7 +28,7 @@ const GameComparison = ({ selectedGame }) => {
             <p>Tamaño: {game.size} KB</p>
             <p>Licencias Disponibles: {game.licensesAvailable}</p>
             <p>Licencias Vendidas: {game.licensesSold}</p>
-            <button onClick={() => handleAddToCart(game.id)}>Agregar al carrito</button> {/* Botón para agregar al carrito */}
+            <button onClick={() => handleAddToCart(game.id)}>Agregar al carrito</button>
           </div>
         ))}
       </div>

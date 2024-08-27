@@ -8,6 +8,7 @@ import GameReviews from '../../components/GameReviews/GameReviews';
 import { GamesContext } from '../../context/GameContext';
 import { useAuth } from '../../context/AuthContext';
 import { usePageTitle } from '../../context/PageTitleContext';
+import SellerSales from '../../components/Sales/SellerSales';
 
 const SalesPage = () => {
   const { games } = useContext(GamesContext);
@@ -39,14 +40,19 @@ const SalesPage = () => {
       <Promotions />
       <SortedSalesTable />
       <Sales />
+      <br/>
+      <SellerSales/>
+      <br/>
       {selectedGame ? (
         <>
           <GameComparison selectedGame={selectedGame} />
           <GameReviews gameId={selectedGame.id} />
+          
         </>
       ) : (
         <p>No tienes juegos disponibles para mostrar.</p>
       )}
+      
     </div>
   );
 };

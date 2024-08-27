@@ -6,8 +6,10 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext'; // Importar el contexto del carrito
 import axios from 'axios';
 import emailjs from 'emailjs-com';
+
 
 const sendMembershipEmail = (to_name, to_email) => {
   if (!to_name || !to_email) {
@@ -81,9 +83,12 @@ export default function Checkout() {
     cvv: '',
   });
 
+
+  
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { cart, clearCart } = useCart(); // Obtener el carrito y la función para vaciarlo
 
   const { purchaseType, cartItems = [] } = location.state || {
     purchaseType: null,
@@ -147,6 +152,8 @@ export default function Checkout() {
     }
   };
 
+
+
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -156,41 +163,69 @@ export default function Checkout() {
       let totalPrice = discountedTotal;
 
       if (purchaseType === 'membership') {
+        const updatedUser = {
+          ...user,
+          role: 'vendedor',
+          sellerId: user.id, // Podrías generar un ID único si es necesario
+        };
         totalPrice = 19;
-        await axios.put(`http://localhost:3000/users/${user.id}`, { membership: true });
+        await axios.put(`http://localhost:3000/users/${user.id}`, { membership: true }, updatedUser);
         sendMembershipEmail(formData.to_name, formData.to_email);
+        navigate('/SalesPage');
 
       } else if (purchaseType === 'game' && cartItems.length > 0) {
         for (const item of cartItems) {
           if (!item.sellerId || !user?.id || !item.id) {
             throw new Error(`Datos insuficientes para registrar la compra. Verifica el vendedor, el usuario y el ID del juego.`);
           }
+          const gameResponse = await axios.get(`http://localhost:3000/games/${item.id}`);
+          const gameData = gameResponse.data;
 
+          // Registro de la compra
           const purchaseData = {
-            buyerId: user.id,
-            sellerId: item.sellerId,
-            gameId: item.id,
-            quantity: item.quantity,
-            purchaseDate: new Date().toISOString().split('T')[0],
-            price: item.price,
-            totalPrice: item.price * item.quantity,
-            gameName: item.name,
+              buyerId: user.id,
+              sellerId: gameData.sellerId, // Obtener sellerId del juego
+              gameId: item.id,
+              quantity: item.quantity,
+              purchaseDate: new Date().toISOString().split('T')[0],
+              price: item.price,
+              totalPrice: item.price * item.quantity,
+              gameName: item.name,
           };
+
 
           await axios.post('http://localhost:3000/purchases', purchaseData);
 
-          await axios.put(`http://localhost:3000/games/${item.id}`, {
-            licensesSold: item.licensesSold + item.quantity,
-            licensesAvailable: item.licensesAvailable - item.quantity,
-          });
-        }
+          // Actualización del juego en gamesOwned del usuario
+          const existingGame = user.gamesOwned.find(g => g.gameId === item.id);
+          const updatedGamesOwned = existingGame
+          ? user.gamesOwned.map(g =>
+              g.gameId === item.id
+                ? { ...g, quantity: g.quantity + item.quantity }
+                : g
+            )
+          : [...user.gamesOwned, { gameId: item.id, quantity: item.quantity }];
+        const updatedUser = {
+          ...user,
+          gamesOwned: updatedGamesOwned,
+        };
+
+        await axios.put(`http://localhost:3000/users/${user.id}`, updatedUser);
+
+        const updatedGameData = {
+          ...gameData, // Mantener todos los campos existentes del juego
+          licensesSold: gameData.licensesSold + item.quantity,
+          licensesAvailable: gameData.licensesAvailable - item.quantity,
+        };
+        await axios.put(`http://localhost:3000/games/${item.id}`, updatedGameData);
+      }
 
         sendGamesEmail(formData.to_name, formData.to_email, cartItems, totalPrice);
       }
 
       console.log(`Compra registrada con éxito por un total de: $${totalPrice.toFixed(2)}`);
-
-    } catch (error) {
+      clearCart();
+    }  catch (error) {
       console.error('Error al procesar el pago:', error);
       alert(`Hubo un error al procesar el pago: ${error.message}`);
     }
