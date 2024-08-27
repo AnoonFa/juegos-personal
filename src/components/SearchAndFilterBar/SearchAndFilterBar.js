@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchAndFilterBar.css';
 
 const SearchAndFilterBar = ({ allGames, setGames }) => {
@@ -6,13 +6,29 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
   const [filterCategory, setFilterCategory] = useState('');
   const [filterPrice, setFilterPrice] = useState('');
 
+  useEffect(() => {
+    // Restablecer juegos cuando se cambien los filtros
+    handleSearch();
+  }, [searchTerm, filterCategory, filterPrice]);
+
   const handleSearch = () => {
-    // Siempre filtra sobre allGames
-    const filteredGames = allGames.filter(game =>
-      game.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterCategory ? game.category === filterCategory : true) &&
-      (filterPrice ? game.price <= filterPrice : true)
-    );
+    // Trabaja sobre allGames para asegurarte de que no se modifique
+    let filteredGames = [...allGames];
+
+    if (searchTerm) {
+      filteredGames = filteredGames.filter(game =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (filterCategory) {
+      filteredGames = filteredGames.filter(game => game.category === filterCategory);
+    }
+
+    if (filterPrice) {
+      filteredGames = filteredGames.filter(game => game.price <= filterPrice);
+    }
+
     setGames(filteredGames);
   };
 
@@ -33,7 +49,7 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
             <option value="">Todas las categorías</option>
             <option value="rompecabezas">Rompecabezas</option>
             <option value="acción">Acción</option>
-            <option value="deporte">Deporte</option>
+            <option value="deportes">Deporte</option>
           </select>
         </div>
         <div className="filter-group">
@@ -47,7 +63,6 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
           />
         </div>
       </div>
-      <button onClick={handleSearch} className="search-button">Buscar</button>
     </div>
   );
 };

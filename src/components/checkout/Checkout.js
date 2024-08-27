@@ -195,7 +195,22 @@ export default function Checkout() {
       alert(`Hubo un error al procesar el pago: ${error.message}`);
     }
   };
-
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#90caf9',
+      },
+      background: {
+        default: '#121212',
+        paper: '#1d1d1d',
+      },
+      text: {
+        primary: '#ffffff',
+        secondary: '#b0b0b0',
+      },
+    },
+  });
 
   return (
     <ThemeProvider theme={darkTheme}>

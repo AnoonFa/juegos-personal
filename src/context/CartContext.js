@@ -1,4 +1,3 @@
-// CartContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
@@ -26,7 +25,7 @@ const CartProvider = ({ children }) => {
   const addToCart = async (product, quantity) => {
     if (user) {
       try {
-        const existingProduct = cart.find(item => item.id === product.id);
+        const existingProduct = cart.find(item => item.productId === product.id);
         if (existingProduct) {
           await axios.put(`http://localhost:3000/cart/${existingProduct.id}`, {
             ...existingProduct,
@@ -34,7 +33,7 @@ const CartProvider = ({ children }) => {
           });
         } else {
           const response = await axios.post('http://localhost:3000/cart', {
-            ...product,
+            productId: product.id,
             quantity,
             userId: user.id,
           });
@@ -45,11 +44,11 @@ const CartProvider = ({ children }) => {
       }
     } else {
       const localCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const existingProduct = localCart.find(item => item.id === product.id);
+      const existingProduct = localCart.find(item => item.productId === product.id);
       if (existingProduct) {
         existingProduct.quantity += quantity;
       } else {
-        localCart.push({ ...product, quantity });
+        localCart.push({ productId: product.id, quantity });
       }
       localStorage.setItem('cart', JSON.stringify(localCart));
       setCart(localCart);

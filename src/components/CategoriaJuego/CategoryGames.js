@@ -3,12 +3,23 @@ import { useParams } from 'react-router-dom';
 import { GamesContext } from '../../context/GameContext';
 import './CategoryGames.css';
 
+const normalizeString = (str) => {
+  return str
+    .normalize('NFD') // Normaliza la cadena para separar los acentos
+    .replace(/[\u0300-\u036f]/g, '') // Elimina los acentos
+    .toLowerCase()
+    .trim(); // Convierte a minúsculas y elimina espacios en blanco
+};
+
 const CategoryGames = () => {
   const { category } = useParams(); // Obtenemos la categoría desde la URL
   const { games } = useContext(GamesContext);
 
-  // Filtrar juegos basados en la categoría, respetando mayúsculas y acentos
-  const filteredGames = games.filter(game => game.category === category);
+  // Normalizar la categoría recibida de la URL
+  const normalizedCategory = normalizeString(category);
+
+  // Filtrar juegos basados en la categoría normalizada
+  const filteredGames = games.filter(game => normalizeString(game.category) === normalizedCategory);
 
   return (
     <section className="category-games">

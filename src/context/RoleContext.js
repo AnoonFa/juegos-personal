@@ -14,10 +14,10 @@ export const RoleProvider = ({ children }) => {
       if (user) {
         try {
           const response = await axios.get(`http://localhost:3000/roles?userId=${user.id}`);
-          setRole(response.data.role || 'client');
+          setRole(response.data.role || 'cliente');
         } catch (error) {
           console.error('Error fetching role:', error);
-          setRole('client');
+          setRole('cliente');
         }
       } else {
         setRole('nolog');

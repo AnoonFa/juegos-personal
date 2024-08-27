@@ -41,10 +41,7 @@ const LeftMenus = () => {
             <img src={compraIcon} alt="compra" />
             <label>Compra</label>
           </div>
-          <div onClick={() => navigate("/MasVPage")}>
-            <img src={flechaIcon} alt="mas-vendidos" />
-            <label>El más vendido</label>
-          </div>
+          
 
           {/* Mostrar opciones específicas según el rol del usuario */}
           {isAuthenticated && user.role === 'administrador' && (
@@ -65,8 +62,12 @@ const LeftMenus = () => {
               <label>Conviértete en Vendedor</label>
             </div>
           )}
+          <div onClick={() => navigate("/MasVPage")}>
+            <img src={flechaIcon} alt="mas-vendidos" />
+            <label>El más vendido</label>
+          </div>
 
-          {isAuthenticated && user.role === 'administrador' && (
+          {isAuthenticated && user.role === 'cliente' && (
             <div onClick={() => navigate("/Library")}>
               <img src={Biblioteca} alt="Biblioteca" />
               <label>Biblioteca</label>

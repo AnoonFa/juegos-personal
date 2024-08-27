@@ -5,8 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../context/PageTitleContext';
 
-
-
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
     nombre: '',
@@ -18,7 +16,6 @@ const RegisterForm = () => {
 
   const navigate = useNavigate();
   const { setTitle } = usePageTitle();
-
 
   useEffect(() => {
     setTitle('Registro'); // Establecer el título de la página
@@ -35,8 +32,19 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Crear el objeto de usuario con los valores predeterminados
+    const newUser = {
+      nombre: formData.nombre,
+      telefono: formData.telefono,
+      correo: formData.correo,
+      username: formData.username,
+      role: 'cliente',          // Rol predeterminado
+      membership: false,        // Membresía predeterminada
+      gamesOwned: []            // Juegos predeterminados (vacío)
+    };
+
     try {
-      const response = await axios.post('http://localhost:3000/register', formData);
+      const response = await axios.post('http://localhost:3000/users', newUser); // Cambiado a /users
 
       if (response.status === 201) {
         alert('Registro exitoso. Puedes iniciar sesión ahora.');
@@ -49,13 +57,7 @@ const RegisterForm = () => {
       alert('Error en el registro: ' + error.message);
     }
   };
-const ExamplePage = () => {
-  const { setTitle } = usePageTitle();
 
-  useEffect(() => {
-    setTitle('Título de la Página');
-  }, [setTitle]);
-};
   return (
     <div className="fondo-wrapper">
       <div className="fondo">
@@ -91,4 +93,3 @@ const ExamplePage = () => {
 };
 
 export default RegisterForm;
-

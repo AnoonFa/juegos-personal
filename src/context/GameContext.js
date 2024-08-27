@@ -14,8 +14,8 @@ export const GamesProvider = ({ children }) => {
     const fetchGames = async () => {
       try {
         const response = await axios.get('http://localhost:3000/games');
-        setAllGames(response.data);
-        setGames(response.data);
+        setAllGames(response.data); // Solo cargar una vez
+        setGames(response.data); // Inicializar con todos los juegos
         setError(null);
       } catch (error) {
         console.error('Error loading games:', error);

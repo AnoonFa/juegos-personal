@@ -1,68 +1,134 @@
 {
-    "games": [
-      {
-        "id": 1,
-        "name": "Death's Gambit",
-        "category": "acción",
-        "price": 19.99,
-        "licensesAvailable": 50,
-        "licensesSold": 10,
-        "imageUrl": "path_to_image",
-        "sellerId": 1
-      },
-      {
-        "id": 2,
-        "name": "LumberJack",
-        "category": "aventura",
-        "price": 15.99,
-        "licensesAvailable": 30,
-        "licensesSold": 5,
-        "imageUrl": "path_to_image",
-        "sellerId": 2
-      }
-    ],
-    "purchases": [
-      {
-        "id": 1,
-        "buyerId": 1,
-        "gameId": 1,
-        "quantity": 1,
-        "purchaseDate": "2024-08-25",
-        "totalPrice": 19.99
-      }
-    ],
-    "sales": [
-      {
-        "id": 1,
-        "gameId": 1,
-        "quantity": 1,
-        "saleDate": "2023-08-23",
-        "pricePerUnit": 100,
-        "sellerId": "nOugdh8ukR8TuijAiHpF",
-        "membershipApplied": true
-      }
-    ],
-    "users": [
-      {
-        "id": 1,
-        "nombre": "Alejo",
-        "telefono": "3144008868",
-        "correo": "al@lool.com",
-        "username": "Alejo",
-        "role": "cliente",
-        "membership": true,
-        "gamesOwned": [1]
-      },
-      {
-        "id": 2,
-        "nombre": "Esteban",
-        "telefono": "3144008869",
-        "correo": "esteban@gmail.com",
-        "username": "Esteban123",
-        "role": "administrador",
-        "membership": false,
-        "gamesOwned": []
-      }
-    ]
-  }
-  
+  "games": [
+    {
+      "id": 1,
+      "name": "Death's Gambit",
+      "category": "acción",
+      "price": 19.99,
+      "licensesAvailable": 50,
+      "licensesSold": 10,
+      "imageUrl": "https://i.ibb.co/pZ2JsQ4/3a5b6745-a401-4e6e-b5aa-99a02f86ff14.webp",
+      "sellerId": 1,
+      "description": "Un desafiante juego de acción y plataformas.",
+      "discount": 20,
+      "promoEndDate": "2024-12-31"
+    },
+    {
+      "id": 2,
+      "name": "LumberJack",
+      "category": "deportes",
+      "price": 15.99,
+      "licensesAvailable": 30,
+      "licensesSold": 5,
+      "imageUrl": "path_to_image",
+      "sellerId": 2,
+      "description": "Una aventura emocionante en los bosques.",
+      "discount": 15,
+      "promoEndDate": "2024-11-30"
+    
+    },
+    {
+      "id": 3,
+      "name": "Rompete",
+      "category": "rompecabezas",
+      "price": 15.99,
+      "licensesAvailable": 30,
+      "licensesSold": 5,
+      "imageUrl": "path_to_image",
+      "sellerId": 2,
+      "description": "Uno de los mas dificiles para romperte la cabeza.",
+      "discount": 0,
+      "promoEndDate": ""
+    }
+  ],
+  "purchases": [
+    {
+      "id": 1,
+      "buyerId": 1,
+      "gameId": 1,
+      "quantity": 1,
+      "purchaseDate": "2024-08-25",
+      "totalPrice": 19.99
+    }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "gameId": 1,
+      "quantity": 1,
+      "saleDate": "2023-08-23",
+      "pricePerUnit": 100,
+      "sellerId": "nOugdh8ukR8TuijAiHpF",
+      "membershipApplied": true
+    }
+  ],
+  "users": [
+    {
+      "membership": true,
+      "id": "d69c"
+    },
+    {
+      "id": "b0e8",
+      "nombre": "Alejao",
+      "telefono": "3144008843",
+      "correo": "nanoespinosa12@gmail.com",
+      "username": "Alejo2",
+      "role": "cliente",
+      "membership": false,
+      "gamesOwned": []
+    },
+    {
+      "id": "7c05",
+      "identifier": "231",
+      "password": "123456"
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "userId": "b0e8",
+      "productId": 1,
+      "quantity": 2
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "gameId": 1,
+      "reviewerName": "John Doe",
+      "rating": 4,
+      "comment": "Great game!"
+    },
+    {
+      "id": 2,
+      "gameId": 2,
+      "reviewerName": "Jane Doe",
+      "rating": 5,
+      "comment": "Loved it!"
+    },
+    {
+      "id": "4e63",
+      "gameId": 1,
+      "comment": "Si es de acción pero mucho",
+      "rating": "4",
+      "userId": "d69c",
+      "createdAt": "2024-08-27T04:03:15.255Z"
+    },
+    {
+      "id": "5a30",
+      "gameId": 1,
+      "comment": "wow",
+      "rating": "5",
+      "userId": "d69c",
+      "createdAt": "2024-08-27T04:05:32.870Z"
+    },
+    {
+      "id": "fd31",
+      "gameId": 1,
+      "comment": "que",
+      "rating": "2",
+      "userId": "d69c",
+      "createdAt": "2024-08-27T04:05:41.814Z"
+    }
+  ]
+}

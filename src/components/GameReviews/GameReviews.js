@@ -3,24 +3,41 @@ import axios from 'axios';
 import './GameReviews.css';
 import { useAuth } from '../../context/AuthContext';
 
-const GameReviews = ({ gameId }) => {
+const GameReviews = ({ gameId, mode = 'all' }) => {
   const [reviews, setReviews] = useState([]);
+  const [gameName, setGameName] = useState('');
   const [newReview, setNewReview] = useState('');
   const [rating, setRating] = useState(1);
   const { user } = useAuth();
+  const [visibleReviews, setVisibleReviews] = useState(3); // Mostrar solo 3 reseñas inicialmente
 
   useEffect(() => {
+    const fetchGameDetails = async () => {
+      try {
+        const gameResponse = await axios.get(`http://localhost:3000/games/${gameId}`);
+        setGameName(gameResponse.data.name);
+      } catch (error) {
+        console.error('Error fetching game details:', error);
+      }
+    };
+
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}`);
-        setReviews(response.data);
+        let reviewsResponse;
+        if (mode === 'user' && user) {
+          reviewsResponse = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}&sellerId=${user.id}`);
+        } else {
+          reviewsResponse = await axios.get(`http://localhost:3000/reviews?gameId=${gameId}`);
+        }
+        setReviews(reviewsResponse.data);
       } catch (error) {
         console.error('Error fetching reviews:', error);
       }
     };
 
+    fetchGameDetails();
     fetchReviews();
-  }, [gameId]);
+  }, [gameId, mode, user]);
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +48,13 @@ const GameReviews = ({ gameId }) => {
           gameId,
           username: user.username,
           comment: newReview,
-          rating: rating,
-          userId: user.id, 
+          rating,
+          userId: user.id,
           createdAt: new Date().toISOString(),
         };
 
         await axios.post('http://localhost:3000/reviews', reviewData);
-        setReviews([...reviews, reviewData]);
+        setReviews([...reviews, { ...reviewData, id: reviews.length + 1 }]);
         setNewReview('');
         setRating(1);
       } catch (error) {
@@ -48,17 +65,26 @@ const GameReviews = ({ gameId }) => {
     }
   };
 
+  const showMoreReviews = () => {
+    setVisibleReviews(prev => prev + 3); // Mostrar 3 reseñas más al hacer clic en el botón
+  };
+
   return (
     <div className="game-reviews">
-      <h3>Reseñas de Juegos</h3>
+      <h3>Reseñas de {gameName}</h3>
       {reviews.length > 0 ? (
-        reviews.map(review => (
-          <div key={review.id} className="review">
-            <h4>{review.username}</h4>
-            <p>{review.comment}</p>
-            <p>Puntuación: {review.rating}/5</p>
-          </div>
-        ))
+        <>
+          {reviews.slice(0, visibleReviews).map((review, index) => (
+            <div key={review.id || index} className="review">
+              <h4>{review.username}</h4>
+              <p>{review.comment}</p>
+              <p>Puntuación: {review.rating}/5</p>
+            </div>
+          ))}
+          {visibleReviews < reviews.length && (
+            <button onClick={showMoreReviews}>Mostrar más</button>
+          )}
+        </>
       ) : (
         <p>No hay reseñas disponibles.</p>
       )}

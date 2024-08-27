@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Sales.css';
 
-
 const Sales = () => {
   const { games, setGames, updateGameLicenses } = useContext(GamesContext);
-  const { user } = useAuth();
+  const { user } = useAuth(); // Verifica que `user` esté correctamente definido
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Rompecabezas');
   const [size, setSize] = useState(0);
@@ -18,6 +17,13 @@ const Sales = () => {
   const [discount, setDiscount] = useState(0);
   const [promoDuration, setPromoDuration] = useState(0);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    // Asegúrate de que `user` se carga correctamente
+    if (!user) {
+      console.error('User not found or not authenticated.');
+    }
+  }, [user]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -37,7 +43,7 @@ const Sales = () => {
   const handleSell = async () => {
     if (!validateForm()) return;
 
-    if (!user || !user.uid) {
+    if (!user || !user.id) {
       alert('Debes estar autenticado para vender juegos.');
       return;
     }
@@ -106,12 +112,12 @@ const Sales = () => {
     setErrors({});
   };
 
-  // Verificar si user existe antes de acceder a su propiedad uid
-  if (!user || !user.uid) {
+  // Verifica si `user` existe antes de acceder a su propiedad id
+  if (!user || !user.id) {
     return <p>Debes iniciar sesión para ver esta página.</p>;
   }
 
-  const userGames = games.filter(game => game.sellerId === user.uid && game.licensesAvailable > 0);
+  const userGames = games.filter(game => game.sellerId === user.id && game.licensesAvailable > 0);
 
   return (
     <div className="sales-page">

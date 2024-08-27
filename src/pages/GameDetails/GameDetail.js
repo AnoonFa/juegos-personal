@@ -15,7 +15,8 @@ const GameDetails = () => {
   const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
 
   useEffect(() => {
-    const foundGame = games.find(game => game.id === id);
+    const numericId = parseInt(id, 10); // Convertir el id a número
+    const foundGame = games.find(game => game.id === numericId);
     if (foundGame) {
       setGame(foundGame);
       setTitle(foundGame.name); // Establecer el título de la página

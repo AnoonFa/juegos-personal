@@ -5,6 +5,7 @@ import GameList from '../../components/GameList/GameList';
 import SortedSalesTable from '../../components/Tablas/TablaOrdenada';
 import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
 import '../Home/Home.css';
+import GameReviews from '../../components/GameReviews/GameReviews';
 
 const MasVPage = () => {
   const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
@@ -19,6 +20,7 @@ const MasVPage = () => {
       <SortedSalesTable />
       <StatsTables />
       <GameList />
+      <GameReviews/>
     </div>
   );
 };

@@ -9,8 +9,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/user');
-        setUser(response.data); // Simula que obtenemos el usuario autenticado
+        const response = await axios.get('http://localhost:3000/users');
+        setUser(response.data[0]); // Simula que obtenemos el usuario autenticado
       } catch (error) {
         console.error('Error fetching user:', error);
         setUser(null);

@@ -22,6 +22,7 @@ export default function Review({ purchaseType, cartItems }) {
   );
 
   const getTotalPrice = () => {
+    if (purchaseType === 'membership') return 30000;
     let totalPrice = 0;
     cartItems.forEach(item => {
       totalPrice += item.price * item.quantity; // Usar el precio ya calculado
