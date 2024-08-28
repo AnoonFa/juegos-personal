@@ -20,7 +20,7 @@
       "price": 15.99,
       "licensesAvailable": 30,
       "licensesSold": 5,
-      "imageUrl": "path_to_image",
+      "imageUrl": "https://lh3.googleusercontent.com/pw/AP1GczMvO8OwbsOrlNOBHdegPda9gV60jcmWGV2pHdUSRQpilb291BB-AU78h-kLgdgfK_D8KeyY1cnSOhkvV6nAjTROsRnNfbPEuFrvzrjvn7T6tb9iMkkgNDgrvPh3az4HdG2AStuywAGDeusY3VHQRG3u=w1024-h1024-s-no-gm?authuser=0",
       "sellerId": 2,
       "description": "Uno de los mas dificiles para romperte la cabeza.",
       "discount": 0,
@@ -28,14 +28,14 @@
     },
     {
       "id": "5ffc",
-      "name": "213",
+      "name": "1000 cxp",
       "category": "Rompecabezas",
-      "size": 321321,
-      "price": 321321,
-      "licensesAvailable": 0,
+      "size": 1000,
+      "price": 10000,
+      "licensesAvailable": 10,
       "licensesSold": 1,
-      "imageUrl": "vew",
-      "description": "cwewcecw",
+      "imageUrl": "https://photos.app.goo.gl/Wo73UymKX1ZWG26L6",
+      "description": "Les presentamos 1000 cxp de (1000 combinaciones*mil piezas) una nueva expwue te encantara ",
       "discount": 10,
       "promoEndDate": "2024-08-28T18:26:24.637Z",
       "sellerId": "faa2"
@@ -153,7 +153,7 @@
   ],
   "reviews": [
     {
-      "id": "1",
+      "id": "3",
       "gameId": 1,
       "reviewerName": "John Doe",
       "rating": 4,
@@ -161,14 +161,14 @@
     },
     {
       "id": "2",
-      "gameId": 2,
+      "gameId": "2",
       "reviewerName": "Jane Doe",
       "rating": 5,
       "comment": "Loved it!"
     },
     {
       "id": "4e63",
-      "gameId": 1,
+      "gameId": "2",
       "comment": "Si es de acción pero mucho",
       "rating": "4",
       "userId": "d69c",
@@ -176,7 +176,7 @@
     },
     {
       "id": "5a30",
-      "gameId": 1,
+      "gameId":" 3",
       "comment": "wow",
       "rating": "5",
       "userId": "d69c",
@@ -184,7 +184,7 @@
     },
     {
       "id": "fd31",
-      "gameId": 1,
+      "gameId": "2",
       "comment": "que",
       "rating": "2",
       "userId": "d69c",
