@@ -1,6 +1,6 @@
 /* Variables */
 :root {
-  --isDark: #0d3d5b;
+  --isDark: #0d3d5b00;
 }
 
 /* Modo Oscuro (Único Modo) */
@@ -22,16 +22,11 @@
   background-color: transparent;
 }
 
-.leftMenu .logo img {
-  width: 80px;
-  background-color: transparent;
-  filter: invert(100%) brightness(100%) hue-rotate(190deg);
-}
 
 /* Estilos para el botón de cierre */
 .leftMenu .closeButton {
   display: none;
-  color: white;
+  color: rgba(216, 36, 36, 0);
 }
 
 /* Estilos para los íconos */
@@ -50,6 +45,7 @@
   justify-content: space-between;
   background-color: var(--isDark);
   padding: 10px;
+
   margin-top: 10px;
 }
 
@@ -57,7 +53,8 @@
   width: 15vw;
   padding: 10px;
   border-radius: 7px;
-  background-color: #0994E2;
+  color: white;
+  background-color: #424242;
 }
 
 .leftMenu .icons div:hover img {
@@ -80,8 +77,8 @@
 .leftMenu .icons div label {
   background-color: transparent;
   width: 100%;
-  font-size: 14px;
-  color: white;
+  font-size: large;
+  color: rgb(155, 153, 153);
   margin-left: 10px;
   text-align: left;
 }

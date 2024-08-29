@@ -85,6 +85,9 @@ const RegisterForm = () => {
               <FaLock className='icono' />
             </div>
             <button type="submit" className="btn">Registrar</button>
+            <div className="registro-link">
+              <p className='notiene'>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+            </div>
           </form>
         </div>
       </div>

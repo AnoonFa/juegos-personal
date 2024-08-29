@@ -20,7 +20,7 @@
 }
 
 .game-image {
-  width: 500px; /* Tamaño fijo grande para la imagen */
+  width: 300px; /* Tamaño fijo grande para la imagen */
   height: auto;
   border-radius: 10px;
 }

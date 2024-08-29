@@ -1,7 +1,7 @@
 .topMenu-container {
   width: 100%;
   height: 100px;
-  background-color: #0d3d5b; /* Color de fondo oscuro */
+  background-color: #121212; /* Color de fondo oscuro */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   position: fixed; /* Cambiado a fixed para que permanezca en su lugar */
   top: 0;
@@ -43,7 +43,7 @@
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: #2980b9;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -52,11 +52,18 @@
 }
 
 .auth-button:hover {
-  background-color: #0056b3;
+  background-color: #206c9e;
 }
 
 .espacio {
   width: 20px; /* Espacio entre íconos */
+}
+.espacio1 {
+  height: 34px;
+  width: 4px;
+  margin-left: 21px;
+  border-left: solid 1px #7a6d6d;
+
 }
 
 .profileInfo {

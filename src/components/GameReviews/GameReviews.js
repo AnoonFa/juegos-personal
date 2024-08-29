@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './GameReviews.css';
 import { useAuth } from '../../context/AuthContext';
@@ -45,13 +45,17 @@ const GameReviews = ({ gameId = null, mode = 'all' }) => {
     fetchReviews();
   }, [gameId]);
 
+  // Verificar si el usuario posee el juego
+  const userOwnsGame = user?.gamesOwned?.some(ownedGame => ownedGame.gameId === gameId);
+
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
-    if (user) {
+    if (user && userOwnsGame) {
       try {
         const reviewData = {
           gameId,
+          gameName,
           username: user.username,
           comment: newReview,
           rating,
@@ -67,7 +71,7 @@ const GameReviews = ({ gameId = null, mode = 'all' }) => {
         console.error('Error submitting review:', error);
       }
     } else {
-      alert('Debes estar logueado para dejar una reseña.');
+      alert('Debes estar logueado y poseer el juego para dejar una reseña.');
     }
   };
 
@@ -103,8 +107,7 @@ const GameReviews = ({ gameId = null, mode = 'all' }) => {
         <p>No hay reseñas disponibles.</p>
       )}
 
-      {/* Mostrar el formulario solo si se está viendo un juego específico */}
-      {user && gameId && (
+      {user && userOwnsGame && (
         <form onSubmit={handleReviewSubmit} className="review-form">
           <textarea
             value={newReview}

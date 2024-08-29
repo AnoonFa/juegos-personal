@@ -34,8 +34,12 @@ const GameDetails = () => {
   };
 
   const handleBuyNow = () => {
-    addToCart(game.id, quantity);
-    navigate('/checkout', { state: { purchaseType: 'game', cartItems: [{ ...game, price: calculateDiscountedPrice(), quantity }] } });
+    if (user && user.role !== 'nolog') {
+      addToCart(game.id, quantity);
+      navigate('/checkout', { state: { purchaseType: 'game', cartItems: [{ ...game, price: calculateDiscountedPrice(), quantity }] } });
+    } else {
+      navigate('/login');
+    }
   };
 
   const handleCloseAlert = () => {
@@ -69,6 +73,13 @@ const GameDetails = () => {
       <h2 className="game-name">{game.name}</h2>
       <div className="game-main">
         <img src={game.imageUrl} alt={game.name} className="game-image" />
+        <div className="game-info">
+        <p>Categoría: {game.category}</p>
+        <p>Tamaño: {game.size} KB</p>
+        <p>Licencias Disponibles: {game.licensesAvailable}</p>
+        <p>Licencias Vendidas: {game.licensesSold}</p>
+        <p>Descripción: {game.description}</p>
+      </div>
         <div className="game-menu">
           {game.discount && game.promoEndDate ? (
             <>
@@ -98,13 +109,7 @@ const GameDetails = () => {
           )}
         </div>
       </div>
-      <div className="game-info">
-        <p>Categoría: {game.category}</p>
-        <p>Tamaño: {game.size} KB</p>
-        <p>Licencias Disponibles: {game.licensesAvailable}</p>
-        <p>Licencias Vendidas: {game.licensesSold}</p>
-        <p>Descripción: {game.description}</p>
-      </div>
+
       <GameReviews gameId={game.id} />
     </div>
   );

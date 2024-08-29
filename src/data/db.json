@@ -3,7 +3,7 @@
     {
       "id": "2",
       "name": "LumberJack",
-      "category": "deportes",
+      "category": "Deportes",
       "price": 15.99,
       "licensesAvailable": 29,
       "licensesSold": 6,
@@ -16,7 +16,7 @@
     {
       "id": "3",
       "name": "Rompete",
-      "category": "rompecabezas",
+      "category": "Rompecabezas",
       "price": 15.99,
       "licensesAvailable": 30,
       "licensesSold": 5,
@@ -141,6 +141,17 @@
       "role": "cliente",
       "membership": false,
       "gamesOwned": []
+    },
+    {
+      "id": "3a01",
+      "nombre": "Esteban",
+      "telefono": "3144008869",
+      "correo": "nanoespinosa13@gmail.com",
+      "username": "Alexa",
+      "contrasena": "123456",
+      "role": "cliente",
+      "membership": false,
+      "gamesOwned": []
     }
   ],
   "cart": [
@@ -153,20 +164,6 @@
   ],
   "reviews": [
     {
-      "id": "3",
-      "gameId": 1,
-      "reviewerName": "John Doe",
-      "rating": 4,
-      "comment": "Great game!"
-    },
-    {
-      "id": "2",
-      "gameId": "2",
-      "reviewerName": "Jane Doe",
-      "rating": 5,
-      "comment": "Loved it!"
-    },
-    {
       "id": "4e63",
       "gameId": "2",
       "comment": "Si es de acción pero mucho",
@@ -176,19 +173,11 @@
     },
     {
       "id": "5a30",
-      "gameId":" 3",
+      "gameId": " 3",
       "comment": "wow",
       "rating": "5",
       "userId": "d69c",
       "createdAt": "2024-08-27T04:05:32.870Z"
-    },
-    {
-      "id": "fd31",
-      "gameId": "2",
-      "comment": "que",
-      "rating": "2",
-      "userId": "d69c",
-      "createdAt": "2024-08-27T04:05:41.814Z"
     }
   ]
 }

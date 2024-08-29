@@ -28,7 +28,7 @@ const LeftMenus = () => {
         <button className="closeButton" type="button">X</button>
 
         <div className="icons">
-          {/* Mostrar siempre las opciones generales */}
+          
           <div onClick={() => navigate("/Home")}>
             <img src={gamesIcon} alt="games" />
             <label>Juegos</label>
@@ -43,7 +43,7 @@ const LeftMenus = () => {
           </div>
           
 
-          {/* Mostrar opciones específicas según el rol del usuario */}
+          
           {isAuthenticated && user.role === 'administrador' && (
             <div onClick={() => navigate("/admin")}>
               <img src={usersIcon} alt="users" />

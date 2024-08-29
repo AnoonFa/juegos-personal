@@ -43,7 +43,7 @@ const TopMenu = () => {
           className="cart-icon"
           onClick={handleCartClick}
         />
-        <span className="espacio"> </span>
+        <span className="espacio1"> </span>
         {user && user.role !== 'nolog' && (
           <>
             <img
