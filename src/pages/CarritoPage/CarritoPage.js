@@ -2,17 +2,17 @@ import React, { useContext, useEffect } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
+import { usePageTitle } from '../../context/PageTitleContext';
 import './CarritoPage.css';
 
 const CartPage = () => {
   const { cart, updateGameLicenses, removeFromCart } = useContext(GamesContext);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
+  const { setTitle } = usePageTitle();
 
   useEffect(() => {
-    setTitle('Carrito de Compras'); // Establecer el título de la página
+    setTitle('Carrito de Compras');
   }, [setTitle]);
 
   const calculateDiscount = () => {
@@ -56,11 +56,14 @@ const CartPage = () => {
     const item = cart.find(item => item.id === id);
     if (item) {
       const newQuantity = item.quantity + increment;
-      if (newQuantity >= 1 && newQuantity <= item.licensesAvailable) {
-        updateGameLicenses(id, increment, true);
+      if (newQuantity > 0 && newQuantity <= item.licensesAvailable) {
+        updateGameLicenses(id, newQuantity); // Actualiza la cantidad si es válida
+      } else if (newQuantity <= 0) {
+        removeFromCart(id); // Elimina del carrito si la cantidad llega a 0
       }
     }
   };
+  
 
   const handleProceedToPayment = () => {
     if (!user) {
@@ -76,46 +79,62 @@ const CartPage = () => {
     removeFromCart(id);
   };
 
+  const handleNavigateToGameDetails = (id) => {
+    navigate(`/game/${id}`);
+  };
+
   return (
     <div className="cart-page">
       <h1>Carrito de Compras</h1>
-      <div className="cart-items">
-        {cart.map((item, index) => (
-          <div key={index} className="cart-item">
-            <img src={item.imageUrl} alt={item.name} />
-            <div className="item-details">
-              <h3>{item.name}</h3>
-              <p>Categoría: {item.category}</p>
-              <p>Licencias Disponibles: {item.licensesAvailable}</p>
-              <p>Licencias Vendidas: {item.licensesSold}</p>
+      <div className="cart-content">
+        <div className="cart-items">
+          {cart.map((item, index) => (
+            <div key={index} className="cart-item">
+              <img src={item.imageUrl} alt={item.name} />
+              <div className="item-details">
+                <h3 className='titulo' onClick={() => handleNavigateToGameDetails(item.id)}>
+                  {item.name}
+                </h3>
+                <p className='pp'><strong>Licencias Disponibles:</strong> {item.licensesAvailable}</p>
 
-              {item.discount && (
-                <div>
-                  <p className="original-price">Precio Original: ${item.price.toFixed(2)}</p>
-                  <p className="discounted-price">Precio con Descuento: ${(item.price - (item.price * (item.discount / 100))).toFixed(2)} (-{item.discount}%)</p>
-                  <p>Descuento válido hasta: {new Date(item.promoEndDate).toLocaleDateString()}</p>
+                {item.discount && (
+                  <div>
+                    <p className="original-price">Precio Original: ${item.price.toFixed(2)}</p>
+                    <p className="discounted-price">Precio con Descuento: ${(item.price - (item.price * (item.discount / 100))).toFixed(2)} (-{item.discount}%)</p>
+                    <p>Descuento válido hasta: {new Date(item.promoEndDate).toLocaleDateString()}</p>
+                  </div>
+                )}
+                {!item.discount && (
+                  <p>Precio: ${item.price.toFixed(2)}</p>
+                )}
+
+                <div className="quantity-controls">
+                  <button 
+                    onClick={() => handleQuantityChange(item.id, -1)}
+                    disabled={item.quantity <= 1}
+                  >
+                    -
+                  </button>
+                  <input type="number" value={item.quantity} readOnly />
+                  <button 
+                    onClick={() => handleQuantityChange(item.id, 1)}
+                    disabled={item.quantity >= item.licensesAvailable}
+                  >
+                    +
+                  </button>
                 </div>
-              )}
-              {!item.discount && (
-                <p>Precio: ${item.price.toFixed(2)}</p>
-              )}
-
-              <div className="quantity-controls">
-                <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
-                <input type="number" value={item.quantity} readOnly />
-                <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+                <button onClick={() => handleRemoveFromCart(item.id)} className="remove-button">Descartar</button>
               </div>
-              <button onClick={() => handleRemoveFromCart(item.id)} className="remove-button">Descartar</button>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="cart-summary">
-        <h2>Resumen de Compra</h2>
-        <p>Total: ${total.toFixed(2)}</p>
-        {discount > 0 && <p>Descuento Adicional: {discount}%</p>}
-        <p>Total con Descuento: ${totalDiscounted.toFixed(2)}</p>
-        <button onClick={handleProceedToPayment}>Proceder al Pago</button>
+          ))}
+        </div>
+        <div className="cart-summary">
+          <h2>Resumen de Compra</h2>
+          <p>Total: ${total.toFixed(2)}</p>
+          {discount > 1 && <p>Descuento Adicional: {discount}%</p>}
+          <p>Total con Descuento: ${totalDiscounted.toFixed(2)}</p>
+          <button onClick={handleProceedToPayment}>Proceder al Pago</button>
+        </div>
       </div>
     </div>
   );

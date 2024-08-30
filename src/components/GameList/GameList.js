@@ -15,7 +15,7 @@ const GameList = () => {
       <div className="game-list">
         {games.map(game => ( // Cambiado de `allGames` a `games`
           <div key={game.id} className="game-card" onClick={() => navigate(`/game/${game.id}`)}>
-            <img src={game.imageUrl} alt={game.name} />
+            <img src={game.coverImageUrl} alt={game.name} />
             <h3>{game.name}</h3>
             {game.discount && game.discountEndDate ? (
               <>

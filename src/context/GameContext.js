@@ -1,4 +1,3 @@
-// GameContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -65,6 +64,15 @@ export const GamesProvider = ({ children }) => {
               }
           : game
       )
+    );
+
+     // Actualizar la cantidad en el carrito
+     setCart(prevCart =>
+      prevCart.map(item =>
+        item.id === gameId
+          ? { ...item, quantity: quantity }
+          : item
+      ).filter(item => item.quantity > 0) // Eliminar si la cantidad es 0
     );
   };
 

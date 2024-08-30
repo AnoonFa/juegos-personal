@@ -108,7 +108,7 @@ const ProfilePage = () => {
             name="correo" 
             value={formData.correo} 
             onChange={handleChange} 
-            disabled 
+            required 
           />
         </div>
         <div className="form-group">

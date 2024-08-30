@@ -32,7 +32,7 @@
 }
 
 .comparison-item button {
-  background-color: #27ae60;
+  background-color: #2980b9;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -42,5 +42,5 @@
 }
 
 .comparison-item button:hover {
-  background-color: #1f8e4d;
+  background-color: #3379a8;
 }

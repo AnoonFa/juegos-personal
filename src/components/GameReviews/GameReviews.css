@@ -74,7 +74,7 @@
 }
 
 .review-form button {
-  background-color: #27ae60;
+  background-color: #2980b9;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -84,5 +84,5 @@
 }
 
 .review-form button:hover {
-  background-color: #1f8e4d;
+  background-color: rgb(41, 140, 206);
 }

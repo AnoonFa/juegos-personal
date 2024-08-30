@@ -22,7 +22,6 @@
   background-color: transparent;
 }
 
-
 /* Estilos para el botón de cierre */
 .leftMenu .closeButton {
   display: none;
@@ -45,11 +44,10 @@
   justify-content: space-between;
   background-color: var(--isDark);
   padding: 10px;
-
   margin-top: 10px;
 }
 
-.leftMenu .icons div:hover {
+.leftMenu .icons div:hover, .leftMenu .icons div.active {
   width: 15vw;
   padding: 10px;
   border-radius: 7px;
@@ -57,13 +55,13 @@
   background-color: #424242;
 }
 
-.leftMenu .icons div:hover img {
+.leftMenu .icons div:hover img, .leftMenu .icons div.active img {
   width: 30px;
   background-color: transparent;
   filter: invert(100%);
 }
 
-.leftMenu .icons div:hover label {
+.leftMenu .icons div:hover label, .leftMenu .icons div.active label {
   color: white;
   background-color: transparent;
 }

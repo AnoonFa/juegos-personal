@@ -18,7 +18,6 @@ const Home = () => {
     <div className="home">
       <Carousel />
       <Categories />
-      <StatsTables />
       <SortedSalesTable />
       <GameList />
     </div>

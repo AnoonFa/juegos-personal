@@ -5,6 +5,8 @@ import GameReviews from '../../components/GameReviews/GameReviews';
 import { usePageTitle } from '../../context/PageTitleContext';
 import { useAuth } from '../../context/AuthContext'; // Importar el contexto de autenticación
 import './GameDetails.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa los estilos necesarios
+import { Carousel } from 'react-responsive-carousel';
 
 const GameDetails = () => {
   const { id } = useParams();
@@ -29,8 +31,10 @@ const GameDetails = () => {
   }
 
   const handleAddToCart = () => {
-    addToCart(game.id, quantity);
-    setShowAlert(true);
+    if (quantity <= game.licensesAvailable) {
+      addToCart(game.id, quantity);
+      setShowAlert(true);
+    }
   };
 
   const handleBuyNow = () => {
@@ -59,54 +63,55 @@ const GameDetails = () => {
 
   const discountedPrice = calculateDiscountedPrice();
 
-    // Función para manejar el clic en "Conviértete en colaborador"
-    const handleBecomeSeller = () => {
-      if (!user.membership && !user.sellerId) {
-        navigate('/become-seller');
-      } else if (user.sellerId) {
-        navigate('/sales');
-      }
-    };
-
   return (
     <div className="game-details">
       <h2 className="game-name">{game.name}</h2>
       <div className="game-main">
-        <img src={game.imageUrl} alt={game.name} className="game-image" />
-        <div className="game-info">
-        <p>Categoría: {game.category}</p>
-        <p>Tamaño: {game.size} KB</p>
-        <p>Licencias Disponibles: {game.licensesAvailable}</p>
-        <p>Licencias Vendidas: {game.licensesSold}</p>
-        <p>Descripción: {game.description}</p>
-      </div>
-        <div className="game-menu">
-          {game.discount && game.promoEndDate ? (
-            <>
-              <p className="original-price">Precio Original: ${game.price.toFixed(2)}</p>
-              <p className="discounted-price">
-                Precio con Descuento: ${discountedPrice.toFixed(2)} (-{game.discount}%)
-              </p>
-              <p>Descuento válido hasta: {new Date(game.promoEndDate).toLocaleDateString()}</p>
-            </>
-          ) : (
-            <p>Precio: ${game.price.toFixed(2)}</p>
-          )}
-
-          {/* Comprobar si hay licencias disponibles */}
-          {game.licensesAvailable > 0 ? (
-            <>
-              <div className="quantity-controls">
-                <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
-                <input type="number" value={quantity} readOnly />
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
+        <div className="game-carousel">
+          <Carousel showThumbs={true} showArrows={true} dynamicHeight={false} infiniteLoop={true}>
+            {game.imageUrls.map((url, index) => (
+              <div key={index}>
+                <img src={url} alt={`${game.name} ${index + 1}`} />
               </div>
-              <button onClick={handleBuyNow} className="buy-now-button">Cómpralo ya</button>
-              <button onClick={handleAddToCart} className="add-to-cart-button">Agregar al Carrito</button>
-            </>
-          ) : (
-            <p className="no-licenses-message">No hay licencias disponibles. Por favor, espera a que se agreguen más.</p>
-          )}
+            ))}
+          </Carousel>
+        </div>
+        <div className="game-info">
+          <center><div className="game-logo">
+            <img src={game.logoUrl} alt={`${game.name} Logo`} />
+          </div></center>
+          <p>Categoría: {game.category}</p>
+          <p>Tamaño: {game.size} KB</p>
+          <p>Licencias Disponibles: {game.licensesAvailable}</p>
+          <p>Licencias Vendidas: {game.licensesSold}</p>
+          <p>Descripción: {game.description}</p>
+          <div className="game-menu">
+            {game.discount && game.promoEndDate ? (
+              <>
+                <p className="original-price">Precio Original: ${game.price.toFixed(2)}</p>
+                <p className="discounted-price">
+                  Precio con Descuento: ${discountedPrice.toFixed(2)} (-{game.discount}%)
+                </p>
+                <p>Descuento válido hasta: {new Date(game.promoEndDate).toLocaleDateString()}</p>
+              </>
+            ) : (
+              <p>Precio: ${game.price.toFixed(2)}</p>
+            )}
+
+            {game.licensesAvailable > 0 ? (
+              <>
+                <div className="quantity-controls">
+                  <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
+                  <input type="number" value={quantity} readOnly />
+                  <button onClick={() => setQuantity(quantity + 1)} disabled={quantity >= game.licensesAvailable}>+</button>
+                </div>
+                <button onClick={handleBuyNow} className="buy-now-button">Cómpralo ya</button>
+                <button onClick={handleAddToCart} className="add-to-cart-button">Agregar al Carrito</button>
+              </>
+            ) : (
+              <p className="no-licenses-message">No hay licencias disponibles. Por favor, espera a que se agreguen más.</p>
+            )}
+          </div>
         </div>
       </div>
 

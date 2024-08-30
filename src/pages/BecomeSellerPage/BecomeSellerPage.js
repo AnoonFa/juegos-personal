@@ -1,24 +1,32 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
+import { usePageTitle } from '../../context/PageTitleContext';
 
 const medalla = require('../../assets/icons/medalla.png');
 
 const BecomeSellerPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
+  const { setTitle } = usePageTitle();
 
   useEffect(() => {
-    setTitle('Conviértete en Vendedor'); // Establecer el título de la página
+    setTitle('Conviértete en Vendedor');
   }, [setTitle]);
 
-  const handleBecomeSeller = () => {
+  useEffect(() => {
     if (!user) {
       navigate('/login'); // Redirige al login si no está autenticado
+    }
+  }, [user, navigate]); // Dependencias incluyen `user` y `navigate`
+
+
+  const handleBecomeSeller = () => {
+    if (user && user.role !== 'nolog') {
+
+      navigate('/checkout', { state: { purchaseType: 'membership' } });
     } else {
-      navigate('/Checkout', { state: { purchaseType: 'membership' } }); // Redirige a la página de pagos si está autenticado
+      navigate('/login');
     }
   };
 

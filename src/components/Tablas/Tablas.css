@@ -1,43 +1,136 @@
-.table-container {
-  margin: 20px 0;
+.pagina-tabla {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  background-color: #282828;
+  background-color: #121212;
   color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.table-container h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  color: #fff;
+.pestanas {
+  display: flex;
+  margin-bottom: 20px;
 }
 
-.custom-table {
+.boton-pestana {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.boton-pestana.activo {
+  background-color: #444;
+}
+
+.contenedor-tabla {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.contenido-tabla {
+  width: 62%;
+}
+
+.tabla-personalizada {
   width: 100%;
   border-collapse: collapse;
 }
 
-.custom-table th,
-.custom-table td {
+.tabla-personalizada th,
+.tabla-personalizada td {
   padding: 12px;
-  border: 1px solid #444;
+  border: 1px solid transparent;
   text-align: left;
   color: white;
 }
 
-.custom-table th {
+.tabla-personalizada th {
   background-color: #333;
   font-weight: bold;
 }
 
-.custom-table tr:hover {
-  background-color: #444;
+.tabla-personalizada tr {
+  transition: background-color 0.3s ease;
 }
 
-.empty-table {
+.tabla-personalizada tr.resaltado,
+.tabla-personalizada tr:hover {
+  background-color: #3a3a3a; /* Color de resaltado */
+}
+
+.tabla-vacia {
   text-align: center;
   color: #999;
   font-style: italic;
   padding: 20px;
+}
+
+.pie-tabla {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.boton-alternar {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-alternar:hover {
+  background-color: #555;
+}
+
+.info-juego {
+  width: 35%;
+  padding: 20px;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.info-resaltada {
+  background-color: #3a3a3a; /* Mismo color que el resaltado de la tabla */
+  border-color: transparent; /* Elimina los bordes visibles */
+}
+
+.info-juego h2 {
+  margin-bottom: -10px;
+  color: #fff;
+}
+
+.title{
+  margin-top: -10px;
+}
+
+.info-juego p {
+  margin-bottom: -10px;
+  color: #ccc;
+}
+
+.imagenes-juego {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 21px;
+  gap: 10px;
+}
+
+.imagenes-juego img {
+  width: 48%;
+  border-radius: 8px;
+}
+
+/* Conexión visual entre la tabla y la info */
+.contenedor-tabla .resaltado + .info-resaltada {
+  box-shadow: none; /* Elimina sombra entre tabla e info */
 }

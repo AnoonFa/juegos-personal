@@ -1,64 +1,78 @@
 .fondo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #1e1e1e;
-  }
-  
-  .fondo {
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .contenedor-form {
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .contenedor-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .contenedor-input {
-    margin-bottom: 15px;
-    position: relative;
-  }
-  
-  .contenedor-input input,
-  .contenedor-input select {
-    width: calc(100% - 30px);
-    padding: 10px;
-    padding-left: 30px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .contenedor-input .icono {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    color: #666;
-  }
-  
-  .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-  }
-  
-  .btn:hover {
-    background-color: #0f82e0;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1e1e1e00; /* Fondo oscuro */
+}
+
+.fondo {
+  background-color: #333333; /* Fondo oscuro para el formulario */
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+.contenedor-form {
+  max-width: 400px;
+  width: 100%;
+}
+
+.contenedor-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f0f0f0; /* Texto claro */
+}
+
+.contenedor-input {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.contenedor-input input,
+.contenedor-input select {
+  width: calc(100% - 30px);
+  padding: 10px;
+  padding-left: 30px;
+  border: 1px solid #555; /* Borde más oscuro */
+  border-radius: 5px;
+  background-color: #222; /* Fondo más oscuro */
+  color: #f0f0f0; /* Texto claro */
+}
+
+.contenedor-input .icono {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #888; /* Color de icono más claro */
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2980b9; /* Botón azul oscuro */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: rgb(67, 155, 226); /* Botón azul más claro al pasar el cursor */
+}
+
+.registro-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.registro-link a {
+  color: #2980b9; /* Color del enlace */
+}
+
+.notiene {
+  color: #f0f0f0; /* Texto claro */
+}

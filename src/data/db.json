@@ -2,40 +2,63 @@
   "games": [
     {
       "id": "2",
-      "name": "LumberJack",
-      "category": "Deportes",
-      "price": 15.99,
+      "name": "Call of Duty Black ops4",
+      "category": "Acción",
+      "price": 119000,
+      "size": 209000, 
       "licensesAvailable": 29,
       "licensesSold": 6,
-      "imageUrl": "path_to_image",
-      "sellerId": 2,
-      "description": "Una aventura emocionante en los bosques.",
+      "logoUrl": "https://pngbuy.com/wp-content/uploads/2023/08/call-of-duty-black-ops-Logo.png", 
+      "coverImageUrl": "https://image.api.playstation.com/vulcan/img/cfn/11307CjjUZ9rA_whmJUghJsG9Hl1-rmnOUTk3-nccj01ZpYMCHrJ8k8kzBrVyp-p-iCPej73TEJAs88ZBeiZ1uirtj0fsa16.png?w=440", 
+      "imageUrls": [
+        "https://estaticos-cdn.prensaiberica.es/clip/c7475c91-d382-4d70-89a7-ad05729e8d91_alta-libre-aspect-ratio_default_0.jpg",
+        "https://media.wired.com/photos/5bc7b4936278de2d212348df/master/pass/COD-BlackOps4-FA.jpg",
+        "https://i.ytimg.com/vi/dts5_BBiqDU/maxresdefault.jpg",
+        "https://www.telegraph.co.uk/content/dam/gaming/2018/09/11/Call-of-Duty-Black-Ops-4-Blackout-beta-grenade_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.png"
+      ],
+      "description": "Call of Duty: Black Ops 4 ofrece la experiencia multijugador más táctica y profunda de la serie, junto con la enorme experiencia 'zombis' disponible desde el lanzamiento, que proporcionará el triple de aventuras. Blackout, un modo competitivo completamente nuevo inspirado en 'battle royale' que reúne a personajes, lugares, armas y equipo de toda la serie en un combate por la supervivencia, todos contra todos, con el exclusivo sabor de Black Ops.",
       "discount": 15,
-      "promoEndDate": "2024-11-30"
+      "promoEndDate": "2024-11-30",
+      "sellerId": 2
     },
     {
       "id": "3",
-      "name": "Rompete",
-      "category": "Rompecabezas",
-      "price": 15.99,
+      "name": "Fifa 2023",
+      "category": "Deportes",
+      "price": 129000,
+      "size": 300000,  
       "licensesAvailable": 30,
       "licensesSold": 5,
-      "imageUrl": "https://lh3.googleusercontent.com/pw/AP1GczMvO8OwbsOrlNOBHdegPda9gV60jcmWGV2pHdUSRQpilb291BB-AU78h-kLgdgfK_D8KeyY1cnSOhkvV6nAjTROsRnNfbPEuFrvzrjvn7T6tb9iMkkgNDgrvPh3az4HdG2AStuywAGDeusY3VHQRG3u=w1024-h1024-s-no-gm?authuser=0",
-      "sellerId": 2,
-      "description": "Uno de los mas dificiles para romperte la cabeza.",
+      "logoUrl": "https://wapesports.com/wp-content/uploads/2022/08/FIFA-23-LOGO.png",  
+      "coverImageUrl": "https://media.vandal.net/m/122945/fifa-23-202210612192557_1.jpg", 
+      "imageUrls": [
+        "https://media.revistagq.com/photos/6336b7688cc1e0eba345cd73/3:2/w_1349,h_899,c_limit/fifa-23.png",
+        "https://i.blogs.es/36f763/screenshot_659/840_560.jpeg",
+        "https://imag.malavida.com/mvimgbig/download-fs/fifa-21670-3.jpg",
+        "https://sm.ign.com/t/ign_es/screenshot/default/vinijr-stutter-feint-16x9-wm-lores-1-2_c3zb.1280.jpg"
+      ],
+      "description": "FIFA 23 es la nueva entrega del simulador de fútbol de EA Sports para PlayStation 4 y 5, Xbox One, Xbox Series, PC y Nintendo Switch. Esta entrega presenta la FIFA World Cup masculina y una mejora en la jugabilidad gracias a la tecnología HyperMotion2 que ofrece una experiencia de juego aún más realista. Además, incluye incorporación de equipos femeninos, funciones de juego cruzado y más.",
       "discount": 0,
-      "promoEndDate": ""
+      "promoEndDate": "",
+      "sellerId": 2
     },
     {
       "id": "5ffc",
-      "name": "1000 cxp",
+      "name": "Rompecabezas Jigsaw",
       "category": "Rompecabezas",
       "size": 1000,
       "price": 10000,
       "licensesAvailable": 10,
       "licensesSold": 1,
-      "imageUrl": "https://photos.app.goo.gl/Wo73UymKX1ZWG26L6",
-      "description": "Les presentamos 1000 cxp de (1000 combinaciones*mil piezas) una nueva expwue te encantara ",
+      "logoUrl": "https://example.com/logo-1000cxp.png",  
+      "coverImageUrl": "https://play-lh.googleusercontent.com/VKQlVqQ7EgyQzvawEFamRKL-dczwlHoB_KY2OTuoD_38DgGnuVYrN8O_vr192AOC0alD",  
+      "imageUrls": [
+        "https://play-lh.googleusercontent.com/ZBIZhHjDP9l1SdCZdruaBa9D03c2jS6n9r6Cx2RPmtN3-9qffbAeikue6L0A6hhZSLk=w526-h296-rw",
+        "https://play-lh.googleusercontent.com/HMYO72k7AD-qdBCTwxAawhY7hQBhirz0AY3mTnmQKA7ORgu_04jTXlVOrYaR3mPj=w526-h296-rw",
+        "https://play-lh.googleusercontent.com/47lYDU4ozhYCiQXnzQXn-hedurk7Ir_xRcbB3CYatWYvL7lF1GNAHHt8r1SKbOzuMg=w526-h296-rw",
+        "https://play-lh.googleusercontent.com/T9-Pm6yUFoyT576Tzt_MA2IXhN7hkwDYaEKQ-MtalsCy8qvVjhn33_brtLWC500nMvA=w526-h296-rw"
+      ],
+      "description": "Les presentamos 1000 cxp de (1000 combinaciones*mil piezas) una nueva experiencia que te encantará.",
       "discount": 10,
       "promoEndDate": "2024-08-28T18:26:24.637Z",
       "sellerId": "faa2"

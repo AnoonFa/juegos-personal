@@ -1,73 +1,84 @@
 .carousel-container {
   display: flex;
-  justify-content: center;
+
+justify-content: center;
   align-items: center;
   margin: 20px auto;
 }
 
-.carousel {
+.carousel img{
   position: relative;
-  max-width: 500px;
-  background-color: #333;
+  width: 74%;
+  max-width: 1200px;
+  background-color: #33333300;
   padding: 20px;
   border-radius: 10px;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .carousel-thumbnails {
+  width: 20%;
   display: flex;
   flex-direction: column;
-  margin-left: 20px; /* Cambiado para poner las miniaturas a la derecha */
+  justify-content: space-around;
+  margin-left: 20px;
 }
 
-.carousel-thumbnails img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10px;
+.thumbnail-item {
+  position: relative;
+  margin-bottom: 15px;
   cursor: pointer;
+}
+
+.thumbnail-item .progress-bg {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #444;
   border-radius: 5px;
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
+  transition: background-color 0.3s, border 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
-.carousel-thumbnails img:hover,
-.carousel-thumbnails img.active {
-  border-color: #fff;
+.thumbnail-item img {
+  width: 85px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 5px;
+  z-index: 2;
 }
 
-.carousel-info {
-  text-align: center;
+.thumbnail-item span {
   color: white;
-  margin-top: 15px;
+  z-index: 2;
 }
 
-.carousel-info h2 {
-  font-size: 20px;
-  margin-bottom: 5px;
+.thumbnail-item.active .progress-bg::before,
+.thumbnail-item:hover .progress-bg::before {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
 }
 
-.carousel button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
+.thumbnail-item .progress-bg::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgba(255, 0, 0, 0);
+  transition: width 5s linear;
+  z-index: 1;
 }
 
-.carousel button:hover {
-  color: #ccc;
+.thumbnail-item.active .progress-bg::before {
+  width: 100%;
 }
 
-.carousel button:first-child {
-  left: 10px;
-}
-
-.carousel button:last-child {
-  right: 10px;
-}
-.carousel .thumbs-wrapper {
-  display: none !important; /* Esto ocultará completamente las miniaturas en la parte inferior */
+.carousel .legend {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
 }

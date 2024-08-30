@@ -1,108 +1,104 @@
 .sales-page {
-  margin: 20px;
   padding: 20px;
-  background-color: #1e1e1e; /* Fondo oscuro */
-  color: #ddd; /* Texto claro */
-  border-radius: 8px;
-  max-width: 600px; /* Ajuste de ancho para hacer el formulario más pequeño */
-  margin: auto;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  background-color: #121212;
+  color: #e0e0e0;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .sales-form {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.sales-form .form-group {
-  margin-bottom: 15px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.sales-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #ccc;
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Espacio entre los campos en la misma fila */
+  flex-wrap: wrap;
 }
 
-.sales-form input,
-.sales-form select {
-  width: 100%;
-  padding: 8px; /* Reducir el padding para un tamaño más compacto */
-  margin-top: 5px;
+.form-row .form-group {
+  flex: 1 1 calc(50% - 20px); /* Cada grupo ocupa el 50% del ancho menos el espacio entre ellos */
+}
+
+.form-row.large .form-group {
+  flex: 1 1 100%; /* Ocupa todo el ancho en una fila específica */
+}
+
+input
+textarea {
+  padding: 10px;
+  border-radius: 4px;
   border: 1px solid #444;
-  border-radius: 4px;
   background-color: #333;
-  color: #ddd;
-}
-
-.sales-form button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 16px; /* Ajuste del tamaño del botón */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 15px;
+  color: #e0e0e0;
   width: 100%;
-  font-size: 16px;
 }
 
-.sales-form button:hover {
-  background-color: #0056b3;
+textarea {
+  resize: none;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #e0e0e0;
+
+
+}
+
+.error {
+  color: #ff6666;
+  font-size: 12px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  background-color: #2980b9;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #626263;
 }
 
 .existing-games {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.game-card {
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 15px;
-  width: 100%;
-  max-width: 200px;
-  text-align: center;
-  background-color: #282828;
-}
-
-.game-card img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-.game-card h3 {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #fff;
-}
-
-.game-card p {
-  color: #bbb;
+  margin-top: 40px;
 }
 
 .agregarlicencias {
-  margin-top: 10px;
-  padding: 8px;
-  background-color: #28a745;
+  margin-left: auto;
+  background-color: #007bff;
   color: white;
+  padding: 5px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .agregarlicencias:hover {
-  background-color: #218838;
+  background-color: #0056b3;
 }
 
-@media (max-width: 600px) {
-  .sales-page {
-    padding: 15px;
-  }
+.ver-mas-boton {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  .game-card {
-    max-width: 100%;
-  }
+.ver-mas-boton:hover {
+  background-color: #555;
 }

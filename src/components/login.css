@@ -1,78 +1,91 @@
 .fondo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #1e1e1e;
-  }
-  
-  .fondo {
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  }
-  .notiene{
-    color: #1e1e1e;
-  }
-  .contenedor-form.login {
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .contenedor-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .contenedor-input {
-    margin-bottom: 15px;
-    position: relative;
-  }
-  
-  .contenedor-input input,
-  .contenedor-input select {
-    width: calc(100% - 30px);
-    padding: 10px;
-    padding-left: 30px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .contenedor-input .icono {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    color: #666;
-  }
-  
-  .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-  }
-  
-  .btn:hover {
-    background-color: #0b7dda;
-  }
-  
-  .recordar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .recordar label {
-    font-size: 14px;
-    color: #666;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121212; /* Fondo oscuro */
+}
+
+.fondo {
+  background-color: #1e1e1e; /* Fondo de formulario oscuro */
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
+}
+
+.contenedor-form.login {
+  max-width: 400px;
+  width: 100%;
+}
+
+.contenedor-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffff; /* Texto en blanco */
+}
+
+.contenedor-input {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.contenedor-input input,
+.contenedor-input select {
+  width: calc(100% - 30px);
+  padding: 10px;
+  padding-left: 30px;
+  border: 1px solid #444; /* Borde más oscuro */
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #333; /* Fondo de input más oscuro */
+  color: #e0e0e0; /* Color del texto en el input */
+}
+
+.contenedor-input .icono {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #999; /* Icono en color gris */
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2980b9; /* Azul para el botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #499cd3; /* Azul más oscuro en hover */
+}
+
+.recordar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.recordar label {
+  font-size: 14px;
+  color: #bbb; /* Texto gris claro */
+}
+
+.notiene {
+  color: #bbb; /* Color del texto de registro */
+}
+
+.registro-link a {
+  color: #1e90ff; /* Azul claro para el enlace de registro */
+  text-decoration: none;
+}
+
+.registro-link a:hover {
+  text-decoration: underline;
+}
