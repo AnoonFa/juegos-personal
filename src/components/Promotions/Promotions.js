@@ -20,7 +20,7 @@ const Promotions = () => {
   
   return (
     <div className="promotions">
-      <h2>Promociones Actuales</h2>
+      <h2><span></span></h2>
       <Slider {...settings}>
         <div className="promotion">
           <img src={juego1} alt="Descuento del 20%" />

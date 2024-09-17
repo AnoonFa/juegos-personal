@@ -4,6 +4,7 @@ import Categories from '../../components/CategoriaJuego/CategoriaJuego';
 import GameList from '../../components/GameList/GameList';
 import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
 import PromotionsList from '../../components/PromotionsList/PromotionsList';
+import SortedSalesTable from '../../components/Tablas/TablaOrdenada';
 
 const PromotionsPage = () => {
   const { setTitle } = usePageTitle(); // Obtener la función para establecer el título
@@ -15,7 +16,8 @@ const PromotionsPage = () => {
   return (
     <div>
       <Promotions />
-      <Categories />
+      <SortedSalesTable />
+
       <PromotionsList />
     </div>
   );

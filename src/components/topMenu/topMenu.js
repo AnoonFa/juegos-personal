@@ -1,63 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { usePageTitle } from '../../context/PageTitleContext'; // Importar el contexto del título
+import CategoriesMenu from '../CategoriaJuego/CategoriaJuego';
+import SearchBar from '../SearchBar/SearchBar';  // Importar el nuevo componente de búsqueda
 import './topMenu.css';
 
-const cartIcon = require('../../assets/icons/carrito-de-compras.png');
-const profileIcon = require('../../assets/icons/avatar-de-usuario.png');
-
 const TopMenu = () => {
-  const { user, setUser } = useAuth();
+  const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { title } = usePageTitle(); // Obtener el título de la página desde el contexto
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleCartClick = () => {
-    navigate('/CartPage');
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLoginLogout = () => {
-    if (user && user.role !== 'nolog') {
-      setUser({ role: 'nolog' });
-      navigate('/login');
-    } else {
-      navigate('/login');
-    }
+  const handleCartClick = () => navigate('/CartPage');
+  const handleProfileClick = () => navigate('/ProfilePage');
+  const handleLoginClick = () => navigate('/login');
+  const handleRegisterClick = () => navigate('/register');
+  const handleHomeClick = () => navigate('/Home');
+  const handleLogoutClick = () => {
+    logoutUser();  // Llamamos a la función para cerrar sesión
+    navigate('/Home');  // Redirigir al usuario a la página principal
   };
 
-  const handleProfileClick = () => {
-    navigate('/ProfilePage');
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="topMenu-container">
-      <span></span>
-      <label className="title">{title}</label> {/* Mostrar el título de la página */}
-      
-      <div className="image-container">
-        <span></span>
-        <img
-          src={cartIcon}
-          alt="Cart"
-          className="cart-icon"
-          onClick={handleCartClick}
-        />
-        <span className="espacio1"> </span>
-        {user && user.role !== 'nolog' && (
-          <>
-            <img
-              src={profileIcon}
-              alt="Profile"
-              className="profile-icon"
-              onClick={handleProfileClick}
-            />
-            <span className="espacio"> </span>
-          </>
-        )}
-        <button className="auth-button" onClick={handleLoginLogout}>
-          {user && user.role !== 'nolog' ? 'Cerrar sesión' : 'Iniciar sesión'}
-        </button>
+    <div className="menu-wrapper">
+      {/* Nivel superior */}
+      <div className="menu-container">
+        <div className="logo-container">
+          <img onClick={handleHomeClick} src={require('../../assets/icons/logo.png')} alt="Logo" className="logo" />
+          <h2>El Rincon de los Juegos</h2>
+        </div>
+
+        {/* Componente de búsqueda */}
+        <SearchBar /><marquee className= "">lo mejor de lo merjo</marquee>
+
+        <div className="icon-group">
+          <img src={require('../../assets/icons/carrito-de-compras.png')} alt="Cart" className="icon" onClick={handleCartClick} />
+
+          {user ? (
+            <div className="auth-section">
+              <div className="profile-section">
+                {/* Profile Image */}
+                <img
+                  src={require('../../assets/icons/avatar-de-usuario.png')}  // Replace with the actual path of the profile image
+                  alt="Profile"
+                  className="icon profile-icon"
+                  onClick={handleProfileClick}
+                />
+              </div>
+              <span className="separator">|</span>
+              <button onClick={handleLogoutClick} className="logout-button">Cerrar sesión</button>
+            </div>  
+          ) : (
+            <div className="auth-buttons">
+              <button onClick={handleLoginClick}>Iniciar sesión</button>
+              <span className="separator">|</span>
+              <button onClick={handleRegisterClick}>Registrarse</button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Fondo oscuro cuando el menú hamburguesa está abierto */}
+      {isMenuOpen && <div className="overlay-background" onClick={toggleMenu}></div>}
+
+      {/* Menú de Categorías */}
+      <CategoriesMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+
+      {/* Nivel inferior */}
+      <div className="bottom-menu">
+        
+        <div className="category-items">
+          <div className="category-menu" onClick={toggleMenu}>
+            <span>Categorías &#9776;</span>
+          </div>
+          <div onClick={() => navigate("/Home")} className={isActive('/Home') ? 'active' : ''}>
+            <span>Nuestros juegos</span>  {/* Actualizar el nombre */}
+          </div>
+          <div onClick={() => navigate("/PromotionsPage")} className={isActive('/PromotionsPage') ? 'active' : ''}>
+            <span>Juegos en promoción</span> {/* Nueva opción */}
+          </div>
+
+          {/* Verificación de membresía */}
+          {user?.membership ? (
+            <div onClick={() => navigate("/SalesPage")} className={isActive('/SalesPage') ? 'active' : ''}>
+              <span>Vende</span>
+            </div>
+          ) : (
+            <div onClick={() => navigate("/BecomeSellerPage")} className={isActive('/BecomeSellerPage') ? 'active' : ''}>
+              <span>Conviértete en Colaborador</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

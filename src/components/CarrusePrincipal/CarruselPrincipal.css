@@ -1,9 +1,11 @@
 .carousel-container {
   display: flex;
-
+  margin-left: 20px;
+  margin-right: 49px;
 justify-content: center;
   align-items: center;
-  margin: 20px auto;
+ margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .carousel img{
@@ -78,7 +80,7 @@ justify-content: center;
 }
 
 .carousel .legend {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0);
   padding: 10px;
   border-radius: 5px;
 }

@@ -18,9 +18,8 @@ const MasVPage = () => {
     <div className="home">
       <Promotions />
       <SortedSalesTable />
-      <StatsTables />
+      
       <GameList />
-      <GameReviews mode="all" />
     </div>
   );
 };

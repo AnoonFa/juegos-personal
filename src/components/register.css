@@ -3,25 +3,26 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1e1e1e00; /* Fondo oscuro */
+  background-color: #121212;
 }
 
 .fondo {
-  background-color: #333333; /* Fondo oscuro para el formulario */
+  background-color: #1e1e1e;
   border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  padding: 40px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.7);
+  max-width: 500px;
 }
 
-.contenedor-form {
-  max-width: 400px;
+.contenedor-form.register {
   width: 100%;
 }
 
 .contenedor-form h2 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #f0f0f0; /* Texto claro */
+  margin-bottom: 25px;
+  font-size: 32px;
+  color: #ffffff;
 }
 
 .contenedor-input {
@@ -29,50 +30,43 @@
   position: relative;
 }
 
-.contenedor-input input,
-.contenedor-input select {
-  width: calc(100% - 30px);
-  padding: 10px;
-  padding-left: 30px;
-  border: 1px solid #555; /* Borde más oscuro */
-  border-radius: 5px;
-  background-color: #222; /* Fondo más oscuro */
-  color: #f0f0f0; /* Texto claro */
+.contenedor-input input {
+  width: calc(100% - 40px);
+  padding: 15px;
+  padding-left: 40px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #333;
+  color: #e0e0e0;
 }
 
 .contenedor-input .icono {
   position: absolute;
   left: 10px;
-  top: 10px;
-  color: #888; /* Color de icono más claro */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #999;
+}
+
+.error-msg {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 .btn {
   width: 100%;
-  padding: 10px;
-  background-color: #2980b9; /* Botón azul oscuro */
+  padding: 15px;
+  background-color: #2980b9;
   color: white;
-  border: none;
-  border-radius: 5px;
+  font-size: 18px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
   transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: rgb(67, 155, 226); /* Botón azul más claro al pasar el cursor */
-}
-
-.registro-link {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.registro-link a {
-  color: #2980b9; /* Color del enlace */
-}
-
-.notiene {
-  color: #f0f0f0; /* Texto claro */
+  background-color: #499cd3;
 }

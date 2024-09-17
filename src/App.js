@@ -42,8 +42,6 @@ function App() {
             <CartProvider>
           
             <TopMenu title="App Store" />
-            <LeftMenus/>
-            <main>
               <Routes>
                 <Route path="/admin" element={<ProtectedRoute element={<AdminPage />} />} />                
                 <Route path="/Library/*" element={<ProtectedRoute element={<Library />}/>} />
@@ -63,7 +61,7 @@ function App() {
                 <Route path="/register" element={<RegisterForm />} />
               </Routes>
               
-            </main><Footer/>
+            <Footer/>
           
             </CartProvider>
           </GamesProvider>

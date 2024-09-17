@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { GamesContext } from '../../context/GameContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { usePageTitle } from '../../context/PageTitleContext';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import './CarritoPage.css';
 
 const CartPage = () => {
@@ -10,6 +12,9 @@ const CartPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { setTitle } = usePageTitle();
+
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('');
 
   useEffect(() => {
     setTitle('Carrito de Compras');
@@ -52,18 +57,23 @@ const CartPage = () => {
 
   const { total, totalDiscounted, discount } = calculateDiscount();
 
-  const handleQuantityChange = (id, increment) => {
+  const handleQuantityChange = (id, value) => {
     const item = cart.find(item => item.id === id);
     if (item) {
-      const newQuantity = item.quantity + increment;
-      if (newQuantity > 0 && newQuantity <= item.licensesAvailable) {
+      const newQuantity = parseInt(value, 10);
+      if (isNaN(newQuantity) || newQuantity <= 0) {
+        setAlertMessage('La cantidad debe ser un número positivo.');
+        setAlertType('error');
+      } else if (newQuantity > item.licensesAvailable) {
+        setAlertMessage('No hay suficientes licencias disponibles.');
+        setAlertType('error');
+      } else {
         updateGameLicenses(id, newQuantity); // Actualiza la cantidad si es válida
-      } else if (newQuantity <= 0) {
-        removeFromCart(id); // Elimina del carrito si la cantidad llega a 0
+        setAlertMessage(''); // Limpiar el mensaje de error si no hay problemas
+        setAlertType('');
       }
     }
   };
-  
 
   const handleProceedToPayment = () => {
     if (!user) {
@@ -71,12 +81,15 @@ const CartPage = () => {
     } else if (cart.length > 0) {
       navigate('/Checkout', { state: { purchaseType: 'game', cartItems: cart } });
     } else {
-      alert("El carrito está vacío.");
+      setAlertMessage('El carrito está vacío.');
+      setAlertType('error');
     }
   };
 
   const handleRemoveFromCart = (id) => {
     removeFromCart(id);
+    setAlertMessage('Juego eliminado del carrito.');
+    setAlertType('success');
   };
 
   const handleNavigateToGameDetails = (id) => {
@@ -86,6 +99,16 @@ const CartPage = () => {
   return (
     <div className="cart-page">
       <h1>Carrito de Compras</h1>
+
+      {/* Mostrar alertas si hay mensajes de error */}
+      {alertMessage && (
+        <Stack sx={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }} spacing={2}>
+          <Alert severity={alertType} onClose={() => setAlertMessage('')}>
+            {alertMessage}
+          </Alert>
+        </Stack>
+      )}
+
       <div className="cart-content">
         <div className="cart-items">
           {cart.map((item, index) => (
@@ -110,14 +133,18 @@ const CartPage = () => {
 
                 <div className="quantity-controls">
                   <button 
-                    onClick={() => handleQuantityChange(item.id, -1)}
+                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                     disabled={item.quantity <= 1}
                   >
                     -
                   </button>
-                  <input type="number" value={item.quantity} readOnly />
+                  <input 
+                    type="number" 
+                    value={item.quantity} 
+                    onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                  />
                   <button 
-                    onClick={() => handleQuantityChange(item.id, 1)}
+                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
                     disabled={item.quantity >= item.licensesAvailable}
                   >
                     +

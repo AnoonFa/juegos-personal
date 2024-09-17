@@ -4,11 +4,13 @@
   padding: 20px;
   background-color: #121212;
   color: white;
+  margin-left: 20px;
+    margin-right: 20px;
 }
+
 
 .pestanas {
   display: flex;
-  margin-bottom: 20px;
 }
 
 .boton-pestana {
@@ -28,7 +30,6 @@
 
 .contenedor-tabla {
   display: flex;
-  justify-content: space-between;
   position: relative;
 }
 

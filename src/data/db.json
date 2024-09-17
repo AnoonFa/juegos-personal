@@ -5,11 +5,11 @@
       "name": "Call of Duty Black ops4",
       "category": "Acción",
       "price": 119000,
-      "size": 209000, 
-      "licensesAvailable": 29,
-      "licensesSold": 6,
-      "logoUrl": "https://pngbuy.com/wp-content/uploads/2023/08/call-of-duty-black-ops-Logo.png", 
-      "coverImageUrl": "https://image.api.playstation.com/vulcan/img/cfn/11307CjjUZ9rA_whmJUghJsG9Hl1-rmnOUTk3-nccj01ZpYMCHrJ8k8kzBrVyp-p-iCPej73TEJAs88ZBeiZ1uirtj0fsa16.png?w=440", 
+      "size": 209000,
+      "licensesAvailable": 8,
+      "licensesSold": 27,
+      "logoUrl": "https://pngbuy.com/wp-content/uploads/2023/08/call-of-duty-black-ops-Logo.png",
+      "coverImageUrl": "https://image.api.playstation.com/vulcan/img/cfn/11307CjjUZ9rA_whmJUghJsG9Hl1-rmnOUTk3-nccj01ZpYMCHrJ8k8kzBrVyp-p-iCPej73TEJAs88ZBeiZ1uirtj0fsa16.png?w=440",
       "imageUrls": [
         "https://estaticos-cdn.prensaiberica.es/clip/c7475c91-d382-4d70-89a7-ad05729e8d91_alta-libre-aspect-ratio_default_0.jpg",
         "https://media.wired.com/photos/5bc7b4936278de2d212348df/master/pass/COD-BlackOps4-FA.jpg",
@@ -26,11 +26,11 @@
       "name": "Fifa 2023",
       "category": "Deportes",
       "price": 129000,
-      "size": 300000,  
-      "licensesAvailable": 30,
-      "licensesSold": 5,
-      "logoUrl": "https://wapesports.com/wp-content/uploads/2022/08/FIFA-23-LOGO.png",  
-      "coverImageUrl": "https://media.vandal.net/m/122945/fifa-23-202210612192557_1.jpg", 
+      "size": 300000,
+      "licensesAvailable": 28,
+      "licensesSold": 7,
+      "logoUrl": "https://wapesports.com/wp-content/uploads/2022/08/FIFA-23-LOGO.png",
+      "coverImageUrl": "https://media.vandal.net/m/122945/fifa-23-202210612192557_1.jpg",
       "imageUrls": [
         "https://media.revistagq.com/photos/6336b7688cc1e0eba345cd73/3:2/w_1349,h_899,c_limit/fifa-23.png",
         "https://i.blogs.es/36f763/screenshot_659/840_560.jpeg",
@@ -47,11 +47,11 @@
       "name": "Rompecabezas Jigsaw",
       "category": "Rompecabezas",
       "size": 1000,
-      "price": 10000,
+      "price": 1000,
       "licensesAvailable": 10,
       "licensesSold": 1,
-      "logoUrl": "https://example.com/logo-1000cxp.png",  
-      "coverImageUrl": "https://play-lh.googleusercontent.com/VKQlVqQ7EgyQzvawEFamRKL-dczwlHoB_KY2OTuoD_38DgGnuVYrN8O_vr192AOC0alD",  
+      "logoUrl": "https://example.com/logo-1000cxp.png",
+      "coverImageUrl": "https://play-lh.googleusercontent.com/VKQlVqQ7EgyQzvawEFamRKL-dczwlHoB_KY2OTuoD_38DgGnuVYrN8O_vr192AOC0alD",
       "imageUrls": [
         "https://play-lh.googleusercontent.com/ZBIZhHjDP9l1SdCZdruaBa9D03c2jS6n9r6Cx2RPmtN3-9qffbAeikue6L0A6hhZSLk=w526-h296-rw",
         "https://play-lh.googleusercontent.com/HMYO72k7AD-qdBCTwxAawhY7hQBhirz0AY3mTnmQKA7ORgu_04jTXlVOrYaR3mPj=w526-h296-rw",
@@ -108,6 +108,28 @@
       "price": 289188.9,
       "totalPrice": 289188.9,
       "gameName": "213"
+    },
+    {
+      "id": "fa9b",
+      "buyerId": "3a01",
+      "sellerId": 2,
+      "gameId": "2",
+      "quantity": 21,
+      "purchaseDate": "2024-08-30",
+      "price": 119000,
+      "totalPrice": 2499000,
+      "gameName": "Call of Duty Black ops4"
+    },
+    {
+      "id": "2d4e",
+      "buyerId": "3a01",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 2,
+      "purchaseDate": "2024-08-30",
+      "price": 129000,
+      "totalPrice": 258000,
+      "gameName": "Fifa 2023"
     }
   ],
   "sales": [
@@ -139,20 +161,8 @@
       ]
     },
     {
-      "id": "ce34",
-      "nombre": "Alex",
-      "telefono": "3144008869",
-      "correo": "nanoespinosa13@gmail.com",
-      "username": "Alex",
-      "contrasena": "123456",
-      "role": "administrador",
       "membership": false,
-      "gamesOwned": [
-        {
-          "gameId": "5ffc",
-          "quantity": 1
-        }
-      ]
+      "id": "ce34"
     },
     {
       "id": "25e7",
@@ -166,11 +176,15 @@
       "gamesOwned": []
     },
     {
-      "id": "3a01",
-      "nombre": "Esteban",
-      "telefono": "3144008869",
-      "correo": "nanoespinosa13@gmail.com",
-      "username": "Alexa",
+      "membership": true,
+      "id": "3a01"
+    },
+    {
+      "id": "2ef3",
+      "nombre": "Esteban1",
+      "telefono": "31440088691",
+      "correo": "esteban1@gmail.com",
+      "username": "Esteban1",
       "contrasena": "123456",
       "role": "cliente",
       "membership": false,
@@ -183,24 +197,6 @@
       "userId": "b0e8",
       "productId": 1,
       "quantity": 2
-    }
-  ],
-  "reviews": [
-    {
-      "id": "4e63",
-      "gameId": "2",
-      "comment": "Si es de acción pero mucho",
-      "rating": "4",
-      "userId": "d69c",
-      "createdAt": "2024-08-27T04:03:15.255Z"
-    },
-    {
-      "id": "5a30",
-      "gameId": " 3",
-      "comment": "wow",
-      "rating": "5",
-      "userId": "d69c",
-      "createdAt": "2024-08-27T04:05:32.870Z"
     }
   ]
 }

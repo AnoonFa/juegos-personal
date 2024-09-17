@@ -5,11 +5,15 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { usePageTitle } from '../context/PageTitleContext';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const Login = () => {
   const { setUser } = useAuth();
   const [identifier, setIdentifier] = useState('');
   const [contrasena, setContrasena] = useState(''); 
+  const [alertMessage, setAlertMessage] = useState(''); // Estado para el mensaje de alerta
+  const [alertType, setAlertType] = useState(''); // Estado para el tipo de alerta (success/error)
   const navigate = useNavigate();
   const { setTitle } = usePageTitle();
 
@@ -23,22 +27,29 @@ const Login = () => {
       const user = response.data.find(
         (user) =>
           (user.username === identifier || user.correo === identifier) &&
-          user.contrasena === contrasena 
+          user.contrasena === contrasena
       );
 
       if (user) {
         setUser(user);
-        if (user.role === 'administrador') {
-          navigate('/admin');
-        } else {
-          navigate('/home');
-        }
+        setAlertMessage('Inicio de sesión exitoso');
+        setAlertType('success');
+
+        // Redireccionar después de un breve tiempo
+        setTimeout(() => {
+          if (user.role === 'administrador') {
+            navigate('/admin');
+          } else {
+            navigate('/home');
+          }
+        }, 1500);
       } else {
         throw new Error('Usuario no encontrado o contraseña incorrecta');
       }
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
-      alert('Error en el inicio de sesión: ' + error.message);
+      setAlertMessage('Error en el inicio de sesión: ' + error.message);
+      setAlertType('error');
     }
   };
 
@@ -46,6 +57,15 @@ const Login = () => {
     <div className="fondo-wrapper">
       <div className="fondo">
         <div className="contenedor-form login">
+          {/* Alerta */}
+          {alertMessage && (
+            <Stack sx={{ width: '100%', mb: 2 }} spacing={2}>
+              <Alert severity={alertType} onClose={() => setAlertMessage('')}>
+                {alertMessage}
+              </Alert>
+            </Stack>
+          )}
+
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
             <h2>Iniciar sesión</h2>
             <div className="contenedor-input">

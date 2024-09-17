@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Importa Link
+import React, { useContext, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { GamesContext } from '../../context/GameContext';
 import './CategoryGames.css';
+import SearchAndFilterBar from '../SearchAndFilterBar/SearchAndFilterBar'; // Import the search and filter component
 
 const CategoryGames = () => {
-  const { category } = useParams(); // Obtenemos la categoría desde la URL
-  const { games } = useContext(GamesContext);
+  const { category } = useParams(); // Get category from URL params
+  const { games, allGames, setGames } = useContext(GamesContext); // Use context to get games and setGames
+  const [filteredGames, setFilteredGames] = useState(games); // Store filtered games
 
-  // Función para normalizar la cadena, eliminando acentos y convirtiendo a minúsculas
+  // Function to normalize the category string (for case-insensitive and accent-insensitive comparison)
   const normalizeString = (str) => {
     return str
       .toLowerCase()
@@ -15,18 +17,26 @@ const CategoryGames = () => {
       .replace(/[\u0300-\u036f]/g, "");
   };
 
-  // Filtrar juegos basados en la categoría, insensible a mayúsculas y acentos
-  const filteredGames = games.filter(game => normalizeString(game.category) === normalizeString(category));
+  // Filter games based on the selected category
+  const filteredByCategory = filteredGames.filter(
+    (game) => normalizeString(game.category) === normalizeString(category)
+  );
 
   return (
     <section className="category-games">
       <h2>Juegos en la Categoría: {category}</h2>
+
+     
       <div className="games-list">
-        {filteredGames.length > 0 ? (
-          filteredGames.map(game => (
+         {/* Search and Filter Bar */}
+      <SearchAndFilterBar allGames={allGames} setGames={setFilteredGames} />
+
+        {filteredByCategory.length > 0 ? (
+          filteredByCategory.map((game) => (
             <Link to={`/game/${game.id}`} key={game.id} className="game-card">
-              {game.imageUrl ? (
-                <img src={game.imageUrl} alt={game.name} className="game-image" />
+              {/* Ensure the image is rendered correctly */}
+              {game.coverImageUrl ? (
+                <img src={game.coverImageUrl} alt={game.name} className="game-image" />
               ) : (
                 <div className="no-image">Imagen no disponible</div>
               )}

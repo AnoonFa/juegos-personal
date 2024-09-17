@@ -68,7 +68,7 @@ const AdminPage = () => {
   };
 
   return (
-    <div>
+    <div className="admin-page">
       <Typography variant="h4" align="center" gutterBottom>
         Panel de Administración
       </Typography>
@@ -77,7 +77,7 @@ const AdminPage = () => {
       <Typography variant="h6" gutterBottom>
         Usuarios
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table-container">
         <Table>
           <TableHead>
             <TableRow>
@@ -114,7 +114,7 @@ const AdminPage = () => {
       <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
         Compras
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table-container">
         <Table>
           <TableHead>
             <TableRow>
@@ -143,7 +143,7 @@ const AdminPage = () => {
       <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
         Ventas
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table-container">
         <Table>
           <TableHead>
             <TableRow>
@@ -172,7 +172,7 @@ const AdminPage = () => {
       <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
         Juegos
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className="admin-table-container">
         <Table>
           <TableHead>
             <TableRow>

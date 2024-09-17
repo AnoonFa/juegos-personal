@@ -1,0 +1,125 @@
+/* Contenedor general de la búsqueda */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Barra de búsqueda con borde blanco y lupa */
+.search-bar-container {
+  position: relative;
+  width: 100%;
+}
+
+
+
+.search-icon {
+  font-size: 18px;
+  padding: 10px;
+  color: white;
+  margin-left: 10px;
+}
+
+.search-inputs {
+    width: 88%;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #33333300;
+    color: #ffffff;
+    border: 1px solid white;
+    margin-left: 23px;
+    z-index: 1000;
+    position: relative;
+  }
+  
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+/* Botón "X" dentro de la barra de búsqueda */
+.clear-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Fondo oscuro cuando la búsqueda está activa */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* Resultados de búsqueda */
+.search-results {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 200%;
+  max-height: 417px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+/* Cada resultado de búsqueda */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #333; /* Cambio de color al pasar el ratón */
+}
+
+.game-cover {
+  width: 64px;
+  height: 64px;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.game-name {
+  font-size: 14px;
+  color: white;
+  flex-grow: 1;
+}
+
+/* Precio del juego */
+.game-price {
+  text-align: right;
+}
+
+.discounted-price {
+  color: #ff5722; /* Color del precio con descuento */
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 12px;
+}
+
+.price {
+  color: white;
+  font-size: 14px;
+}

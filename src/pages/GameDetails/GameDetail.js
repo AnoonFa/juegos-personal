@@ -7,6 +7,8 @@ import { useAuth } from '../../context/AuthContext'; // Importar el contexto de 
 import './GameDetails.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa los estilos necesarios
 import { Carousel } from 'react-responsive-carousel';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const GameDetails = () => {
   const { id } = useParams();
@@ -14,8 +16,10 @@ const GameDetails = () => {
   const { user } = useAuth(); // Obtener el usuario autenticado
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [showAlert, setShowAlert] = useState(false);
   const [game, setGame] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(''); // Mensaje de alerta personalizado
+  const [alertType, setAlertType] = useState(''); // Tipo de alerta (success o error)
+  const [isDisabled, setIsDisabled] = useState(false); // Para deshabilitar los botones
   const { setTitle } = usePageTitle();
 
   useEffect(() => {
@@ -30,10 +34,24 @@ const GameDetails = () => {
     return <p>Juego no encontrado o cargando...</p>;
   }
 
+  // Validar si la cantidad es mayor a las licencias disponibles
+  const validateQuantity = (value) => {
+    if (value > game.licensesAvailable) {
+      setAlertMessage('La cantidad excede el número de licencias disponibles.');
+      setAlertType('error');
+      setIsDisabled(true); // Deshabilitar los botones si la cantidad no es válida
+    } else {
+      setAlertMessage('');
+      setAlertType('');
+      setIsDisabled(false); // Habilitar los botones si la cantidad es válida
+    }
+  };
+
   const handleAddToCart = () => {
     if (quantity <= game.licensesAvailable) {
       addToCart(game.id, quantity);
-      setShowAlert(true);
+      setAlertMessage('Juego agregado al carrito correctamente.');
+      setAlertType('success');
     }
   };
 
@@ -46,9 +64,12 @@ const GameDetails = () => {
     }
   };
 
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-    navigate(-1);
+  const handleQuantityChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1) {
+      setQuantity(value);
+      validateQuantity(value); // Validar la cantidad al cambiar
+    }
   };
 
   const calculateDiscountedPrice = () => {
@@ -65,6 +86,15 @@ const GameDetails = () => {
 
   return (
     <div className="game-details">
+      {/* Alerta */}
+      {alertMessage && (
+        <Stack sx={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }} spacing={2}>
+          <Alert severity={alertType} onClose={() => setAlertMessage('')}>
+            {alertMessage}
+          </Alert>
+        </Stack>
+      )}
+
       <h2 className="game-name">{game.name}</h2>
       <div className="game-main">
         <div className="game-carousel">
@@ -101,12 +131,18 @@ const GameDetails = () => {
             {game.licensesAvailable > 0 ? (
               <>
                 <div className="quantity-controls">
-                  <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
-                  <input type="number" value={quantity} readOnly />
-                  <button onClick={() => setQuantity(quantity + 1)} disabled={quantity >= game.licensesAvailable}>+</button>
+                  <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)} disabled={isDisabled}>-</button>
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={handleQuantityChange} // Permitimos que el usuario cambie el valor
+                    min="1"
+                    max={game.licensesAvailable}
+                  />
+                  <button onClick={() => setQuantity(quantity + 1)} disabled={quantity >= game.licensesAvailable || isDisabled}>+</button>
                 </div>
-                <button onClick={handleBuyNow} className="buy-now-button">Cómpralo ya</button>
-                <button onClick={handleAddToCart} className="add-to-cart-button">Agregar al Carrito</button>
+                <button onClick={handleBuyNow} className="buy-now-button" disabled={isDisabled}>Cómpralo ya</button>
+                <button onClick={handleAddToCart} className="add-to-cart-button" disabled={isDisabled}>Agregar al Carrito</button>
               </>
             ) : (
               <p className="no-licenses-message">No hay licencias disponibles. Por favor, espera a que se agreguen más.</p>

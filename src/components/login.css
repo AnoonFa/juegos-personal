@@ -2,88 +2,55 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #121212; /* Fondo oscuro */
+  height: 100vh; /* Asegura que esté centrado verticalmente */
+  background-color: #121212;
 }
 
 .fondo {
-  background-color: #1e1e1e; /* Fondo de formulario oscuro */
+  background-color: #1e1e1e;
   border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
-}
-
-.contenedor-form.login {
-  max-width: 400px;
-  width: 100%;
+  padding: 40px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.7);
+  max-width: 500px; /* Aumentar tamaño del formulario */
 }
 
 .contenedor-form h2 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #ffffff; /* Texto en blanco */
+  margin-bottom: 30px; /* Aumentar el espaciado */
+  font-size: 32px;
+  color: #ffffff;
 }
 
-.contenedor-input {
-  margin-bottom: 15px;
-  position: relative;
+.contenedor-input input {
+  padding: 15px;
+  padding-left: 45px; /* Mayor padding en los inputs */
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #333;
+  color: #e0e0e0;
+  transition: border-color 0.3s ease;
 }
 
-.contenedor-input input,
-.contenedor-input select {
-  width: calc(100% - 30px);
-  padding: 10px;
-  padding-left: 30px;
-  border: 1px solid #444; /* Borde más oscuro */
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #333; /* Fondo de input más oscuro */
-  color: #e0e0e0; /* Color del texto en el input */
-}
-
-.contenedor-input .icono {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  color: #999; /* Icono en color gris */
+.contenedor-input input:focus {
+  border-color: #499cd3; /* Cambio de color en el borde cuando está enfocado */
+  box-shadow: 0 0 10px rgba(73, 156, 211, 0.5); /* Sombra suave */
 }
 
 .btn {
   width: 100%;
-  padding: 10px;
-  background-color: #2980b9; /* Azul para el botón */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background-color 0.3s;
+  padding: 15px;
+  background-color: #2980b9;
+  font-size: 18px;
+  margin-top: 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-  background-color: #499cd3; /* Azul más oscuro en hover */
-}
-
-.recordar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.recordar label {
-  font-size: 14px;
-  color: #bbb; /* Texto gris claro */
-}
-
-.notiene {
-  color: #bbb; /* Color del texto de registro */
-}
-
-.registro-link a {
-  color: #1e90ff; /* Azul claro para el enlace de registro */
-  text-decoration: none;
+  background-color: #499cd3;
+  transform: scale(1.05); /* Efecto de crecimiento al pasar el mouse */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .registro-link a:hover {
