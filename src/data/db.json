@@ -6,8 +6,8 @@
       "category": "Acción",
       "price": 119000,
       "size": 209000,
-      "licensesAvailable": 8,
-      "licensesSold": 27,
+      "licensesAvailable": 7,
+      "licensesSold": 28,
       "logoUrl": "https://pngbuy.com/wp-content/uploads/2023/08/call-of-duty-black-ops-Logo.png",
       "coverImageUrl": "https://image.api.playstation.com/vulcan/img/cfn/11307CjjUZ9rA_whmJUghJsG9Hl1-rmnOUTk3-nccj01ZpYMCHrJ8k8kzBrVyp-p-iCPej73TEJAs88ZBeiZ1uirtj0fsa16.png?w=440",
       "imageUrls": [
@@ -27,8 +27,8 @@
       "category": "Deportes",
       "price": 129000,
       "size": 300000,
-      "licensesAvailable": 28,
-      "licensesSold": 7,
+      "licensesAvailable": 23,
+      "licensesSold": 12,
       "logoUrl": "https://wapesports.com/wp-content/uploads/2022/08/FIFA-23-LOGO.png",
       "coverImageUrl": "https://media.vandal.net/m/122945/fifa-23-202210612192557_1.jpg",
       "imageUrls": [
@@ -130,6 +130,61 @@
       "price": 129000,
       "totalPrice": 258000,
       "gameName": "Fifa 2023"
+    },
+    {
+      "id": "1e66",
+      "buyerId": "2ef3",
+      "sellerId": 2,
+      "gameId": "2",
+      "quantity": 1,
+      "purchaseDate": "2024-09-18",
+      "price": 119000,
+      "totalPrice": 119000,
+      "gameName": "Call of Duty Black ops4"
+    },
+    {
+      "id": "69b7",
+      "buyerId": "25e7",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 1,
+      "purchaseDate": "2024-09-18",
+      "price": 129000,
+      "totalPrice": 129000,
+      "gameName": "Fifa 2023"
+    },
+    {
+      "id": "b83d",
+      "buyerId": "25e7",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 1,
+      "purchaseDate": "2024-09-18",
+      "price": 129000,
+      "totalPrice": 129000,
+      "gameName": "Fifa 2023"
+    },
+    {
+      "id": "91fa",
+      "buyerId": "25e7",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "price": 129000,
+      "totalPrice": 129000,
+      "gameName": "Fifa 2023"
+    },
+    {
+      "id": "099e",
+      "buyerId": "25e7",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 2,
+      "purchaseDate": "2024-09-19",
+      "price": 129000,
+      "totalPrice": 258000,
+      "gameName": "Fifa 2023"
     }
   ],
   "sales": [
@@ -172,8 +227,14 @@
       "username": "Pepe",
       "contrasena": "123456",
       "role": "cliente",
-      "membership": false,
-      "gamesOwned": []
+      "membership": true,
+      "gamesOwned": [
+        {
+          "gameId": "3",
+          "quantity": 4
+        }
+      ],
+      "sellerId": "25e7"
     },
     {
       "membership": true,
@@ -186,17 +247,22 @@
       "correo": "esteban1@gmail.com",
       "username": "Esteban1",
       "contrasena": "123456",
-      "role": "cliente",
+      "role": "administrador",
       "membership": false,
-      "gamesOwned": []
+      "gamesOwned": [
+        {
+          "gameId": "2",
+          "quantity": 1
+        }
+      ]
     }
   ],
   "cart": [
     {
-      "id": "1",
-      "userId": "b0e8",
-      "productId": 1,
-      "quantity": 2
+      "id": "e504",
+      "productId": "2",
+      "quantity": 1,
+      "userId": "faa2"
     }
   ]
 }

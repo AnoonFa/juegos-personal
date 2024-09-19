@@ -244,6 +244,8 @@
   align-items: center;
   background-color: #032941;
   padding: 15px 20px;
+  justify-content: center;
+  display: flex;
   width: 100%;
   box-sizing: border-box;
 }
@@ -257,16 +259,16 @@
 
 .category-items div {
   cursor: pointer;
-  width: 58%;
-  /* font-size: 16px; */
+  /* width: 58%; */
+  font-size: 16px;
   /* justify-content: space-around; */
   align-items: center;
   display: flex;
   text-align: center;
-  /* padding: 0px 13px; */
+  padding: 0px 13px;
   background-color: transparent;
   transition: background-color 0.3s ease;
-      margin-left: 28px;
+  margin-left: 28px;
 }
 
 .category-items div:hover {

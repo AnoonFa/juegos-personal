@@ -103,17 +103,17 @@ const Register = () => {
 
   return (
     <div className="fondo-wrapper">
+      {/* Alerta global */}
+      {alertMessage && (
+        <Stack sx={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }} spacing={2}>
+          <Alert severity={alertType} onClose={() => setAlertMessage('')}>
+            {alertMessage}
+          </Alert>
+        </Stack>
+      )}
+
       <div className="fondo">
         <div className="contenedor-form register">
-          {/* Alerta general */}
-          {alertMessage && (
-            <Stack sx={{ width: '100%', mb: 2 }} spacing={2}>
-              <Alert severity={alertType} onClose={() => setAlertMessage('')}>
-                {alertMessage}
-              </Alert>
-            </Stack>
-          )}
-
           <form onSubmit={handleRegister}>
             <h2>Registrarse</h2>
 
@@ -154,11 +154,6 @@ const Register = () => {
                 required
               />
               <FaUser className="icono" />
-              {userExists && (
-                <Alert severity="error" sx={{ mt: 1 }}>
-                  El nombre de usuario ya está en uso.
-                </Alert>
-              )}
             </div>
 
             {/* Campo de correo */}
@@ -174,11 +169,6 @@ const Register = () => {
                 required
               />
               <FaEnvelope className="icono" />
-              {emailExists && (
-                <Alert severity="error" sx={{ mt: 1 }}>
-                  El correo ya está en uso.
-                </Alert>
-              )}
             </div>
 
             {/* Campo de contraseña */}
@@ -191,11 +181,6 @@ const Register = () => {
                 required
               />
               <FaLock className="icono" />
-              {passwordError && (
-                <Alert severity="error" sx={{ mt: 1 }}>
-                  {passwordError}
-                </Alert>
-              )}
             </div>
 
             {/* Confirmar contraseña */}

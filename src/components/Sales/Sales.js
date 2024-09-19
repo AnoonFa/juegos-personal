@@ -3,7 +3,8 @@ import { GamesContext } from '../../context/GameContext';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Sales.css';
-import UserGames from './UserGames'; // Importar el nuevo componente
+import UserGames from './UserGames';
+import { Alert, Stack } from '@mui/material';  // Importar Alert y Stack de MUI
 
 const Sales = () => {
   const { games, setGames, updateGameLicenses } = useContext(GamesContext);
@@ -20,6 +21,9 @@ const Sales = () => {
   const [discount, setDiscount] = useState(0);
   const [promoDuration, setPromoDuration] = useState(0);
   const [errors, setErrors] = useState({});
+  
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('');
 
   useEffect(() => {
     if (!user) {
@@ -48,7 +52,8 @@ const Sales = () => {
     if (!validateForm()) return;
 
     if (!user || !user.id) {
-      alert('Debes estar autenticado para vender juegos.');
+      setAlertMessage('Debes estar autenticado para vender juegos.');
+      setAlertType('error');
       return;
     }
 
@@ -64,8 +69,11 @@ const Sales = () => {
         });
 
         updateGameLicenses(existingGame.id, quantity, false);
-        alert('Licencias añadidas al juego existente!');
+        setAlertMessage('Licencias añadidas al juego existente!');
+        setAlertType('success');
       } catch (error) {
+        setAlertMessage('Error al actualizar el juego existente.');
+        setAlertType('error');
         console.error('Error al actualizar el juego existente:', error);
       }
     } else {
@@ -102,8 +110,11 @@ const Sales = () => {
           promoEndDate: promoDuration > 0 ? new Date(Date.now() + promoDuration * 24 * 60 * 60 * 1000).toISOString() : null,
           sellerId: user.id
         }]);
-        alert('Juego nuevo añadido y licencias vendidas!');
+        setAlertMessage('Juego nuevo añadido y licencias vendidas!');
+        setAlertType('success');
       } catch (error) {
+        setAlertMessage('Error al añadir el nuevo juego.');
+        setAlertType('error');
         console.error('Error al añadir el nuevo juego:', error);
       }
     }

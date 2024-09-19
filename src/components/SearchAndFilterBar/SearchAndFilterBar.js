@@ -7,34 +7,41 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
   const [filterPrice, setFilterPrice] = useState('');
 
   useEffect(() => {
-    // Restablecer juegos cuando se cambien los filtros
     handleSearch();
-  }, [searchTerm, filterCategory, filterPrice]);
+  }, [searchTerm, filterCategory, filterPrice]); // Ensure search runs when any of these change
 
   const handleSearch = () => {
-    // Trabaja sobre allGames para asegurarte de que no se modifique
+    // Ensure we are working with a copy of allGames and not mutating the original array
     let filteredGames = [...allGames];
 
-    if (searchTerm) {
+    // Filter by search term
+    if (searchTerm.trim()) {
       filteredGames = filteredGames.filter(game =>
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
+    // Filter by category
     if (filterCategory) {
-      filteredGames = filteredGames.filter(game => game.category === filterCategory);
+      filteredGames = filteredGames.filter(game => 
+        game.category.toLowerCase() === filterCategory.toLowerCase()
+      );
     }
 
+    // Filter by maximum price
     if (filterPrice) {
-      filteredGames = filteredGames.filter(game => game.price <= filterPrice);
+      filteredGames = filteredGames.filter(game => game.price <= Number(filterPrice));
     }
 
+    // Update the games to show the filtered results
     setGames(filteredGames);
   };
 
   return (
     <div className="search-filter-bar">
       <h2>Buscar y Filtrar Juegos</h2>
+      
+      {/* Search by name */}
       <input
         type="text"
         placeholder="Buscar por nombre..."
@@ -42,6 +49,8 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-input"
       />
+      
+      {/* Filter options */}
       <div className="filter-options">
         <div className="filter-group">
           <label>Género</label>
@@ -49,9 +58,10 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
             <option value="">Todas las categorías</option>
             <option value="rompecabezas">Rompecabezas</option>
             <option value="acción">Acción</option>
-            <option value="deportes">Deporte</option>
+            <option value="deportes">Deportes</option>
           </select>
         </div>
+
         <div className="filter-group">
           <label>Precio Máximo</label>
           <input

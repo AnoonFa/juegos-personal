@@ -40,7 +40,7 @@ const Login = () => {
           if (user.role === 'administrador') {
             navigate('/admin');
           } else {
-            navigate('/home');
+            navigate(-1);
           }
         }, 1500);
       } else {
@@ -59,7 +59,7 @@ const Login = () => {
         <div className="contenedor-form login">
           {/* Alerta */}
           {alertMessage && (
-            <Stack sx={{ width: '100%', mb: 2 }} spacing={2}>
+            <Stack sx={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }} spacing={2}>
               <Alert severity={alertType} onClose={() => setAlertMessage('')}>
                 {alertMessage}
               </Alert>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Paper, Stepper, Step, StepLabel, Button, Typography, CssBaseline } from '@mui/material';
+import { Paper, Stepper, Step, StepLabel, Button, Typography, CssBaseline, Alert, Stack } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { useAuth } from '../../context/AuthContext';
-import { useCart } from '../../context/CartContext'; // Importar el contexto del carrito
+import { useCart } from '../../context/CartContext';
 import axios from 'axios';
 import emailjs from 'emailjs-com';
 
@@ -82,13 +82,14 @@ export default function Checkout() {
     expDate: '',
     cvv: '',
   });
-
-
+  
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('');
   
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { cart, clearCart } = useCart(); // Obtener el carrito y la función para vaciarlo
+  const { clearCart } = useCart();
 
   const { purchaseType, cartItems = [] } = location.state || {
     purchaseType: null,
@@ -143,94 +144,93 @@ export default function Checkout() {
   const handleNext = async () => {
     if (activeStep === steps.length - 1) {
       await handlePayment();
-      alert('Pago completado con éxito');
-      navigate('/');
     } else if (isFormValid()) {
       setActiveStep(activeStep + 1);
     } else {
-      alert('Por favor, complete todos los campos antes de continuar.');
+      setAlertMessage('Por favor, complete todos los campos antes de continuar.');
+      setAlertType('error');
     }
   };
-
-
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
   const handlePayment = async () => {
-  try {
-    let totalPrice = discountedTotal;
-
-    if (purchaseType === 'membership') {
-      const updatedUser = {
-        ...user,
-        role: 'vendedor',
-        sellerId: user.id, 
-      };
-      totalPrice = 19;
-      await axios.put(`http://localhost:3000/users/${user.id}`, { membership: true }, updatedUser);
-      sendMembershipEmail(formData.to_name, formData.to_email);
-      navigate('/SalesPage');
-
-    } else if (purchaseType === 'game' && cartItems.length > 0) {
-      for (const item of cartItems) {
-        if (!item.sellerId || !user?.id || !item.id) {
-          throw new Error(`Datos insuficientes para registrar la compra. Verifica el vendedor, el usuario y el ID del juego.`);
-        }
-        const gameResponse = await axios.get(`http://localhost:3000/games/${item.id}`);
-        const gameData = gameResponse.data;
-
-        const purchaseData = {
-            buyerId: user.id,
-            sellerId: gameData.sellerId,
-            gameId: item.id,
-            quantity: item.quantity,
-            purchaseDate: new Date().toISOString().split('T')[0],
-            price: item.price,
-            totalPrice: item.price * item.quantity,
-            gameName: item.name,
-        };
-
-        await axios.post('http://localhost:3000/purchases', purchaseData);
-
-        const existingGame = user.gamesOwned.find(g => g.gameId === item.id);
-        const updatedGamesOwned = existingGame
-        ? user.gamesOwned.map(g =>
-            g.gameId === item.id
-              ? { ...g, quantity: g.quantity + item.quantity }
-              : g
-          )
-        : [...user.gamesOwned, { gameId: item.id, quantity: item.quantity }];
-
+    try {
+      let totalPrice = discountedTotal;
+  
+      if (purchaseType === 'membership') {
+        // Lógica para membresía
         const updatedUser = {
           ...user,
-          gamesOwned: updatedGamesOwned,
+          membership: true,
         };
-
+        totalPrice = 19;
         await axios.put(`http://localhost:3000/users/${user.id}`, updatedUser);
-
-        const updatedGameData = {
-          ...gameData,
-          licensesSold: gameData.licensesSold + item.quantity,
-          licensesAvailable: gameData.licensesAvailable - item.quantity,
-        };
-        await axios.put(`http://localhost:3000/games/${item.id}`, updatedGameData);
+        sendMembershipEmail(formData.to_name, formData.to_email);
+        setAlertMessage('Membresía adquirida con éxito.');
+        setAlertType('success');
+        navigate('/SalesPage');
+  
+      } else if (purchaseType === 'game' && cartItems.length > 0) {
+        // Lógica para compra de juegos
+        for (const item of cartItems) {
+          const gameResponse = await axios.get(`http://localhost:3000/games/${item.id}`);
+          const gameData = gameResponse.data;
+  
+          const purchaseData = {
+              buyerId: user.id,
+              sellerId: gameData.sellerId,
+              gameId: item.id,
+              quantity: item.quantity,
+              purchaseDate: new Date().toISOString().split('T')[0],
+              price: item.price,
+              totalPrice: item.price * item.quantity,
+              gameName: item.name,
+          };
+  
+          await axios.post('http://localhost:3000/purchases', purchaseData);
+  
+          const existingGame = user.gamesOwned.find(g => g.gameId === item.id);
+          const updatedGamesOwned = existingGame
+            ? user.gamesOwned.map(g =>
+                g.gameId === item.id
+                  ? { ...g, quantity: g.quantity + item.quantity }
+                  : g
+              )
+            : [...user.gamesOwned, { gameId: item.id, quantity: item.quantity }];
+  
+          const updatedUser = {
+            ...user,
+            gamesOwned: updatedGamesOwned,
+          };
+  
+          await axios.put(`http://localhost:3000/users/${user.id}`, updatedUser);
+          const updatedGameData = {
+            ...gameData,
+            licensesSold: gameData.licensesSold + item.quantity,
+            licensesAvailable: gameData.licensesAvailable - item.quantity,
+          };
+          await axios.put(`http://localhost:3000/games/${item.id}`, updatedGameData);
+        }
+  
+        sendGamesEmail(formData.to_name, formData.to_email, cartItems, totalPrice);
+        setAlertMessage('Compra realizada con éxito.');
+        setAlertType('success');
       }
-
-      sendGamesEmail(formData.to_name, formData.to_email, cartItems, totalPrice);
+  
+      // Limpiar el carrito después del pago exitoso
+      clearCart();
+  
+      // Navegar a la página de inicio o agradecimiento
+      navigate('/Home');
+    } catch (error) {
+      setAlertMessage(`Error al procesar el pago: ${error.message}`);
+      setAlertType('error');
     }
-
-    console.log(`Compra registrada con éxito por un total de: $${totalPrice.toFixed(2)}`);
-    
-    // Vaciar el carrito después de la compra exitosa
-    clearCart();
-
-  } catch (error) {
-    console.error('Error al procesar el pago:', error);
-    alert(`Hubo un error al procesar el pago: ${error.message}`);
-  }
-};
+  };
+  
 
   const darkTheme = createTheme({
     palette: {
@@ -274,6 +274,15 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
+
+          {alertMessage && (
+            <Stack sx={{ width: '100%', marginBottom: '1rem' }} spacing={2}>
+              <Alert severity={alertType} onClose={() => setAlertMessage('')}>
+                {alertMessage}
+              </Alert>
+            </Stack>
+          )}
+
           {getStepContent(activeStep, formData, handleInputChange, purchaseType, cartItems)}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
             {activeStep !== 0 && (

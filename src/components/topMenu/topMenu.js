@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { useAuth } from '../../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CategoriesMenu from '../CategoriaJuego/CategoriaJuego';
@@ -37,7 +37,8 @@ const TopMenu = () => {
         </div>
 
         {/* Componente de búsqueda */}
-        <SearchBar /><marquee className= "">lo mejor de lo merjo</marquee>
+        <SearchBar />
+        <marquee className= "">Compra al menos 25 licencias de juegos de rompecabezas y obtén un 20% de descuento en tu pedido</marquee>
 
         <div className="icon-group">
           <img src={require('../../assets/icons/carrito-de-compras.png')} alt="Cart" className="icon" onClick={handleCartClick} />
@@ -74,7 +75,6 @@ const TopMenu = () => {
 
       {/* Nivel inferior */}
       <div className="bottom-menu">
-        
         <div className="category-items">
           <div className="category-menu" onClick={toggleMenu}>
             <span>Categorías &#9776;</span>
@@ -94,6 +94,20 @@ const TopMenu = () => {
           ) : (
             <div onClick={() => navigate("/BecomeSellerPage")} className={isActive('/BecomeSellerPage') ? 'active' : ''}>
               <span>Conviértete en Colaborador</span>
+            </div>
+          )}
+
+          {/* Mostrar Biblioteca solo si el usuario es cliente y está logueado */}
+          {user && user.role === 'cliente' && (
+            <div onClick={() => navigate("/library")} className={isActive('/library') ? 'active' : ''}>
+              <span>Biblioteca</span>
+            </div>
+          )}
+
+          {/* Mostrar Panel de Administración solo si el usuario es administrador */}
+          {user && user.role === 'administrador' && (
+            <div onClick={() => navigate("/admin")} className={isActive('/admin') ? 'active' : ''}>
+              <span>Panel de Administración</span>
             </div>
           )}
         </div>

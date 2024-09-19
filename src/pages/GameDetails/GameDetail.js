@@ -9,10 +9,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa los e
 import { Carousel } from 'react-responsive-carousel';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { useCart } from '../../context/CartContext'; // Cambiar a CartContext
+
 
 const GameDetails = () => {
   const { id } = useParams();
-  const { games, addToCart } = useContext(GamesContext);
+  const { games } = useContext(GamesContext);
+  const { addToCart } = useCart(); // Ahora usamos CartContext para agregar al carrito
   const { user } = useAuth(); // Obtener el usuario autenticado
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
@@ -49,7 +52,7 @@ const GameDetails = () => {
 
   const handleAddToCart = () => {
     if (quantity <= game.licensesAvailable) {
-      addToCart(game.id, quantity);
+      addToCart(game, quantity); // Usamos `addToCart` de `CartContext`
       setAlertMessage('Juego agregado al carrito correctamente.');
       setAlertType('success');
     }

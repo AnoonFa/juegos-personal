@@ -26,7 +26,7 @@ export const GamesProvider = ({ children }) => {
   }, []);
 
   const addToCart = (gameId, quantity) => {
-    const game = games.find(g => g.id === gameId);
+    const game = games.find(g => String(g.id) === String(gameId)); // Asegurarse de comparar como cadena
     if (game) {
       setCart(prevCart => {
         const existingItem = prevCart.find(item => item.id === gameId);
@@ -42,6 +42,7 @@ export const GamesProvider = ({ children }) => {
       console.error('Game not found');
     }
   };
+  
 
   const removeFromCart = (id) => {
     setCart(cart.filter(item => item.id !== id));

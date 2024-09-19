@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { GamesContext } from '../../context/GameContext';
+import { useCart } from '../../context/CartContext'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { usePageTitle } from '../../context/PageTitleContext';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 import './CarritoPage.css';
+import { GamesContext } from '../../context/GameContext'; // Importar contexto de juegos
 
 const CartPage = () => {
-  const { cart, updateGameLicenses, removeFromCart } = useContext(GamesContext);
+  const { cart, removeFromCart, clearCart } = useCart(); 
+  const { games } = useContext(GamesContext); // Obtener la lista de juegos
   const { user } = useAuth();
   const navigate = useNavigate();
   const { setTitle } = usePageTitle();
@@ -20,6 +23,7 @@ const CartPage = () => {
     setTitle('Carrito de Compras');
   }, [setTitle]);
 
+  // Cálculo de descuentos según categorías y promociones
   const calculateDiscount = () => {
     let total = 0;
     let totalPuzzles = 0;
@@ -28,19 +32,22 @@ const CartPage = () => {
     let totalDiscounted = 0;
 
     cart.forEach(item => {
-      let itemPrice = item.price;
-      const currentDate = new Date();
-      const discountEndDate = new Date(item.promoEndDate);
+      const game = games.find(g => g.id === item.productId); // Buscar el juego correspondiente
+      if (!game) return;
 
-      if (item.discount && currentDate <= discountEndDate) {
-        itemPrice = itemPrice - (itemPrice * (item.discount / 100));
+      let itemPrice = game.price;
+      const currentDate = new Date();
+      const discountEndDate = new Date(game.promoEndDate);
+
+      if (game.discount && currentDate <= discountEndDate) {
+        itemPrice = itemPrice - (itemPrice * (game.discount / 100));
       }
 
       total += itemPrice * item.quantity;
 
-      if (item.category === "Rompecabezas") totalPuzzles += item.quantity;
-      if (item.category === "Deportes") totalSports += item.quantity;
-      if (item.category === "Acción") totalAction += item.quantity;
+      if (game.category === "Rompecabezas") totalPuzzles += item.quantity;
+      if (game.category === "Deportes") totalSports += item.quantity;
+      if (game.category === "Acción") totalAction += item.quantity;
     });
 
     let discount = 0;
@@ -57,41 +64,48 @@ const CartPage = () => {
 
   const { total, totalDiscounted, discount } = calculateDiscount();
 
+  // Manejo de la cantidad de juegos en el carrito
   const handleQuantityChange = (id, value) => {
-    const item = cart.find(item => item.id === id);
-    if (item) {
+    const item = cart.find(item => item.productId === id);
+    const game = games.find(g => g.id === id);
+    if (item && game) {
       const newQuantity = parseInt(value, 10);
       if (isNaN(newQuantity) || newQuantity <= 0) {
         setAlertMessage('La cantidad debe ser un número positivo.');
         setAlertType('error');
-      } else if (newQuantity > item.licensesAvailable) {
+      } else if (newQuantity > game.licensesAvailable) {
         setAlertMessage('No hay suficientes licencias disponibles.');
         setAlertType('error');
       } else {
-        updateGameLicenses(id, newQuantity); // Actualiza la cantidad si es válida
+        item.quantity = newQuantity;
         setAlertMessage(''); // Limpiar el mensaje de error si no hay problemas
         setAlertType('');
       }
     }
   };
 
+  // Proceder al pago
   const handleProceedToPayment = () => {
     if (!user) {
       navigate('/login');
     } else if (cart.length > 0) {
-      navigate('/Checkout', { state: { purchaseType: 'game', cartItems: cart } });
+      navigate('/checkout', { state: { purchaseType: 'game', cartItems: cart } }); // Pasamos los productos y el tipo de compra
     } else {
       setAlertMessage('El carrito está vacío.');
       setAlertType('error');
     }
   };
+  
+  
 
+  // Eliminar un juego del carrito
   const handleRemoveFromCart = (id) => {
     removeFromCart(id);
     setAlertMessage('Juego eliminado del carrito.');
     setAlertType('success');
   };
 
+  // Navegar a los detalles de un juego
   const handleNavigateToGameDetails = (id) => {
     navigate(`/game/${id}`);
   };
@@ -100,7 +114,7 @@ const CartPage = () => {
     <div className="cart-page">
       <h1>Carrito de Compras</h1>
 
-      {/* Mostrar alertas si hay mensajes de error */}
+      {/* Mostrar alertas si hay mensajes */}
       {alertMessage && (
         <Stack sx={{ position: 'fixed', top: 20, right: 20, zIndex: 1000 }} spacing={2}>
           <Alert severity={alertType} onClose={() => setAlertMessage('')}>
@@ -111,49 +125,54 @@ const CartPage = () => {
 
       <div className="cart-content">
         <div className="cart-items">
-          {cart.map((item, index) => (
-            <div key={index} className="cart-item">
-              <img src={item.imageUrl} alt={item.name} />
-              <div className="item-details">
-                <h3 className='titulo' onClick={() => handleNavigateToGameDetails(item.id)}>
-                  {item.name}
-                </h3>
-                <p className='pp'><strong>Licencias Disponibles:</strong> {item.licensesAvailable}</p>
+          {cart.map((item, index) => {
+            const game = games.find(g => g.id === item.productId); // Buscar los detalles del juego
+            if (!game) return null; // Si no se encuentra el juego, omitirlo
 
-                {item.discount && (
-                  <div>
-                    <p className="original-price">Precio Original: ${item.price.toFixed(2)}</p>
-                    <p className="discounted-price">Precio con Descuento: ${(item.price - (item.price * (item.discount / 100))).toFixed(2)} (-{item.discount}%)</p>
-                    <p>Descuento válido hasta: {new Date(item.promoEndDate).toLocaleDateString()}</p>
+            return (
+              <div key={index} className="cart-item">
+                <img src={game.coverImageUrl} alt={game.name} />
+                <div className="item-details">
+                  <h3 className='titulo' onClick={() => handleNavigateToGameDetails(item.productId)}>
+                    {game.name}
+                  </h3>
+                  <p className='pp'><strong>Licencias Disponibles:</strong> {game.licensesAvailable}</p>
+
+                  {game.discount && (
+                    <div>
+                      <p className="original-price">Precio Original: ${game.price.toFixed(2)}</p>
+                      <p className="discounted-price">Precio con Descuento: ${(game.price - (game.price * (game.discount / 100))).toFixed(2)} (-{game.discount}%)</p>
+                      <p>Descuento válido hasta: {new Date(game.promoEndDate).toLocaleDateString()}</p>
+                    </div>
+                  )}
+                  {!game.discount && (
+                    <p>Precio: ${game.price.toFixed(2)}</p>
+                  )}
+
+                  <div className="quantity-controls">
+                    <button 
+                      onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <input 
+                      type="number" 
+                      value={item.quantity} 
+                      onChange={(e) => handleQuantityChange(item.productId, e.target.value)}
+                    />
+                    <button 
+                      onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                      disabled={item.quantity >= game.licensesAvailable}
+                    >
+                      +
+                    </button>
                   </div>
-                )}
-                {!item.discount && (
-                  <p>Precio: ${item.price.toFixed(2)}</p>
-                )}
-
-                <div className="quantity-controls">
-                  <button 
-                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                    disabled={item.quantity <= 1}
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="number" 
-                    value={item.quantity} 
-                    onChange={(e) => handleQuantityChange(item.id, e.target.value)}
-                  />
-                  <button 
-                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                    disabled={item.quantity >= item.licensesAvailable}
-                  >
-                    +
-                  </button>
+                  <button onClick={() => handleRemoveFromCart(item.productId)} className="remove-button">Eliminar</button>
                 </div>
-                <button onClick={() => handleRemoveFromCart(item.id)} className="remove-button">Descartar</button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="cart-summary">
           <h2>Resumen de Compra</h2>
