@@ -64,7 +64,7 @@ function getStepContent(step, formData, handleInputChange, purchaseType, cartIte
     case 0:
       return <AddressForm formData={formData} handleInputChange={handleInputChange} purchaseType={purchaseType} cartItems={cartItems} />;
     case 1:
-      return <PaymentForm formData={formData} handleInputChange={handleInputChange} />;
+      return <PaymentForm formData={formData} handleInputChange={handleInputChange} cartItems={cartItems} />;
     case 2:
       return <Review purchaseType={purchaseType} cartItems={cartItems} />;
     default:
@@ -82,10 +82,10 @@ export default function Checkout() {
     expDate: '',
     cvv: '',
   });
-  
+
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState('');
-  
+
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -95,32 +95,10 @@ export default function Checkout() {
     purchaseType: null,
     cartItems: []
   };
-
-  const calculateDiscount = () => {
-    let total = 0;
-    let totalPuzzles = 0;
-    let totalSports = 0;
-    let totalAction = 0;
-
-    cartItems.forEach(item => {
-      total += item.price * item.quantity;
-      if (item.category === "rompecabezas") totalPuzzles += item.quantity;
-      if (item.category === "deporte") totalSports += item.quantity;
-      if (item.category === "acción") totalAction += item.quantity;
-    });
-
-    let discount = 0;
-    if (totalPuzzles >= 25) {
-      discount = 0.20;
-    } else if (totalSports >= 20 && totalAction >= 15) {
-      discount = 0.15;
-    }
-
-    const discountedTotal = total - (total * discount);
-    return { total, discountedTotal, discount };
-  };
-
-  const { total, discountedTotal, discount } = calculateDiscount();
+  
+  // Verifica los datos de cartItems
+  console.log(cartItems); // Esto debería mostrar los detalles de los juegos en el carrito
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -158,7 +136,7 @@ export default function Checkout() {
 
   const handlePayment = async () => {
     try {
-      let totalPrice = discountedTotal;
+      let totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   
       if (purchaseType === 'membership') {
         // Lógica para membresía
@@ -176,30 +154,37 @@ export default function Checkout() {
       } else if (purchaseType === 'game' && cartItems.length > 0) {
         // Lógica para compra de juegos
         for (const item of cartItems) {
-          const gameResponse = await axios.get(`http://localhost:3000/games/${item.id}`);
+          // Asegúrate de usar productId en lugar de id del carrito
+          const gameResponse = await axios.get(`http://localhost:3000/games/${item.productId}`);
+          if (!gameResponse.data) {
+            setAlertMessage(`Juego con id ${item.productId} no encontrado.`);
+            setAlertType('error');
+            return;
+          }
+  
           const gameData = gameResponse.data;
   
           const purchaseData = {
-              buyerId: user.id,
-              sellerId: gameData.sellerId,
-              gameId: item.id,
-              quantity: item.quantity,
-              purchaseDate: new Date().toISOString().split('T')[0],
-              price: item.price,
-              totalPrice: item.price * item.quantity,
-              gameName: item.name,
+            buyerId: user.id,
+            sellerId: gameData.sellerId,
+            gameId: item.productId, // Usar productId aquí
+            quantity: item.quantity,
+            purchaseDate: new Date().toISOString().split('T')[0],
+            price: item.price,
+            totalPrice: item.price * item.quantity,
+            gameName: item.name,
           };
   
           await axios.post('http://localhost:3000/purchases', purchaseData);
   
-          const existingGame = user.gamesOwned.find(g => g.gameId === item.id);
+          const existingGame = user.gamesOwned.find(g => g.gameId === item.productId);
           const updatedGamesOwned = existingGame
             ? user.gamesOwned.map(g =>
-                g.gameId === item.id
+                g.gameId === item.productId
                   ? { ...g, quantity: g.quantity + item.quantity }
                   : g
               )
-            : [...user.gamesOwned, { gameId: item.id, quantity: item.quantity }];
+            : [...user.gamesOwned, { gameId: item.productId, quantity: item.quantity }];
   
           const updatedUser = {
             ...user,
@@ -212,7 +197,7 @@ export default function Checkout() {
             licensesSold: gameData.licensesSold + item.quantity,
             licensesAvailable: gameData.licensesAvailable - item.quantity,
           };
-          await axios.put(`http://localhost:3000/games/${item.id}`, updatedGameData);
+          await axios.put(`http://localhost:3000/games/${item.productId}`, updatedGameData);
         }
   
         sendGamesEmail(formData.to_name, formData.to_email, cartItems, totalPrice);
@@ -220,11 +205,8 @@ export default function Checkout() {
         setAlertType('success');
       }
   
-      // Limpiar el carrito después del pago exitoso
-      clearCart();
-  
-      // Navegar a la página de inicio o agradecimiento
-      navigate('/Home');
+      clearCart(); // Limpiar el carrito después del pago
+      navigate('/Home'); // Navegar a la página de agradecimiento
     } catch (error) {
       setAlertMessage(`Error al procesar el pago: ${error.message}`);
       setAlertType('error');

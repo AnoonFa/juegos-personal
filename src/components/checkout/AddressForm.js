@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, Typography, TextField, ListItem, ListItemText } from '@mui/material';
+import { GamesContext } from '../../context/GameContext'; // Importa el contexto de juegos
 
 export default function AddressForm({ formData, handleInputChange, purchaseType, cartItems }) {
+  const { games } = useContext(GamesContext); // Acceder a la lista de juegos desde el contexto
+
+  // Función para obtener los detalles del juego por productId
+  const getGameDetails = (productId) => {
+    return games.find(game => game.id === productId);
+  };
+
   const renderCartDetails = () => (
     <>
-      {cartItems.map((item, index) => (
-        <ListItem key={index}>
-          <ListItemText 
-            primary={`Juego: ${item.name}`} 
-            secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
-          />
-        </ListItem>
-      ))}
+      {cartItems.map((item, index) => {
+        // Obtener los detalles del juego usando productId
+        const gameDetails = getGameDetails(item.productId);
+
+        if (!gameDetails) {
+          return <ListItem key={index}><ListItemText primary="Juego no encontrado" /></ListItem>;
+        }
+
+        return (
+          <ListItem key={index}>
+            <ListItemText 
+              primary={`Juego: ${gameDetails.name}`} 
+              secondary={`Cantidad: ${item.quantity} - Precio: $${gameDetails.price.toFixed(2)}`} 
+            />
+          </ListItem>
+        );
+      })}
     </>
   );
 

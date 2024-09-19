@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from './AuthContext';
+import { useAuth } from './AuthContext'; // Importar el contexto de autenticación
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth(); // Obtener el usuario y la función de actualización del AuthContext
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
@@ -36,30 +36,47 @@ const CartProvider = ({ children }) => {
             item.productId === product.id ? updatedProduct : item
           ));
         } else {
-          const response = await axios.post('http://localhost:3000/cart', {
+          const newProduct = {
             productId: product.id,
-            quantity,
+            name: product.name,
+            price: product.price,
+            quantity: quantity,
             userId: user.id,
-          });
-          setCart(prevCart => [...prevCart, response.data]); // Actualiza el carrito con el nuevo producto
+            imageUrls: product.imageUrls,
+            discount: product.discount,
+            promoEndDate: product.promoEndDate
+          };
+          const response = await axios.post('http://localhost:3000/cart', newProduct);
+          setCart(prevCart => [...prevCart, response.data]);
         }
       } catch (error) {
         console.error('Error adding to cart:', error);
       }
-    } else {
-      // Para manejar el carrito en localStorage si el usuario no está autenticado
-      const localCart = JSON.parse(localStorage.getItem('cart')) || [];
-      const existingProduct = localCart.find(item => item.productId === product.id);
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      } else {
-        localCart.push({ productId: product.id, quantity });
-      }
-      localStorage.setItem('cart', JSON.stringify(localCart));
-      setCart(localCart);
     }
   };
-  
+
+  const purchaseGame = async (game) => {
+    if (user) {
+      try {
+        // Agregar el juego a gamesOwned del usuario
+        const existingGame = user.gamesOwned.find(owned => owned.gameId === game.id);
+        if (existingGame) {
+          // Si el juego ya está en la biblioteca, aumentar la cantidad
+          existingGame.quantity += 1;
+        } else {
+          // Si el juego no está en la biblioteca, añadirlo
+          user.gamesOwned.push({ gameId: game.id, quantity: 1 });
+        }
+        // Actualizar el usuario con los nuevos juegos
+        updateUser({ ...user });
+
+        // Limpiar el carrito después de la compra
+        await clearCart();
+      } catch (error) {
+        console.error('Error purchasing game:', error);
+      }
+    }
+  };
 
   const removeFromCart = async (productId) => {
     if (user) {
@@ -95,7 +112,7 @@ const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, purchaseGame }}>
       {children}
     </CartContext.Provider>
   );

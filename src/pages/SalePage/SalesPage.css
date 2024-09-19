@@ -62,3 +62,34 @@
     margin: 10px 0;
   }
   
+
+  .sales-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .sales-comparison-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .seller-sales {
+    flex: 1; /* Ajusta para ocupar la mitad del espacio */
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+  
+  .game-comparison {
+    flex: 1; /* Ajusta para ocupar la mitad del espacio */
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+  
+  .buttonss {
+    align-items: center;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin-bottom: 24px;
+  }

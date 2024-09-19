@@ -8,32 +8,31 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchTerm, filterCategory, filterPrice]); // Ensure search runs when any of these change
+  }, [searchTerm, filterCategory, filterPrice]); // Asegura que el filtro se ejecute cuando alguno cambie
 
   const handleSearch = () => {
-    // Ensure we are working with a copy of allGames and not mutating the original array
-    let filteredGames = [...allGames];
+    let filteredGames = [...allGames]; // Hacer una copia de allGames para no mutar el array original
 
-    // Filter by search term
+    // Filtrar por término de búsqueda
     if (searchTerm.trim()) {
       filteredGames = filteredGames.filter(game =>
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Filter by category
+    // Filtrar por categoría
     if (filterCategory) {
       filteredGames = filteredGames.filter(game => 
         game.category.toLowerCase() === filterCategory.toLowerCase()
       );
     }
 
-    // Filter by maximum price
+    // Filtrar por precio máximo
     if (filterPrice) {
       filteredGames = filteredGames.filter(game => game.price <= Number(filterPrice));
     }
 
-    // Update the games to show the filtered results
+    // Actualizar los juegos con los resultados filtrados
     setGames(filteredGames);
   };
 
@@ -41,7 +40,7 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
     <div className="search-filter-bar">
       <h2>Buscar y Filtrar Juegos</h2>
       
-      {/* Search by name */}
+      {/* Búsqueda por nombre */}
       <input
         type="text"
         placeholder="Buscar por nombre..."
@@ -50,7 +49,7 @@ const SearchAndFilterBar = ({ allGames, setGames }) => {
         className="search-input"
       />
       
-      {/* Filter options */}
+      {/* Opciones de filtro */}
       <div className="filter-options">
         <div className="filter-group">
           <label>Género</label>

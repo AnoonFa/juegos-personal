@@ -89,12 +89,15 @@ const CartPage = () => {
     if (!user) {
       navigate('/login');
     } else if (cart.length > 0) {
-      navigate('/checkout', { state: { purchaseType: 'game', cartItems: cart } }); // Pasamos los productos y el tipo de compra
+      navigate('/checkout', { state: { purchaseType: 'game', cartItems: cart } });
     } else {
       setAlertMessage('El carrito está vacío.');
       setAlertType('error');
     }
   };
+
+  
+  
   
   
 

@@ -27,8 +27,8 @@
       "category": "Deportes",
       "price": 129000,
       "size": 300000,
-      "licensesAvailable": 23,
-      "licensesSold": 12,
+      "licensesAvailable": 21,
+      "licensesSold": 14,
       "logoUrl": "https://wapesports.com/wp-content/uploads/2022/08/FIFA-23-LOGO.png",
       "coverImageUrl": "https://media.vandal.net/m/122945/fifa-23-202210612192557_1.jpg",
       "imageUrls": [
@@ -49,7 +49,7 @@
       "size": 1000,
       "price": 1000,
       "licensesAvailable": 10,
-      "licensesSold": 1,
+      "licensesSold": 2,
       "logoUrl": "https://example.com/logo-1000cxp.png",
       "coverImageUrl": "https://play-lh.googleusercontent.com/VKQlVqQ7EgyQzvawEFamRKL-dczwlHoB_KY2OTuoD_38DgGnuVYrN8O_vr192AOC0alD",
       "imageUrls": [
@@ -60,7 +60,7 @@
       ],
       "description": "Les presentamos 1000 cxp de (1000 combinaciones*mil piezas) una nueva experiencia que te encantará.",
       "discount": 10,
-      "promoEndDate": "2024-08-28T18:26:24.637Z",
+      "promoEndDate": "2024-12-31T23:59:59.000Z",
       "sellerId": "faa2"
     }
   ],
@@ -185,6 +185,64 @@
       "price": 129000,
       "totalPrice": 258000,
       "gameName": "Fifa 2023"
+    },
+    {
+      "id": "aacf",
+      "buyerId": "faa2",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "price": 129000,
+      "totalPrice": 129000,
+      "gameName": "Fifa 2023"
+    },
+    {
+      "id": "df01",
+      "buyerId": "faa2",
+      "sellerId": 2,
+      "gameId": "3",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "price": 129000,
+      "totalPrice": 129000,
+      "gameName": "Fifa 2023"
+    },
+    {
+      "id": "ba81",
+      "buyerId": "faa2",
+      "sellerId": "faa2",
+      "gameId": "ae6b",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "totalPrice": null
+    },
+    {
+      "id": "90c4",
+      "buyerId": "faa2",
+      "sellerId": "faa2",
+      "gameId": "ae6b",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "totalPrice": null
+    },
+    {
+      "id": "65b4",
+      "buyerId": "faa2",
+      "sellerId": "faa2",
+      "gameId": "ae6b",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "totalPrice": null
+    },
+    {
+      "id": "8ae6",
+      "buyerId": "faa2",
+      "sellerId": "faa2",
+      "gameId": "5ffc",
+      "quantity": 1,
+      "purchaseDate": "2024-09-19",
+      "totalPrice": null
     }
   ],
   "sales": [
@@ -212,6 +270,14 @@
         {
           "gameId": "2",
           "quantity": 2
+        },
+        {
+          "gameId": "3",
+          "quantity": 1
+        },
+        {
+          "gameId": "5ffc",
+          "quantity": 1
         }
       ]
     },
@@ -257,12 +323,5 @@
       ]
     }
   ],
-  "cart": [
-    {
-      "id": "e504",
-      "productId": "2",
-      "quantity": 1,
-      "userId": "faa2"
-    }
-  ]
+  "cart": []
 }

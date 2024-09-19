@@ -85,25 +85,15 @@ const AdminPage = () => {
               <TableCell>Nombre</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Membresía</TableCell>
-              <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.nombre}</TableCell>
+                <TableCell>{user.correo}</TableCell>
                 <TableCell>{user.membership ? 'Sí' : 'No'}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleEditUser(user.id, { membership: !user.membership })}
-                  >
-                    {user.membership ? 'Quitar Membresía' : 'Dar Membresía'}
-                  </Button>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>

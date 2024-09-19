@@ -50,13 +50,24 @@ const GameDetails = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    if (quantity <= game.licensesAvailable) {
-      addToCart(game, quantity); // Usamos `addToCart` de `CartContext`
-      setAlertMessage('Juego agregado al carrito correctamente.');
-      setAlertType('success');
-    }
-  };
+const handleAddToCart = () => {
+  if (quantity <= game.licensesAvailable) {
+    // Asegúrate de pasar todo el objeto `game` junto con la cantidad
+    addToCart({ 
+      id: game.id,
+      name: game.name,
+      price: game.price,
+      discount: game.discount,
+      promoEndDate: game.promoEndDate,
+      quantity: quantity,
+      licensesAvailable: game.licensesAvailable,
+      imageUrls: game.imageUrls
+    });
+    setAlertMessage('Juego agregado al carrito correctamente.');
+    setAlertType('success');
+  }
+};
+
 
   const handleBuyNow = () => {
     if (user && user.role !== 'nolog') {
@@ -154,7 +165,6 @@ const GameDetails = () => {
         </div>
       </div>
 
-      <GameReviews gameId={game.id} />
     </div>
   );
 };

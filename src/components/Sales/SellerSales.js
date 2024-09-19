@@ -9,7 +9,7 @@ const SellerSales = () => {
 
   useEffect(() => {
     const fetchSales = async () => {
-      if (user && user.id) {  // Asegurarse de que user y user.id están definidos
+      if (user && user.id) {
         try {
           const response = await axios.get(`http://localhost:3000/purchases?sellerId=${user.id}`);
           setSales(response.data);
@@ -31,13 +31,18 @@ const SellerSales = () => {
       <h1>Mis Ventas</h1>
       {sales.length > 0 ? (
         <ul>
-          {sales.map(sale => (
+          {sales.map((sale) => (
             <li key={sale.id} className="sale-item">
-              <p>Juego: {sale.gameName}</p>
-              <p>Comprador: {sale.buyerId}</p>
-              <p>Cantidad: {sale.quantity}</p>
-              <p>Precio Total: ${sale.totalPrice.toFixed(2)}</p>
-              <p>Fecha de Compra: {sale.purchaseDate}</p>
+              <p>Juego: {sale.gameName || 'Nombre no disponible'}</p>
+              <p>Comprador: {sale.buyerId || 'ID no disponible'}</p>
+              <p>Cantidad: {sale.quantity || 0}</p>
+              <p>
+                Precio Total: $
+                {sale.totalPrice !== null && sale.totalPrice !== undefined
+                  ? sale.totalPrice.toFixed(2)
+                  : '0.00'}
+              </p>
+              <p>Fecha de Compra: {sale.purchaseDate || 'Fecha no disponible'}</p>
             </li>
           ))}
         </ul>
